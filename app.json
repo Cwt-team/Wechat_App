@@ -1,0 +1,62 @@
+{
+  "usingComponents": {
+   
+  },
+  "pages": [
+    "pages/home/home",
+    "pages/contact/contact",
+    "pages/message/message",
+    "pages/index/index",
+    "pages/records/records",
+    "pages/calllog-skip/calllog-skip",
+    "pages/repair-skip/repair-skip",
+    "pages/else-skip/else-skip",
+    "pages/cmtalk-skip/cmtalk-skip",
+    "pages/wuye-skip/wuyes-skip",
+    "pages/functionintroduction-skip/functionintroduction-skip",
+    "pages/function-skip/function-skip",
+    "pages/functionskip/fun-op-skip/fun-op-skip",
+    "pages/functionskip/fun-fanweisui-skip/fun-fanweisui-skip",
+    "pages/functionskip/fun-fire-skip/fun-fire-skip",
+    "pages/functionskip/fun-cm-skip/fun-cm-skip",
+    "pages/functionskip/fun-call-skip/fun-call-skip",
+    "pages/functionskip/fun-repair-skip/fun-repair-skip",
+    "pages/recordskip/Alarm-record-skip/Alarm-record-skip",
+    "pages/recordskip/fws-skip/fws-skip",
+    "pages/recordskip/rp-skip/rp-skip",
+    "pages/recordskip/calling-skip/calling-skip",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarBackgroundColor": "#ffffff",
+    "enablePullDownRefresh": true
+  },
+
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "images/tabs/home.png",
+        "selectedIconPath": "images/tabs/home-active.png"
+      },
+      {
+        "pagePath": "pages/records/records",
+        "text": "记录",
+        "iconPath": "/images/button/alarm.png",
+        "selectedIconPath": "/images/button/alarm.png"
+      },
+      {
+        "pagePath": "pages/contact/contact",
+        "text": "个人",
+        "iconPath": "images/tabs/user.png",
+        "selectedIconPath": "images/tabs/user-active.png"
+      }
+    ]
+  },
+   "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

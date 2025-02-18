@@ -1,0 +1,6 @@
+
+.btn{
+  background-color:  rgb(36, 157, 255);
+  color:rgb(22, 20, 20)
+}
+

@@ -1,0 +1,103 @@
+page {
+  background-color: #f1f1f1;
+}
+ 
+/* 设置背景颜色 */
+.top-bg {
+  height: 200rpx;
+  background-color: #008c8c;
+}
+ 
+/* 圆角盒子 */
+.box {
+  background-color: white;
+  margin-top: -120rpx;
+  border-top-left-radius: 50rpx;
+  border-top-right-radius: 50rpx;
+  padding: 0 20rpx;
+}
+ 
+/* 头像部分 */
+.head-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1rpx solid #fbdbdc;
+  padding-bottom: 20rpx;
+}
+ 
+.avatar {
+  margin-top: -80rpx;
+  font-weight: inherit;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0);
+}
+ 
+.avatar::after {
+  border: none;
+}
+ 
+.head-img {
+  width: 140rpx;
+  height: 140rpx;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #fbdbdc;
+}
+ 
+.tip {
+  font-size: 26rpx;
+  color: gray;
+  margin: 15rpx 0;
+}
+ 
+/* 列表部分 */
+.row {
+  display: flex;
+  align-items: center;
+  padding: 36rpx 10rpx;
+  font-size: 30rpx;
+  font-weight: inherit;
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom: 1rpx solid #fbdbdc;
+}
+ 
+.row::after {
+  border: none;
+}
+ 
+.text {
+  margin-left: 15rpx;
+  color: #636262;
+}
+ 
+.left {
+  width: 90%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+ 
+.right {
+  width: 10%;
+  text-align: right;
+  color: rgb(148, 147, 147);
+}
+ 
+.end {
+  background-color: white;
+  margin-top: 20rpx;
+  padding: 0 20rpx;
+}
+ 
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20rpx 0;
+  font-size: 22rpx;
+  margin: 30rpx 0;
+  color: gray;
+}
