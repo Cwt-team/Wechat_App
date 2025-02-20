@@ -1,0 +1,35 @@
+/* pages/user_setting/user_setting.js.wxss */
+/* 列表部分 */
+.row {
+  display: flex;
+  align-items: center;
+  padding: 36rpx 10rpx;
+  font-size: 30rpx;
+  font-weight: inherit;
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom: 1rpx solid #fbdbdc;
+}
+ 
+.row::after {
+  border: none;
+}
+ 
+.text {
+  margin-left: 15rpx;
+  color: #636262;
+}
+ 
+.left {
+  width: 90%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+ 
+.right {
+  width: 5%;
+  text-align: right;
+  color: rgb(148, 147, 147);
+}
+
+ 

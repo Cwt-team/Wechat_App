@@ -1,0 +1,30 @@
+<!--pages/user_setting/user_setting.wxml-->
+<!-- 第一部分 -->
+<view>
+  <button class="row" style="width:100%;" bindtap="basicclick">
+    <view class="left">
+      <van-icon name="passed" /> 
+    <text class="text">反馈与建议</text>
+    </view>
+    <view class="right">></view>
+    </button>
+
+    <button class="row" style="width:100%;" bindtap="feedbackClick">
+    <view class="left">
+    <van-icon name="passed" />
+    <text class="text">版本号</text>
+    </view>
+    <view class="right">></view>
+    </button>
+
+    <button class="row" style="width:100%;border-bottom:none;" bindtap="aboutClick">
+    <view class="left">
+    <van-icon name="passed" />
+    <text class="text">关于我们</text>  
+    </view>
+    <view class="right">></view>
+    </button>
+     </view>
+     <!-- 第二部分 -->
+  
+
