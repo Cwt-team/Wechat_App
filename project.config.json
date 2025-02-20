@@ -1,0 +1,21 @@
+{
+  "appid": "wx020f80df8ae74383",
+  "compileType": "miniprogram",
+  "libVersion": "3.7.8",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  }
+}
