@@ -1,13 +1,12 @@
 {
-  "usingComponents": {
-   
-  },
+  "usingComponents": {},
   "pages": [
+    "pages/logic/logic",
     "pages/home/home",
     "pages/contact/contact",
     "pages/message/message",
     "pages/index/index",
-    "pages/records/records",
+    "pages/lock/lock",
     "pages/calllog-skip/calllog-skip",
     "pages/repair-skip/repair-skip",
     "pages/else-skip/else-skip",
@@ -25,7 +24,9 @@
     "pages/recordskip/fws-skip/fws-skip",
     "pages/recordskip/rp-skip/rp-skip",
     "pages/recordskip/calling-skip/calling-skip",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/user_setting/user_setting"
+    
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -33,7 +34,6 @@
     "navigationBarBackgroundColor": "#ffffff",
     "enablePullDownRefresh": true
   },
-
   "tabBar": {
     "list": [
       {
@@ -43,8 +43,8 @@
         "selectedIconPath": "images/tabs/home-active.png"
       },
       {
-        "pagePath": "pages/records/records",
-        "text": "记录",
+        "pagePath": "pages/lock/lock",
+        "text": "开锁",
         "iconPath": "/images/button/alarm.png",
         "selectedIconPath": "/images/button/alarm.png"
       },
@@ -56,7 +56,7 @@
       }
     ]
   },
-   "componentFramework": "glass-easel",
+  "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"
 }

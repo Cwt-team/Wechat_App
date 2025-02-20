@@ -1,0 +1,45 @@
+/* pages/logic/logic.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.login-button {
+  width: 80%;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #1aad19;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.phone-login {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.input-field {
+  width: 80%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.send-code-button {
+  width: 80%;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+}
