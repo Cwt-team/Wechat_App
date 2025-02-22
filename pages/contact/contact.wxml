@@ -15,6 +15,7 @@
       <van-icon name="success" /> 
     <text class="text">基本信息</text>
     </view>
+    <text>阳光花园01栋01楼01号</text>
     <view class="right">></view>
     </button>
 
@@ -25,22 +26,6 @@
     </view>
     <view class="right">></view>
     </button>
-
-    <button class="row" style="width:100%;" bindtap="feedbackClick">
-    <view class="left">
-    <van-icon name="passed" />
-    <text class="text">匿名反馈</text>
-    </view>
-    <view class="right">></view>
-    </button>
-
-    <button class="row" style="width:100%;border-bottom:none;" bindtap="aboutClick">
-    <view class="left">
-    <van-icon name="passed" />
-    <text class="text">关于我们</text>  
-    </view>
-    <view class="right">></view>
-    </button>
      </view>
 </view>
 
@@ -48,17 +33,15 @@
 <view class="end">
   <button open-type="share" class="row" style="width: 100%;">
     <view class="left">
-      <icon class="icon-small" type="success" size="16"></icon>
+      <icon class="icon-small" type="" size="16"></icon>
       <text class="text">分享好友</text>
     </view>
     <view class="right">></view>
   </button>
 
- 
-
-  <button open-type="contact" class="row" style="width: 100%;border-bottom: none;">
+  <button bindtap="settingClick" class="row" style="width: 100%;border-bottom: none;">
     <view class="left">
-      <icon class="icon-small" type="success" size=""></icon>
+      <icon class="icon-small" type="" size="16"></icon>
       <text class="text">设置</text>
     </view>
     <view class="right">></view>

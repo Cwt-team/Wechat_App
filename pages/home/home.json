@@ -3,8 +3,8 @@
     "van-image": "@vant/weapp/image/index",
     "van-grid": "@vant/weapp/grid/index",
     "van-grid-item": "@vant/weapp/grid-item/index",
-    "van-notice-bar": "@vant/weapp/notice-bar/index"
-  
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
+    "van-toast": "@vant/weapp/toast/index"
   },
   "navigationBarTitleText": "首页"
 }

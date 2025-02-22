@@ -1,17 +1,11 @@
 // pages/records/records.js
 Page({
-  navigateToPage:function(e){
-    const url=e.currentTarget.dataset.url;
-    wx.navigateTo({
-      url:url
-    });
-  },
-  data: {
-   
-  },
 
-  onDefaultButtonClick:function(){
-    console.log('点击事件')
+  /**
+   * 页面的初始数据
+   */
+  data: {
+
   },
 
   /**

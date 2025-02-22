@@ -2,26 +2,37 @@
 <view class="home">
 <swiper autouplay interval="3000" >
 <swiper-item>
-<image src="https://github.com/lilfuture/resources/blob/d468c37edcdc1cc4aee487e42f5358d8e1920a10/images/fortestuse-2.jpg"></image>
+<image src="/images/ssr (2).png"></image>
 </swiper-item>
 </swiper>
 
 <van-grid>
-  <van-grid-item icon="/images/button/fangke.png" text="一键开门" />
-  <van-grid-item icon="/images/button/repair.png" url="/pages/repair-skip/repair-skip" text="维护维修" />
-  <van-grid-item icon="/images/button/phone.png" url="/pages/calllog-skip/calllog-skip" text="一键反尾随" />
-  <van-grid-item icon="/images/button/alarm.png" url="/pages/functionintroduction-skip/functionintroduction-skip" text="功能介绍" />
-</van-grid>
-<van-grid>
-  <van-grid-item icon="/images/button/evaluate.png" url="/pages/cmtalk-skip/cmtalk-skip" text="社区通知" />
-  <van-grid-item icon="/images/button/fangke.png" url="/pages/wuye-skip/wuyes-skip" text="呼叫物业" />
-  <van-grid-item icon="/images/button/message.png" url="/pages/fire-skip/fire-skip" text="一键火警" />
-  <van-grid-item icon="/images/button/else.png" url="/pages/else-skip/else-skip" text="更多" />
+  <van-grid-item icon="/images/button/fangke.png" text="户户通" ></van-grid-item>
+
+  <van-grid-item icon="/images/button/phone.png" url="/pages/calllog-skip/calllog-skip" text="扫码开门" ></van-grid-item>
+
+  <van-grid-item icon="/images/button/repair.png" url="/pages/repair-skip/repair-skip" text="维护维修" ></van-grid-item>
+
+  <van-grid-item icon="/images/button/alarm.png" url="/pages/functionintroduction-skip/functionintroduction-skip" text="功能介绍" ></van-grid-item>
+
 </van-grid>
 
+<van-grid>
+  <van-grid-item icon="/images/button/evaluate.png" url="/pages/cmtalk-skip/cmtalk-skip" text="社区通知" />
+
+  <van-grid-item icon="/images/button/fangke.png" url="/pages/wuye-skip/wuyes-skip" text="呼叫物业" />
+
+  <van-grid-item icon="/images/button/message.png" url="/pages/fire-skip/fire-skip" text="一键火警" />
+
+  <van-grid-item icon="/images/button/else.png" url="/pages/else-skip/else-skip" text="更多" />
+
+<!-- 通告栏 -->
+</van-grid>
 <van-notice-bar
-  left-icon="volume-o"
-  scrollable text="V我50"
+    left-icon="volume-o"
+    wrapable
+    scrollable="{{ false }}"
+  text="石匠敲击石头的一百零一下绝不是归功最后一下，一定是前一百下厚积薄发的结果"
 />
 
 <rich-text nodes="<h4 style='color:gray;'>生活服务</h1>"></rich-text>

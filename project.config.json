@@ -1,12 +1,18 @@
 {
-  "appid": "wx020f80df8ae74383",
   "compileType": "miniprogram",
-  "libVersion": "3.7.8",
+  "libVersion": "trial",
   "packOptions": {
     "ignore": [],
     "include": []
   },
   "setting": {
+    "coverView": true,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "enhance": true,
+    "showShadowRootInWxmlPanel": true,
+    "packNpmRelationList": [],
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -15,7 +21,9 @@
   },
   "condition": {},
   "editorSetting": {
-    "tabIndent": "insertSpaces",
+    "tabIndent": "auto",
     "tabSize": 2
-  }
+  },
+  "appid": "wx020f80df8ae74383",
+  "simulatorPluginLibVersion": {}
 }

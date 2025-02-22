@@ -1,0 +1,14 @@
+<view class="container">
+  <!-- 微信登录按钮 -->
+  <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="login-button" style="position: relative; left: 0rpx; top: 747rpx">
+    微信登录
+  </button>
+
+  <!-- 手机号登录 -->
+  <view class="phone-login" style="height: 1208rpx; display: block; box-sizing: border-box">
+    <input type="number" placeholder="请输入手机号" bindinput="onPhoneInput" class="input-field" />
+    <button bindtap="onSendCode" class="send-code-button">发送验证码</button>
+    <input type="number" placeholder="请输入验证码" bindinput="onCodeInput" class="input-field" />
+    <button bindtap="onPhoneLogin" class="login-button">手机号登录</button>
+  </view>
+</view>
