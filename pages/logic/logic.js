@@ -1,5 +1,7 @@
 Page({
   data: {
+    username: '',
+    avatar: '',
     phoneNumber: '',
     verificationCode: '',
     generatedCode: '' // 用于存储生成的验证码
@@ -50,5 +52,23 @@ Page({
         icon: 'none'
       });
     }
+  },
+  onLogin: function() {
+    // 模拟登录成功
+    const userInfo = {
+      username: 'testuser',
+      avatar: 'https://example.com/default-avatar.png'
+    };
+
+    // 存储用户信息
+    wx.setStorageSync('userInfo', userInfo);
+
+    // 更新页面数据
+    this.setData(userInfo);
+
+    // 跳转到个人界面
+    wx.switchTab({
+      url: '/pages/contact/contact'
+    });
   }
 });

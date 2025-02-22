@@ -1,5 +1,2 @@
-<van-button type="info" custom-style="width:700rpx; height:150rpx" style="margin:12px;" data-url="/pages/recordskip/Alarm-record-skip/Alarm-record-skip" bindtap="navigateToPage">访客记录</van-button>
-<van-button type="info" custom-style="width:700rpx; height:150rpx" style="margin:12px; position: relative; left: 0rpx; top: 8rpx" data-url="/pages/recordskip/Alarm-record-skip/Alarm-record-skip" bindtap="navigateToPage">报警记录</van-button>
-<van-button type="info" custom-style="width:700rpx; height:150rpx" style="margin:12px; position: relative; left: 0rpx; top: 16rpx" data-url="/pages/recordskip/fws-skip/fws-skip" bindtap="navigateToPage">反尾随记录</van-button>
-<van-button type="info" custom-style="width:700rpx; height:150rpx" style="margin:12px; position: relative; left: 0rpx; top: 24rpx" data-url="/pages/recordskip/rp-skip/rp-skip" bindtap="navigateToPage">报修记录</van-button>
-<van-button type="info" custom-style="width:700rpx; height:150rpx" style="margin:12px; position: relative; left: 0rpx; top: 32rpx" data-url="/pages/recordskip/calling-skip/calling-skip" bindtap="navigateToPage">呼叫记录</van-button>
+<!--pages/records/records.wxml-->
+<text>pages/records/records.wxml</text>

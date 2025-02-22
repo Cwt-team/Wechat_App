@@ -8,7 +8,7 @@ Page({
   onTabItemTap(item) {
     // 在这里处理 TabBar 的点击事件
     wx.showToast({
-      title: 'TabBar 点击了：' + item.pagePath,
+      title: '正在开发，敬请期待：' + item.pagePath,
       icon: 'success',
       duration: 2000
     });

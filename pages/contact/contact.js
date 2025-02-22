@@ -1,181 +1,96 @@
-// pages/contact/contact.js
 Page({
   data: {
     login: {
-      avatar: 'https://img0.baidu.com/it/u=3204281136,1911957924&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',//用户头像
-      username: '未登录', // 用户名
+      show: false,
+      avatar: '',
+      username: '未登录',
+      line: false // 用于控制切换用户和退出登录按钮的显示
+    },
+    accountList: [
+      { username: 'user1', avatar: 'https://example.com/avatar1.png' },
+      { username: 'user2', avatar: 'https://example.com/avatar2.png' }
+    ]
+  },
+  onLoad: function() {
+    // 获取存储的用户信息
+    const userInfo = wx.getStorageSync('userInfo');
+    if (userInfo) {
+      this.setData({
+        login: {
+          show: true,
+          avatar: userInfo.avatar,
+          username: userInfo.username,
+          line: true
+        }
+      });
     }
   },
-  //登录监听
-  chooseAvatar(e) {
-    const avatarUrl = e.detail.avatarUrl; // 获取用户选择的头像URL
-    const username = '用户的用户名'; // 假设你从某个地方获取用户名（例如从服务器或用户输入）
+  chooseAvatar: function() {
+    let that = this;
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        const tempFilePaths = res.tempFilePaths;
+        that.setData({
+          'login.avatar': tempFilePaths[0]
+        });
 
-    this.setData({
-      login: {
-        show: true,
-        line:true,
-        avatar: e.detail.avatarUrl,
-        username:username,
+        // 更新存储的用户信息
+        const userInfo = wx.getStorageSync('userInfo');
+        userInfo.avatar = tempFilePaths[0];
+        wx.setStorageSync('userInfo', userInfo);
       }
-    })
-     // 存储头像信息到本地
-     wx.setStorageSync('userInfo', {
-      avatar: avatarUrl,
-      username:username,  // 用户名保持不变
     });
   },
-  //基本信息
-  basicClick() {
-    console.log('基本信息监听');
+  switchAccount: function() {
+    // 模拟切换账号逻辑
+    const nextAccount = this.data.accountList.find(account => account.username !== this.data.login.username);
+    if (nextAccount) {
+      wx.setStorageSync('userInfo', nextAccount);
+      this.setData({
+        login: {
+          show: true,
+          avatar: nextAccount.avatar,
+          username: nextAccount.username,
+          line: true
+        }
+      });
+    }
   },
-   
-   // 匿名反馈
-   feedbackClick() {
-    console.log('匿名反馈监听');
-  },
-  // 关于我们
-  aboutClick() {
-    console.log('关于我们监听');
-  },
-
-  // 切换用户功能
-switchUser() {
-  wx.showModal({
-    title: '提示',
-    content: '确定切换用户吗？',
-    success: (res) => {
-      if (res.confirm) {
-        // 清除当前用户信息
-        wx.removeStorageSync('userInfo');
-
-        // 清空当前页面中的用户数据
-        this.setData({
-          login: {
-            show: false,
-            line: false,
-            avatar: '默认头像URL',
-            username: '未登录',
-          },
-        });
-
-        // 跳转到登录页面或触发头像选择
-        wx.navigateTo({
-          url: '/pages/login/login', // 登录页路径
-        });
-      }
-    },
-  });
-},
-
-  // 退出监听
-  exitClick() {
+  exitClick: function() {
     let that = this;
     wx.showModal({
       title: '提示',
       content: '确定退出登录吗？',
       success(res) {
         if (res.confirm) {
+          // 清除用户信息
+          wx.removeStorageSync('userInfo');
+
+          // 更新页面数据
           that.setData({
             login: {
               show: false,
               avatar: 'https://img0.baidu.com/it/u=3204281136,1911957924&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+              username: '未登录',
+              line: false
             }
-          })
+          });
+
+          // 跳转到登录页面
+          wx.redirectTo({
+            url: '/pages/logic/logic'
+          });
         }
       }
-    })
-  },
-
-  
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad() {
-    const userInfo = wx.getStorageSync('userInfo');
-    if (userInfo) {
-      this.setData({
-        login: {
-          show: true,
-          line: true,
-          avatar: userInfo.avatar,
-          username: userInfo.username,
-        },
-      });
-    }
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-    this.checkUserInfo();
-  },
-// 检查并更新用户信息
-checkUserInfo() {
-  const userInfo = wx.getStorageSync('userInfo');  // 从本地存储获取用户信息
-
-  if (userInfo) {
-    // 如果有用户信息，更新页面数据
-    this.setData({
-      login: {
-        show: true,
-        line: true,   // 登录后显示“退出登录”按钮
-        avatar: userInfo.avatar,
-        username: userInfo.username,
-      },
     });
-  } else {
-    // 如果没有用户信息，显示默认状态
-    this.setData({
-      login: {
-        show: false,
-        line: false,  // 未登录时不显示“退出登录”按钮
-        avatar: '默认头像URL',  // 设置默认头像
-        username: '未登录',  // 设置默认用户名
-      },
+  },
+  settingClick: function() {
+    // 跳转到 user_setting 页面
+    wx.navigateTo({
+      url: '/pages/user_setting/user_setting'
     });
   }
-},
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
-})
+});

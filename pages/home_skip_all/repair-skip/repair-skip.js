@@ -1,6 +1,11 @@
-// pages/records/records.js
+// pages/repair-skip/repair-skip.js
 Page({
-
+onClickLeft() {
+    wx.showToast({ title: '点击返回', icon: 'https://b.yzcdn.cn/vant/icon-demo-1126.png' });
+  },
+  onClickRight() {
+    wx.showToast({ title: '点击按钮', icon: 'none' });
+  },
   /**
    * 页面的初始数据
    */

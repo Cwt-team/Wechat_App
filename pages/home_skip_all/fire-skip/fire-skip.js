@@ -1,4 +1,4 @@
-// pages/records/records.js
+// pages/fire-skip/fire-skip.js
 Page({
 
   /**

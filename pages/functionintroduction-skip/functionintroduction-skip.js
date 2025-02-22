@@ -1,11 +1,6 @@
 // pages/functionintroduction-skip/functionintroduction-skip.js
 Page({
-  navigateToPage:function(e){
-    const url=e.currentTarget.dataset.url;
-    wx.navigateTo({
-      url:url
-    });
-  },
+
   /**
    * 页面的初始数据
    */

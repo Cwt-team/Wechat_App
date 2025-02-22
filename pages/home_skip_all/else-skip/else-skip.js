@@ -1,4 +1,4 @@
-// pages/records/records.js
+// pages/else-skip/else-skip.js
 Page({
 
   /**

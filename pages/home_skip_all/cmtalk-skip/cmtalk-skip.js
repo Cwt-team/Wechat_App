@@ -1,4 +1,4 @@
-// pages/records/records.js
+// pages/cmtalk-skip/cmtalk-skip.js
 Page({
 
   /**

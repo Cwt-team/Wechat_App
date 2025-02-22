@@ -1,4 +1,4 @@
-// pages/records/records.js
+// pages/wuye-skip/wuyes-skip.js
 Page({
 
   /**
