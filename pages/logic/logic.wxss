@@ -2,44 +2,159 @@
 .container {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  padding: 60rpx 40rpx;
+  background: linear-gradient(180deg, #f6f7fb 0%, #ffffff 100%);
+}
+
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80rpx;
+}
+
+.logo {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 8rpx 16rpx rgba(0,0,0,0.1);
+}
+
+.title {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.login-area {
+  width: 100%;
+}
+
+.login-btn {
+  display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.login-button {
   width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #1aad19;
-  color: white;
+  height: 90rpx;
+  border-radius: 45rpx;
+  margin-bottom: 30rpx;
   border: none;
-  border-radius: 5px;
-  text-align: center;
+  font-size: 32rpx;
 }
 
-.phone-login {
-  width: 100%;
-  margin-top: 20px;
+.wx-btn {
+  background: #07c160;
+  color: #fff;
+}
+
+.wx-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 50rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 30%;
+  height: 1px;
+  background: #eee;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background: #f8f8f8;
+  border-radius: 45rpx;
+  padding: 20rpx 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.input-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
 }
 
 .input-field {
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 30rpx;
 }
 
-.send-code-button {
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #007aff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  text-align: center;
+.verify-code {
+  gap: 20rpx;
+}
+
+.code-input {
+  flex: 1;
+}
+
+.send-code-btn {
+  width: 200rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 26rpx;
+  color: #07c160;
+  background: transparent;
+  border: 1px solid #07c160;
+  border-radius: 30rpx;
+}
+
+.phone-btn {
+  background: #1989fa;
+  color: #fff;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 40rpx 0;
+}
+
+.agreement-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+}
+
+.agreement {
+  color: #999;
+}
+
+.link {
+  display: inline;
+  color: #1989fa;
+}
+
+checkbox .wx-checkbox-input {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 10rpx;
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background: #07c160;
+  border-color: #07c160;
 }

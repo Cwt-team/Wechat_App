@@ -1,10 +1,17 @@
+const API_CONFIG = require('../../utils/config');
+const LoginService = require('../../utils/loginService');
+
 Page({
   data: {
     username: '',
     avatar: '',
     phoneNumber: '',
     verificationCode: '',
-    generatedCode: '' // 用于存储生成的验证码
+    generatedCode: '',
+    isWxLogin: false, // 用于标记是否为微信登录
+    isAgree: false,
+    userInfo: null,
+    hasUserInfo: false
   },
   onPhoneInput: function(e) {
     this.setData({
@@ -16,59 +23,191 @@ Page({
       verificationCode: e.detail.value
     });
   },
-  onSendCode: function() {
+  onSendCode: async function() {
     const phoneNumber = this.data.phoneNumber;
-    if (!phoneNumber) {
+    if (!this.validatePhone(phoneNumber)) {
+      return wx.showToast({ title: '请输入正确的手机号', icon: 'none' });
+    }
+
+    try {
+      await LoginService.sendVerifyCode(phoneNumber);
+      wx.showToast({ title: '验证码已发送', icon: 'success' });
+    } catch (error) {
+      wx.showToast({ title: error.message || '发送失败', icon: 'none' });
+    }
+  },
+  onPhoneLogin: async function() {
+    if (!this.data.isAgree) {
       wx.showToast({
-        title: '请输入手机号',
+        title: '请先同意用户协议和隐私政策',
         icon: 'none'
       });
       return;
     }
+    
+    const { phoneNumber, verificationCode } = this.data;
+    if (!this.validatePhone(phoneNumber) || !verificationCode) {
+      return wx.showToast({ title: '请输入正确的手机号和验证码', icon: 'none' });
+    }
 
-    // 模拟生成验证码
-    const generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
-    this.setData({ generatedCode });
-
-    // 模拟发送验证码
-    console.log(`验证码已发送到 ${phoneNumber}，验证码是：${generatedCode}`);
-    wx.showToast({
-      title: '验证码已发送',
-      icon: 'success'
-    });
+    try {
+      const res = await LoginService.phoneLogin(phoneNumber, verificationCode);
+      if (res.code === 200) {
+        this.handleLoginSuccess(res.data);
+      } else {
+        wx.showToast({ title: res.message, icon: 'none' });
+      }
+    } catch (error) {
+      wx.showToast({ title: '登录失败', icon: 'none' });
+    }
   },
-  onPhoneLogin: function() {
-    const { verificationCode, generatedCode } = this.data;
-    if (verificationCode === generatedCode) {
-      // 验证成功
-      wx.setStorageSync('isLoggedIn', true);
-      wx.switchTab({
-        url: '/pages/home/home'
-      });
-    } else {
-      // 验证失败
-      wx.showToast({
-        title: '验证码错误',
+  onWxLogin: async function() {
+    console.log('开始登录流程');
+    
+    if (!this.data.isAgree) {
+      return wx.showToast({
+        title: '请先同意用户协议和隐私政策',
         icon: 'none'
       });
     }
+
+    wx.showLoading({ title: '登录中...' });
+
+    try {
+      // 1. 获取用户信息
+      const userProfile = await wx.getUserProfile({
+        desc: '用于完善会员资料'
+      });
+      
+      console.log('获取用户信息成功:', userProfile.userInfo);
+      
+      this.setData({
+        userInfo: userProfile.userInfo,
+        hasUserInfo: true
+      });
+
+      // 2. 获取登录凭证
+      const loginRes = await wx.login();
+      console.log('获取登录凭证成功:', loginRes.code);
+
+      // 3. 保存信息并跳转到手机号绑定页面
+      wx.setStorageSync('wxLoginInfo', {
+        code: loginRes.code,
+        userInfo: userProfile.userInfo
+      });
+
+      console.log('准备跳转到手机号绑定页面');
+      wx.navigateTo({
+        url: '/pages/bind-phone/bind-phone',
+        success: () => {
+          console.log('页面跳转成功');
+        },
+        fail: (err) => {
+          console.error('页面跳转失败:', err);
+          wx.showToast({
+            title: '页面跳转失败',
+            icon: 'none'
+          });
+        }
+      });
+
+    } catch (error) {
+      console.error('登录失败:', error);
+      wx.showToast({
+        title: error.message || '登录失败',
+        icon: 'none'
+      });
+    } finally {
+      wx.hideLoading();
+    }
   },
-  onLogin: function() {
-    // 模拟登录成功
-    const userInfo = {
-      username: 'testuser',
-      avatar: 'https://example.com/default-avatar.png'
-    };
-
-    // 存储用户信息
-    wx.setStorageSync('userInfo', userInfo);
-
-    // 更新页面数据
-    this.setData(userInfo);
-
-    // 跳转到个人界面
-    wx.switchTab({
-      url: '/pages/contact/contact'
+  handleLoginSuccess: function(data) {
+    console.log('登录成功,保存数据:', data);
+    wx.setStorageSync('token', data.token);
+    wx.setStorageSync('userInfo', data.userInfo);
+    wx.switchTab({ url: '/pages/index/index' });
+  },
+  getUserProfile: async function() {
+    try {
+      const res = await wx.getUserProfile({
+        desc: '用于完善用户资料'
+      });
+      return res.userInfo;
+    } catch (error) {
+      throw new Error('获取用户信息失败');
+    }
+  },
+  getLoginCode: async function() {
+    const res = await wx.login();
+    if (!res.code) {
+      throw new Error('获取登录凭证失败');
+    }
+    return res.code;
+  },
+  validatePhone: function(phone) {
+    return /^1[3-9]\d{9}$/.test(phone);
+  },
+  onCheckboxChange(e) {
+    this.setData({
+      isAgree: e.detail.value.length > 0
     });
+  },
+  onGetUserInfo: async function(e) {
+    if (!this.data.isAgree) {
+      return wx.showToast({
+        title: '请先同意用户协议和隐私政策',
+        icon: 'none'
+      });
+    }
+
+    if (e.detail.errMsg !== 'getUserInfo:ok') {
+      return wx.showToast({
+        title: '获取用户信息失败',
+        icon: 'none'
+      });
+    }
+
+    wx.showLoading({ title: '登录中...' });
+    
+    try {
+      console.log('开始获取用户信息:', e.detail.userInfo);
+      
+      // 获取手机号
+      const phoneRes = await wx.getUserProfile({
+        desc: '用于完善会员资料',
+        success: (res) => {
+          console.log('获取用户信息成功:', res.userInfo);
+        }
+      });
+
+      // 获取登录凭证
+      const loginCode = await this.getLoginCode();
+      console.log('获取登录凭证成功:', loginCode);
+
+      // 调用登录接口
+      const res = await LoginService.wechatLogin({
+        code: loginCode,
+        userInfo: phoneRes.userInfo
+      });
+      
+      console.log('微信登录响应:', res);
+
+      if (res.code === 200) {
+        this.handleLoginSuccess(res.data);
+      } else {
+        wx.showToast({
+          title: res.message || '登录失败',
+          icon: 'none'
+        });
+      }
+    } catch (error) {
+      console.error('登录失败:', error);
+      wx.showToast({
+        title: error.message || '登录失败',
+        icon: 'none'
+      });
+    } finally {
+      wx.hideLoading();
+    }
   }
 });

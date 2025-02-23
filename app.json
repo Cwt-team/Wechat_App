@@ -2,6 +2,7 @@
   "usingComponents": {},
   "pages": [
     "pages/logic/logic",
+    "pages/bind-phone/bind-phone",
     "pages/home/home",
     "pages/contact/contact",
     "pages/message/message",
@@ -26,12 +27,12 @@
     "pages/recordskip/calling-skip/calling-skip",
     "pages/logs/logs",
     "pages/user_setting/user_setting"
-    
   ],
   "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "物业管理",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
-    "navigationBarBackgroundColor": "#ffffff",
     "enablePullDownRefresh": true
   },
   "tabBar": {

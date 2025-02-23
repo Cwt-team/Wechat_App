@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="avatar-box">
+    <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+    <text class="nickname">{{userInfo.nickName}}</text>
+  </view>
+
+  <view class="tips">绑定手机号后,您可以:</view>
+  <view class="benefits">
+    <view class="benefit-item">
+      <icon type="success" size="18" color="#07c160"/>
+      <text>使用手机号登录</text>
+    </view>
+    <view class="benefit-item">
+      <icon type="success" size="18" color="#07c160"/>
+      <text>接收物业服务通知</text>
+    </view>
+  </view>
+
+  <button class="bind-btn" 
+    open-type="getPhoneNumber" 
+    bindgetphonenumber="getPhoneNumber"
+    loading="{{loading}}">
+    {{loading ? '绑定中...' : '确认绑定'}}
+  </button>
+</view> 
