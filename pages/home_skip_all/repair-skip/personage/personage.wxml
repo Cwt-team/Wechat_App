@@ -1,0 +1,22 @@
+<view class="container">
+  <input type="text" placeholder="请输入房间号" bindinput="onRoomInput" class="input-field" />
+  
+
+  <picker mode="selector" range="{{categories}}" bindchange="onCategoryChange">
+    <view class="picker">
+      当前选择: {{selectedCategory}}
+    </view>
+  </picker>
+  
+  <textarea placeholder="请描述问题" bindinput="onDescriptionInput" class="description-field"></textarea>
+  
+  <button bindtap="chooseImage" class="upload-button">上传照片</button>
+  <view class="image-preview" wx:for="{{images}}" wx:key="*this">
+    <image src="{{item}}" class="preview-image" />
+  </view>
+  
+  <input type="text" placeholder="请输入联系人" bindinput="onContactInput" class="input-field" />
+  <input type="number" placeholder="请输入手机号码" bindinput="onPhoneInput" class="input-field" />
+  
+  <button bindtap="submitRepairRequest" class="submit-button">提交报修</button>
+</view>

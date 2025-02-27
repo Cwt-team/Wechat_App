@@ -1,66 +1,22 @@
-// pages/else-skip/else-skip.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
-})
+    data: {
+      accessList: [
+        { icon: '/images/button/fangke-green.png', text: '户户通', url: '' },
+        { icon: '/images/button/monitor-green.png', text: '监视', url: '' },
+        { icon: '/images/button/invite-green.png', text: '访客邀请', url: '' },
+        { icon: '/images/button/phone-green.png', text: '呼叫记录', url: '' },
+        { icon: '/images/button/elevator-green.png', text: '呼叫电梯', url: '' },
+        { icon: '/images/button/scan-green.png', text: '扫码开门', url: '/pages/home_skip_all/calllog-skip/calllog-skip' },
+        // 其他项...
+      ],
+      lifeList: [
+        { icon: '/images/button/message-green.png', text: '社区通知', url: '/pages/home_skip_all/cmtalk-skip/cmtalk-skip' },
+        { icon: '/images/button/repair-green.png', text: '报事报修', url: '/pages/home_skip_all/repair-skip/repair-skip' },
+        { icon: '/images/button/message-green.png', text: '社区评价', url: '' },
+        { icon: '/images/button/complaint-green.png', text: '投诉建议', url: '' },
+        { icon: '/images/button/alarm-green.png', text: '报警记录', url: '' },
+        { icon: '/images/button/alarm-green.png', text: '一键火警', url: '/pages/home_skip_all/fire-skip/fire-skip' },
+        { icon: '/images/button/alarm-green.png', text: '一键反尾随', url: '' },
+      ]
+    }
+  });

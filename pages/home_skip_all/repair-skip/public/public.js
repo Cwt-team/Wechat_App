@@ -1,21 +1,6 @@
-// pages/repair-skip/repair-skip.js
+// pages/home_skip_all/repair-skip/public/public.js
 Page({
-onClickLeft() {
-    wx.showToast({ title: '点击返回', icon: 'https://b.yzcdn.cn/vant/icon-demo-1126.png' });
-  },
-  onClickRight() {
-    wx.showToast({ title: '点击按钮', icon: 'none' });
-  },
-  onPersonageClick() {
-    wx.navigateTo({
-      url: '/pages/home_skip_all/repair-skip/personage/personage',
-    });
-  },
-  onPublicClick() {
-    wx.navigateTo({
-      url: '/pages/home_skip_all/repair-skip/public/public',
-    });
-  },
+
   /**
    * 页面的初始数据
    */

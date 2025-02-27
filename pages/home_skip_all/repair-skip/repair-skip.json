@@ -1,6 +1,8 @@
 {
   "usingComponents": {
     "van-nav-bar": "@vant/weapp/nav-bar/index",
-    "van-icon": "@vant/weapp/icon/index"
+    "van-icon": "@vant/weapp/icon/index",
+    "van-steps": "@vant/weapp/steps/index",
+    "van-button": "@vant/weapp/button/index"
   }
 }

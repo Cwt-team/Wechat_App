@@ -1,1 +1,26 @@
-/* pages/else-skip/else-skip.wxss */
+.container {
+    display: flex;              /* 启用 Flex 布局 */
+    align-items: center;        /* 垂直居中对齐 */
+    justify-content: flex-start; /* 靠左对齐 */
+    padding-left: 0;            /* 清除左侧 padding */
+    margin-left: 0;             /* 清除左侧 margin */
+  }
+  
+  .icon {
+    width: 24px;               /* 图标宽度 */
+    height: 24px;              /* 图标高度 */
+    margin-right: 8px;         /* 图标与文字的间距 */
+  }
+  
+  .text {
+    font-size: 16px;           /* 文字大小 */
+    margin: 0;                 /* 清除默认 margin */
+    padding: 0;                /* 清除默认 padding */
+  }
+.divider {
+    height: 30rpx;          /* 分隔线高度 */
+    background: #e0e0e0;   /* 灰色色值 */
+    margin: 30rpx 0;       /* 上下边距 */
+    width: 100%;           /* 占满父容器宽度 */
+  }
+  

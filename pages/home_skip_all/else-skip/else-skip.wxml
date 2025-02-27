@@ -1,2 +1,43 @@
-<!--pages/else-skip/else-skip.wxml-->
-<text>pages/else-skip/else-skip.wxml</text>
+<view class="container">
+  <image src="/images/else-green.png" class="icon" />
+  <text class="text">智能门禁</text> 
+</view>
+
+<view class="section">
+    <van-grid column-num="4">
+  <van-grid-item 
+    wx:for="{{ accessList }}" 
+    wx:key="index"
+    use-icon-slot
+    text="{{ item.text }}"
+    url="{{ item.url }}"
+    link-type="navigateTo">
+    <image 
+      slot="icon" 
+      src="{{ item.icon }}" 
+      style="width: 40px; height: 40px;"
+    />
+  </van-grid-item>
+</van-grid>
+
+</view>
+
+<view class="divider"></view>
+<view class="container">
+  <image src="/images/else-green.png" class="icon" />
+  <text class="text">智慧生活</text>
+</view>
+
+<view class="section">
+  <van-grid column-num="4">
+    <van-grid-item 
+      wx:for="{{ lifeList }}" 
+      wx:key="index"
+      use-icon-slot
+      text="{{ item.text }}"
+      url="{{ item.url }}"
+    >
+      <image slot="icon" src="{{ item.icon }}" style="width: 40px; height: 40px;" />
+    </van-grid-item>
+  </van-grid>
+</view>

@@ -1,8 +1,2 @@
-<van-nav-bar
-  title="标题"
-  left-text="返回"
-  right-text="按钮"
-  left-arrow
-  bind:click-left="onClickLeft"
-  bind:click-right="onClickRight"  
-/>
+<van-button type="info" size="large" bind:click="onPersonageClick">个人区域报修</van-button>
+<van-button type="info" size="large" style="position: relative; left: 0rpx; top: 12rpx" bind:click="onPublicClick">公共区域保修</van-button>
