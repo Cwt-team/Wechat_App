@@ -194,5 +194,10 @@ Page({
     } finally {
       wx.hideLoading();
     }
+  },
+  skipLogin: function() {
+    wx.switchTab({
+      url: '/pages/home/home'
+    });
   }
 });

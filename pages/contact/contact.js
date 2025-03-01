@@ -4,28 +4,66 @@ Page({
       show: false,
       avatar: '',
       username: '未登录',
-      line: false // 用于控制切换用户和退出登录按钮的显示
+      line: false
     },
-    accountList: [
-      { username: 'user1', avatar: 'https://example.com/avatar1.png' },
-      { username: 'user2', avatar: 'https://example.com/avatar2.png' }
-    ]
+    userInfo: null,
+    houseInfo: '',
+    communityInfo: ''
   },
+  
   onLoad: function() {
-    // 获取存储的用户信息
+    this.checkLoginStatus();
+  },
+  
+  onShow: function() {
+    // 每次页面显示时检查登录状态，确保数据最新
+    this.checkLoginStatus();
+  },
+  
+  checkLoginStatus: function() {
+    // 获取存储的用户信息和token
     const userInfo = wx.getStorageSync('userInfo');
-    if (userInfo) {
+    const token = wx.getStorageSync('token');
+    
+    if (userInfo && token) {
+      // 已登录状态
       this.setData({
         login: {
           show: true,
-          avatar: userInfo.avatar,
-          username: userInfo.username,
+          avatar: userInfo.avatar_url || '/images/default-avatar.png',
+          username: userInfo.nickname || userInfo.name || '业主',
           line: true
-        }
+        },
+        userInfo: userInfo,
+        houseInfo: userInfo.house_full_name || '',
+        communityInfo: userInfo.community_name || ''
+      });
+    } else {
+      // 未登录状态
+      this.setData({
+        login: {
+          show: false,
+          avatar: 'https://img0.baidu.com/it/u=3204281136,1911957924&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+          username: '未登录',
+          line: false
+        },
+        userInfo: null,
+        houseInfo: '',
+        communityInfo: ''
       });
     }
   },
-  chooseAvatar: function() {
+  
+  chooseAvatar: function(e) {
+    // 如果用户未登录，跳转到登录页面
+    if (!this.data.login.show) {
+      wx.navigateTo({
+        url: '/pages/logic/logic'
+      });
+      return;
+    }
+    
+    // 已登录用户可以更换头像
     let that = this;
     wx.chooseImage({
       count: 1,
@@ -36,29 +74,24 @@ Page({
         that.setData({
           'login.avatar': tempFilePaths[0]
         });
-
+        
         // 更新存储的用户信息
         const userInfo = wx.getStorageSync('userInfo');
-        userInfo.avatar = tempFilePaths[0];
+        userInfo.avatar_url = tempFilePaths[0];
         wx.setStorageSync('userInfo', userInfo);
+        
+        // 这里可以添加上传头像到服务器的代码
       }
     });
   },
-  switchAccount: function() {
-    // 模拟切换账号逻辑
-    const nextAccount = this.data.accountList.find(account => account.username !== this.data.login.username);
-    if (nextAccount) {
-      wx.setStorageSync('userInfo', nextAccount);
-      this.setData({
-        login: {
-          show: true,
-          avatar: nextAccount.avatar,
-          username: nextAccount.username,
-          line: true
-        }
-      });
-    }
+  
+  switchUser: function() {
+    // 跳转到登录页面重新登录
+    wx.navigateTo({
+      url: '/pages/logic/logic'
+    });
   },
+  
   exitClick: function() {
     let that = this;
     wx.showModal({
@@ -66,9 +99,10 @@ Page({
       content: '确定退出登录吗？',
       success(res) {
         if (res.confirm) {
-          // 清除用户信息
+          // 清除用户信息和token
           wx.removeStorageSync('userInfo');
-
+          wx.removeStorageSync('token');
+          
           // 更新页面数据
           that.setData({
             login: {
@@ -76,21 +110,52 @@ Page({
               avatar: 'https://img0.baidu.com/it/u=3204281136,1911957924&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
               username: '未登录',
               line: false
-            }
-          });
-
-          // 跳转到登录页面
-          wx.redirectTo({
-            url: '/pages/logic/logic'
+            },
+            userInfo: null,
+            houseInfo: '',
+            communityInfo: ''
           });
         }
       }
     });
   },
+  
+  basicclick: function() {
+    // 如果未登录，提示用户登录
+    if (!this.data.login.show) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    // 跳转到基本信息页面
+    wx.navigateTo({
+      url: '/pages/user_info/user_info'
+    });
+  },
+  
   settingClick: function() {
-    // 跳转到 user_setting 页面
+    // 跳转到设置页面
     wx.navigateTo({
       url: '/pages/user_setting/user_setting'
+    });
+  },
+  
+  feedbackClick: function() {
+    // 如果未登录，提示用户登录
+    if (!this.data.login.show) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    // 跳转到投诉页面
+    wx.navigateTo({
+      url: '/pages/feedback/feedback'
     });
   }
 });

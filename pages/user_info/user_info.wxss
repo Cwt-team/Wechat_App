@@ -1,0 +1,39 @@
+/* pages/user_info/user_info.wxss */
+.container {
+  padding: 20rpx;
+}
+
+.user-info-card {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30rpx;
+}
+
+.avatar {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 75rpx;
+}
+
+.info-item {
+  display: flex;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.label {
+  width: 180rpx;
+  color: #666;
+}
+
+.value {
+  flex: 1;
+  color: #333;
+} 

@@ -30,13 +30,16 @@
 
 .login-area {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 80%;
   height: 90rpx;
   border-radius: 45rpx;
   margin-bottom: 30rpx;
@@ -157,4 +160,11 @@ checkbox .wx-checkbox-input {
 checkbox .wx-checkbox-input.wx-checkbox-input-checked {
   background: #07c160;
   border-color: #07c160;
+}
+
+/* 暂不登录按钮样式 */
+.skip-btn {
+  background: #f5f5f5;
+  color: #666;
+  border: 1px solid #ddd;
 }

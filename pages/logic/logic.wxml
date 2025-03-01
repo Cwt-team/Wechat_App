@@ -10,6 +10,11 @@
       <image class="wx-icon" src="/static/images/wechat-icon.png" mode="aspectFit"></image>
       微信一键登录
     </button>
+    
+    <!-- 暂不登录按钮 -->
+    <button class="login-btn skip-btn" bindtap="skipLogin">
+      暂不登录
+    </button>
   </view>
 
   <view class="footer">
