@@ -11,7 +11,9 @@
     wx:for="{{customGridItems}}" 
     wx:key="text"
     icon="{{item.icon}}" 
-    url="{{item.url}}" 
+    bindtap="onGridItemTap"
+    data-url="{{item.url}}"
+    data-text="{{item.text}}"
     text="{{item.text}}" 
   />
   

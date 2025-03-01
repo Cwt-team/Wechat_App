@@ -51,6 +51,7 @@ app.use('/images', express.static('public/images'));
 
 // 路由
 app.use('/api/login', require('./routes/login'));
+app.use('/api/call-records', require('./routes/callRecords'));
 
 // 添加健康检查接口
 app.get('/api/health', (req, res) => {

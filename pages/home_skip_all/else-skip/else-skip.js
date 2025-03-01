@@ -1,10 +1,10 @@
 Page({
     data: {
       accessList: [
-        { icon: '/images/button/fangke-green.png', text: '户户通', url: '', isShown: true, id: 'access1' },
+        { icon: '/images/button/fangke-green.png', text: '户户通', url: '/pages/home_skip_all/huhutong-skip/huhutong-skip', isShown: true, id: 'access1' },
         { icon: '/images/button/monitor-green.png', text: '监视', url: '', isShown: true, id: 'access2' },
         { icon: '/images/button/invite-green.png', text: '访客邀请', url: '', isShown: true, id: 'access3' },
-        { icon: '/images/button/phone-green.png', text: '呼叫记录', url: '', isShown: true, id: 'access4' },
+        { icon: '/images/button/phone-green.png', text: '呼叫记录', url: '/pages/recordskip/calling-skip/calling-skip', isShown: true, id: 'access4' },
         { icon: '/images/button/elevator-green.png', text: '呼叫电梯', url: '', isShown: true, id: 'access5' },
         { icon: '/images/button/scan-green.png', text: '扫码开门', url: '/pages/home_skip_all/calllog-skip/calllog-skip', isShown: true, id: 'access6' },
         // 其他项...
@@ -113,7 +113,20 @@ Page({
       // 如果有URL，则导航到对应页面
       if (item.url) {
         wx.navigateTo({
-          url: item.url
+          url: item.url,
+          fail: function(err) {
+            console.error(`${item.text}跳转失败:`, err);
+            wx.showToast({
+              title: `${item.text}页面跳转失败`,
+              icon: 'none'
+            });
+          }
+        });
+      } else if (['访客邀请', '社区评价', '投诉建议'].includes(item.text)) {
+        wx.showToast({
+          title: `${item.text}功能正在开发中`,
+          icon: 'none',
+          duration: 2000
         });
       }
     },

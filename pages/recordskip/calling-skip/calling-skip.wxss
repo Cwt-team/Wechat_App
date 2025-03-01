@@ -1,1 +1,84 @@
 /* pages/recordskip/calling-skip/calling-skip.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  padding: 20rpx 0;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.login-tip, .loading, .empty-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+  color: #999;
+}
+
+.login-btn {
+  margin-top: 30rpx;
+  background-color: #07c160;
+  color: white;
+  font-size: 28rpx;
+  padding: 10rpx 30rpx;
+  border-radius: 30rpx;
+}
+
+.records-list {
+  padding-bottom: 30rpx;
+}
+
+.record-item {
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+
+.door-info {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.call-time {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.record-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.house-info {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.duration {
+  font-size: 26rpx;
+  color: #07c160;
+  background-color: rgba(7, 193, 96, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+}

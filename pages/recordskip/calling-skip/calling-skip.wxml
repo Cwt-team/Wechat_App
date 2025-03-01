@@ -1,2 +1,32 @@
 <!--pages/recordskip/calling-skip/calling-skip.wxml-->
-<text>pages/recordskip/calling-skip/calling-skip.wxml</text>
+<view class="container">
+  <view class="header">
+    <text class="title">呼叫记录</text>
+  </view>
+  
+  <view wx:if="{{!isLogin}}" class="login-tip">
+    <text>请先登录查看您的呼叫记录</text>
+    <button class="login-btn" bindtap="navigateToLogin">去登录</button>
+  </view>
+  
+  <view wx:elif="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+  
+  <view wx:elif="{{callRecords.length === 0}}" class="empty-tip">
+    <text>暂无呼叫记录</text>
+  </view>
+  
+  <view wx:else class="records-list">
+    <view wx:for="{{callRecords}}" wx:key="id" class="record-item">
+      <view class="record-header">
+        <text class="door-info">{{item.door_access_info}}</text>
+        <text class="call-time">{{item.formattedTime}}</text>
+      </view>
+      <view class="record-body">
+        <text class="house-info">{{item.house_full_name}}</text>
+        <text class="duration">通话时长: {{item.formattedDuration}}</text>
+      </view>
+    </view>
+  </view>
+</view>
