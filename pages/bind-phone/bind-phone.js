@@ -62,7 +62,7 @@ Page({
 
         // 延迟跳转
         setTimeout(() => {
-          wx.switchTab({ url: '/pages/index/index' });
+          wx.switchTab({ url: '/pages/home/home' });
         }, 1500);
       } else {
         throw new Error(res.data.message || '绑定失败');

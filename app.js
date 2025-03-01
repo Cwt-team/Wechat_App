@@ -63,7 +63,7 @@ App({
                   
                   // 跳转到主页
                   wx.switchTab({
-                    url: '/pages/index/index',
+                    url: '/pages/home/home',
                     success: () => {
                       console.log('跳转到主页成功');
                       wx.showToast({

@@ -110,7 +110,7 @@ Page({
     console.log('登录成功,保存数据:', data);
     wx.setStorageSync('token', data.token);
     wx.setStorageSync('userInfo', data.userInfo);
-    wx.switchTab({ url: '/pages/index/index' });
+    wx.switchTab({ url: '/pages/home/home' });
   },
   getUserProfile: async function() {
     try {
