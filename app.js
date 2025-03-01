@@ -60,14 +60,32 @@ App({
                   wx.setStorageSync('token', loginRes.data.data.token);
                   wx.setStorageSync('userInfo', loginRes.data.data.userInfo);
                   this.globalData.userInfo = loginRes.data.data.userInfo;
-                } else if (loginRes.data.code === 401) {
-                  // 需要绑定手机号
-                  wx.setStorageSync('wxLoginInfo', {
-                    openid: loginRes.data.data.openid,
-                    userInfo: userRes.userInfo
+                  
+                  // 跳转到主页
+                  wx.switchTab({
+                    url: '/pages/index/index',
+                    success: () => {
+                      console.log('跳转到主页成功');
+                      wx.showToast({
+                        title: '登录成功',
+                        icon: 'success',
+                        duration: 2000
+                      });
+                    },
+                    fail: (err) => {
+                      console.error('跳转到主页失败:', err);
+                    }
                   });
-                  wx.navigateTo({ url: '/pages/bind-phone/bind-phone' });
                 } else {
+                // if (loginRes.data.code === 401) {
+                //   // 需要绑定手机号
+                //   wx.setStorageSync('wxLoginInfo', {
+                //     openid: loginRes.data.data.openid,
+                //     userInfo: userRes.userInfo
+                //   });
+                //   wx.navigateTo({ url: '/pages/bind-phone/bind-phone' });
+                // } else
+                 
                   console.error('登录失败:', loginRes.data.message);
                   wx.showToast({
                     title: loginRes.data.message || '登录失败',

@@ -32,7 +32,7 @@ Page({
 
       // 获取存储的登录信息
       const wxLoginInfo = wx.getStorageSync('wxLoginInfo');
-      if (!wxLoginInfo || !wxLoginInfo.code) {
+      if (!wxLoginInfo) {
         throw new Error('登录信息已失效,请重新登录');
       }
 
@@ -42,7 +42,6 @@ Page({
         method: 'POST',
         data: {
           code: e.detail.code,
-          wxCode: wxLoginInfo.code,
           userInfo: wxLoginInfo.userInfo
         }
       });

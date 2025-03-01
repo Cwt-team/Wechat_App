@@ -3,24 +3,27 @@ require('dotenv').config();
 const config = {
   // 服务器配置
   server: {
-    port: process.env.PORT || 3000,
-    host: process.env.HOST || 'localhost'
+    port: 3000,
+    host: 'localhost'
   },
   
   // MySQL配置
   mysql: {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    charset: process.env.DB_CHARSET
+    host: 'localhost',
+    port: 3326,
+    user: 'root',
+    password: '123456',
+    database: 'wuye',
+    charset: 'utf8mb4',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
   },
   
   // 微信小程序配置
   weapp: {
-    appId: process.env.WEAPP_APPID || '你的小程序appId',
-    appSecret: process.env.WEAPP_APPSECRET || '你的小程序appSecret'
+    appId: 'wx020f80df8ae74383',
+    appSecret: 'f101db91d9f7ecb73478f24d31cff78c'
   },
   
   // 短信服务配置(以阿里云为例)
@@ -33,8 +36,8 @@ const config = {
   
   // JWT配置
   jwt: {
-    secret: process.env.JWT_SECRET || 'your-jwt-secret',
-    expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+    secret: 'your-jwt-secret',
+    expiresIn: '7d'
   }
 };
 

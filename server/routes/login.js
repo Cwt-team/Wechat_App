@@ -88,40 +88,62 @@ router.post('/wechat', async (req, res) => {
     const connection = await pool.getConnection();
     
     try {
-      // 查询是否已绑定业主
+      // 查询是否已有用户
       const [owners] = await connection.execute(
         'SELECT * FROM owner_info WHERE wx_openid = ?',
         [openid]
       );
 
+      let owner;
       if (owners.length > 0) {
-        // 已绑定业主，生成token
-        const owner = owners[0];
-        const token = generateToken(owner);
-        
-        return res.json({
-          code: 200,
-          message: '登录成功',
-          data: {
-            token,
-            userInfo: owner
-          }
-        });
+        // 已存在用户,直接返回
+        owner = owners[0];
       } else {
-        // 未绑定业主，返回openid让前端跳转绑定手机号
-        return res.json({
-          code: 401,
-          message: '请先绑定手机号',
-          data: { openid }
-        });
+        // 不存在则创建新用户
+        const [result] = await connection.execute(
+          'INSERT INTO owner_info (wx_openid, nickname, avatar_url, gender, country, province, city, language) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+          [
+            openid, 
+            userInfo.nickName,
+            userInfo.avatarUrl,
+            userInfo.gender,
+            userInfo.country,
+            userInfo.province,
+            userInfo.city,
+            userInfo.language
+          ]
+        );
+        owner = {
+          id: result.insertId,
+          wx_openid: openid,
+          nickname: userInfo.nickName,
+          avatar_url: userInfo.avatarUrl,
+          gender: userInfo.gender,
+          country: userInfo.country,
+          province: userInfo.province,
+          city: userInfo.city,
+          language: userInfo.language
+        };
       }
+
+      // 生成token
+      const token = generateToken(owner);
+      
+      return res.json({
+        code: 200,
+        message: '登录成功',
+        data: {
+          token,
+          userInfo: owner
+        }
+      });
     } finally {
       connection.release();
     }
   } catch (error) {
     console.error('微信登录处理错误:', error);
     return res.json({
-      code: 500,
+      code: 500, 
       message: error.message || '服务器错误'
     });
   }

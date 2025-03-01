@@ -170,21 +170,27 @@ VALUES
 -- 业主信息表
 CREATE TABLE owner_info (
     id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '业主ID',
-    community_id INT NOT NULL COMMENT '关联的小区ID',
-    house_id INT NOT NULL COMMENT '关联的房屋ID',
-    name VARCHAR(50) NOT NULL COMMENT '姓名',
-    gender CHAR(1) NOT NULL COMMENT '性别：M-男 F-女',
-    phone_number VARCHAR(20) NOT NULL COMMENT '手机号码',
+    community_id INT NULL COMMENT '关联的小区ID',
+    house_id INT NULL COMMENT '关联的房屋ID',
+    name VARCHAR(50) NULL COMMENT '姓名',
+    gender TINYINT DEFAULT 0 COMMENT '性别: 0-未知, 1-男, 2-女',
+    phone_number VARCHAR(11) NULL COMMENT '手机号码',
     id_card VARCHAR(18) COMMENT '身份证号',
     email VARCHAR(100) COMMENT '邮箱',
-    city VARCHAR(50) COMMENT '户籍城市',
+    city VARCHAR(50) DEFAULT '' COMMENT '城市',
     address VARCHAR(200) COMMENT '详细地址',
     owner_type VARCHAR(20) NOT NULL DEFAULT '业主' COMMENT '业主类型',
     face_image VARCHAR(200) COMMENT '人脸图片路径',
     face_status TINYINT DEFAULT 0 COMMENT '人脸状态：0-未录入 1-已录入',
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    FOREIGN KEY (community_id) REFERENCES community_info(id),
-    FOREIGN KEY (house_id) REFERENCES house_info(id),
+    nickname VARCHAR(50) COMMENT '昵称',
+    avatar_url VARCHAR(255) COMMENT '头像URL',
+    country VARCHAR(50) DEFAULT '' COMMENT '国家',
+    province VARCHAR(50) DEFAULT '' COMMENT '省份',
+    language VARCHAR(20) DEFAULT 'zh_CN' COMMENT '语言',
+    wx_openid VARCHAR(50) UNIQUE COMMENT '微信openid',
+    CONSTRAINT owner_info_ibfk_1 FOREIGN KEY (community_id) REFERENCES community_info(id) ON DELETE SET NULL,
+    CONSTRAINT owner_info_ibfk_2 FOREIGN KEY (house_id) REFERENCES house_info(id) ON DELETE SET NULL,
     UNIQUE KEY `uk_phone_number` (`phone_number`),
     UNIQUE KEY `uk_id_card` (`id_card`)
 ) COMMENT '业主信息表';
@@ -208,12 +214,12 @@ INSERT INTO owner_info
 (community_id, house_id, name, gender, phone_number, id_card, owner_type, updated_at)
 VALUES
 -- 崔氏科技小区的业主
-(1, 1, '谢', 'M', '17362955521', NULL, '业主', '2024-07-30 10:10:24.586'),
-(1, 2, '谢', 'M', '17362955522', NULL, '业主', '2024-07-30 09:50:30.203'),
-(1, 3, '程', 'M', '13542406093', NULL, '业主', '2024-07-30 11:12:42.835'),
-(1, 4, '业主', 'M', '13711487267', NULL, '业主', '2024-07-30 12:04:05.300'),
-(1, 5, 'cui', 'M', '13542406094', NULL, '业主', '2024-08-03 15:27:25.602'),
-(1, 6, 'xxx', 'M', '13509993912', '123456789000000', '业主', '2024-08-03 16:33:11.262');
+(1, 1, '谢', 1, '17362955521', NULL, '业主', '2024-07-30 10:10:24.586'),
+(1, 2, '谢', 1, '17362955522', NULL, '业主', '2024-07-30 09:50:30.203'),
+(1, 3, '程', 1, '13542406093', NULL, '业主', '2024-07-30 11:12:42.835'),
+(1, 4, '业主', 1, '13711487267', NULL, '业主', '2024-07-30 12:04:05.300'),
+(1, 5, 'cui', 1, '13542406094', NULL, '业主', '2024-08-03 15:27:25.602'),
+(1, 6, 'xxx', 1, '13509993912', '123456789000000', '业主', '2024-08-03 16:33:11.262');
 
 -- 插入业主权限数据
 INSERT INTO owner_permission

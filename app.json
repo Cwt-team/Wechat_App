@@ -26,7 +26,9 @@
     "pages/recordskip/rp-skip/rp-skip",
     "pages/recordskip/calling-skip/calling-skip",
     "pages/logs/logs",
-    "pages/user_setting/user_setting"
+    "pages/user_setting/user_setting",
+    "pages/login/login",
+    "pages/my/my"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -36,12 +38,15 @@
     "enablePullDownRefresh": true
   },
   "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1AAD19",
+    "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/home/home",
+        "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "images/tabs/home.png",
-        "selectedIconPath": "images/tabs/home-active.png"
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
       },
       {
         "pagePath": "pages/lock/lock",
@@ -54,6 +59,12 @@
         "text": "个人",
         "iconPath": "images/tabs/user.png",
         "selectedIconPath": "images/tabs/user-active.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "images/my.png",
+        "selectedIconPath": "images/my-active.png"
       }
     ]
   },

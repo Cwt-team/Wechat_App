@@ -62,8 +62,6 @@ Page({
     }
   },
   onWxLogin: async function() {
-    console.log('开始登录流程');
-    
     if (!this.data.isAgree) {
       return wx.showToast({
         title: '请先同意用户协议和隐私政策',
@@ -74,42 +72,29 @@ Page({
     wx.showLoading({ title: '登录中...' });
 
     try {
-      // 1. 获取用户信息
+      // 获取用户信息
       const userProfile = await wx.getUserProfile({
         desc: '用于完善会员资料'
       });
       
       console.log('获取用户信息成功:', userProfile.userInfo);
-      
-      this.setData({
-        userInfo: userProfile.userInfo,
-        hasUserInfo: true
-      });
 
-      // 2. 获取登录凭证
+      // 获取登录凭证
       const loginRes = await wx.login();
       console.log('获取登录凭证成功:', loginRes.code);
 
-      // 3. 保存信息并跳转到手机号绑定页面
-      wx.setStorageSync('wxLoginInfo', {
-        code: loginRes.code,
-        userInfo: userProfile.userInfo
-      });
-
-      console.log('准备跳转到手机号绑定页面');
-      wx.navigateTo({
-        url: '/pages/bind-phone/bind-phone',
-        success: () => {
-          console.log('页面跳转成功');
-        },
-        fail: (err) => {
-          console.error('页面跳转失败:', err);
-          wx.showToast({
-            title: '页面跳转失败',
-            icon: 'none'
-          });
-        }
-      });
+      // 调用登录接口
+      const res = await LoginService.wechatLogin(loginRes.code, userProfile.userInfo);
+      
+      if (res.code === 200) {
+        // 保存用户信息并跳转
+        this.handleLoginSuccess(res.data);
+      } else {
+        wx.showToast({
+          title: res.message || '登录失败',
+          icon: 'none'
+        });
+      }
 
     } catch (error) {
       console.error('登录失败:', error);
