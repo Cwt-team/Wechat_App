@@ -38,5 +38,25 @@ Page({
   
   onClick() {
     Toast('这是一个提示');
-  }, 
+  },
+  
+  // 服务卡片点击事件
+  onServiceTap: function(e) {
+    const serviceType = e.currentTarget.dataset.type;
+    
+    // 根据不同服务类型跳转到不同页面
+    if (serviceType === 'travel') {
+      wx.showToast({
+        title: '旅游服务即将上线',
+        icon: 'none',
+        duration: 2000
+      });
+    } else if (serviceType === 'car') {
+      wx.showToast({
+        title: '车辆服务即将上线',
+        icon: 'none',
+        duration: 2000
+      });
+    }
+  }
 });

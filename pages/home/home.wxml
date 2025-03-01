@@ -27,20 +27,30 @@
   text="石匠敲击石头的一百零一下绝不是归功最后一下，一定是前一百下厚积薄发的结果"
 />
 
-<rich-text nodes="<h4 style='color:gray;'>生活服务</h1>"></rich-text>
-
-  <van-image
-  width="10rem"
-  height="10rem"
-  fit="cover"
-  src="/images/fortestuse-2.jpg"
-/>
-
-<van-image
-  width="10rem"
-  height="10rem"
-  fit="contain"
-  src="/images/fortestuse-3.jpg"
-/>
+<!-- 生活服务部分 -->
+<view class="service-section">
+  <view class="section-header">
+    <image src="/images/else-green.png" class="section-icon" />
+    <text class="section-title">生活服务</text>
+  </view>
+  
+  <view class="service-grid">
+    <view class="service-card" bindtap="onServiceTap" data-type="travel">
+      <image src="/images/fortestuse-2.jpg" mode="aspectFill" class="service-image"></image>
+      <view class="service-info">
+        <text class="service-title">旅游服务</text>
+        <text class="service-desc">畅游世界，精彩体验</text>
+      </view>
+    </view>
+    
+    <view class="service-card" bindtap="onServiceTap" data-type="car">
+      <image src="/images/fortestuse-3.jpg" mode="aspectFill" class="service-image"></image>
+      <view class="service-info">
+        <text class="service-title">车辆服务</text>
+        <text class="service-desc">专业保养，安心出行</text>
+      </view>
+    </view>
+  </view>
+</view>
 
 </view>
