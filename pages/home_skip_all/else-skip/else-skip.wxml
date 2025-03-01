@@ -1,43 +1,67 @@
-<view class="container">
-  <image src="/images/else-green.png" class="icon" />
-  <text class="text">智能门禁</text> 
-</view>
+<view class="page-container">
+  <!-- 管理按钮 -->
+  <view class="manage-bar">
+    <button class="manage-btn" bindtap="toggleManageMode">
+      {{ isManaging ? '退出管理' : '管理主页功能' }}
+    </button>
+    <button wx:if="{{isManaging}}" class="save-btn" bindtap="saveSettings">保存设置</button>
+  </view>
+  
+  <!-- 管理模式提示 -->
+  <view wx:if="{{isManaging}}" class="manage-tip">
+    <text>点击图标可选择是否在主页显示（最多选择7个）</text>
+    <text class="selected-count">已选择: {{homeShownItems.length}}/7</text>
+  </view>
 
-<view class="section">
-    <van-grid column-num="4">
-  <van-grid-item 
-    wx:for="{{ accessList }}" 
-    wx:key="index"
-    use-icon-slot
-    text="{{ item.text }}"
-    url="{{ item.url }}"
-    link-type="navigateTo">
-    <image 
-      slot="icon" 
-      src="{{ item.icon }}" 
-      style="width: 40px; height: 40px;"
-    />
-  </van-grid-item>
-</van-grid>
+  <view class="section">
+    <view class="section-header">
+      <image src="/images/else-green.png" class="section-icon" />
+      <text class="section-title">智能门禁</text>
+    </view>
+    
+    <view class="grid-container">
+      <view 
+        wx:for="{{ accessList }}" 
+        wx:key="id"
+        class="grid-item {{isManaging && item.isShown ? 'grid-item-selected' : ''}}"
+        bindtap="onItemTap"
+        data-item="{{ item }}"
+      >
+        <view class="grid-item-content">
+          <image src="{{ item.icon }}" class="grid-icon" />
+          <text class="grid-text">{{ item.text }}</text>
+          <view wx:if="{{isManaging}}" class="checkbox-icon">
+            <van-icon name="{{item.isShown ? 'success' : 'circle'}}" color="{{item.isShown ? '#07c160' : '#999'}}" size="20px" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 
-</view>
+  <view class="divider"></view>
 
-<view class="divider"></view>
-<view class="container">
-  <image src="/images/else-green.png" class="icon" />
-  <text class="text">智慧生活</text>
-</view>
-
-<view class="section">
-  <van-grid column-num="4">
-    <van-grid-item 
-      wx:for="{{ lifeList }}" 
-      wx:key="index"
-      use-icon-slot
-      text="{{ item.text }}"
-      url="{{ item.url }}"
-    >
-      <image slot="icon" src="{{ item.icon }}" style="width: 40px; height: 40px;" />
-    </van-grid-item>
-  </van-grid>
+  <view class="section">
+    <view class="section-header">
+      <image src="/images/else-green.png" class="section-icon" />
+      <text class="section-title">智慧生活</text>
+    </view>
+    
+    <view class="grid-container">
+      <view 
+        wx:for="{{ lifeList }}" 
+        wx:key="id"
+        class="grid-item {{isManaging && item.isShown ? 'grid-item-selected' : ''}}"
+        bindtap="onItemTap"
+        data-item="{{ item }}"
+      >
+        <view class="grid-item-content">
+          <image src="{{ item.icon }}" class="grid-icon" />
+          <text class="grid-text">{{ item.text }}</text>
+          <view wx:if="{{isManaging}}" class="checkbox-icon">
+            <van-icon name="{{item.isShown ? 'success' : 'circle'}}" color="{{item.isShown ? '#07c160' : '#999'}}" size="20px" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>

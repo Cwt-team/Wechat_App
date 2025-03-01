@@ -12,7 +12,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    // 页面加载时显示提示
+    wx.showToast({
+      title: '正在开发，敬请期待',
+      icon: 'none',
+      duration: 2000
+    });
   },
 
   /**
@@ -62,5 +67,14 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  // 添加点击事件处理函数
+  onFireAlarmTap: function() {
+    wx.showToast({
+      title: '正在开发，敬请期待',
+      icon: 'none',
+      duration: 2000
+    });
   }
 })

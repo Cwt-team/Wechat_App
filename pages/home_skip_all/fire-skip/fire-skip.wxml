@@ -1,2 +1,10 @@
 <!--pages/fire-skip/fire-skip.wxml-->
-<text>pages/fire-skip/fire-skip.wxml</text>
+<view class="container">
+  <view class="fire-alarm-box">
+    <image class="fire-alarm-icon" src="/images/button/alarm-green.png" mode="aspectFit"></image>
+    <text class="fire-alarm-title">一键火警</text>
+    <text class="fire-alarm-desc">紧急情况下，一键报警通知物业和消防部门</text>
+    <button class="fire-alarm-button" bindtap="onFireAlarmTap">一键报警</button>
+    <text class="fire-alarm-notice">该功能正在开发中，敬请期待</text>
+  </view>
+</view>

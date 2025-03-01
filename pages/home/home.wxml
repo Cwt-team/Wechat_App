@@ -7,27 +7,19 @@
 </swiper>
 
 <van-grid>
-  <van-grid-item icon="/images/button/fangke-green.png" url="/pages/home_skip_all/huhutong-skip/huhutong-skip" text="户户通" ></van-grid-item>
-
-  <van-grid-item icon="/images/button/scan-green.png" url="/pages/home_skip_all/calllog-skip/calllog-skip" text="扫码开门" ></van-grid-item>
-
-  <van-grid-item icon="/images/button/repair-green.png" url="/pages/home_skip_all/repair-skip/repair-skip" text="报事报修" ></van-grid-item>
-
-  <van-grid-item icon="/images/button/introduce-green.png" url="/pages/home_skip_all/functionintroduction-skip/functionintroduction-skip" text="功能介绍" ></van-grid-item>
-
-</van-grid>
-
-<van-grid>
-  <van-grid-item icon="/images/button/message-green.png" url="/pages/home_skip_all/cmtalk-skip/cmtalk-skip" text="社区通知" />
-
-  <van-grid-item icon="/images/button/fangke-green.png" url="/pages/home_skip_all/wuye-skip/wuyes-skip" text="呼叫物业" />
-
-  <van-grid-item icon="/images/button/alarm-green.png" url="/pages/home_skip_all/fire-skip/fire-skip" text="一键火警" />
-
+  <van-grid-item 
+    wx:for="{{customGridItems}}" 
+    wx:key="text"
+    icon="{{item.icon}}" 
+    url="{{item.url}}" 
+    text="{{item.text}}" 
+  />
+  
+  <!-- 始终显示"更多"按钮 -->
   <van-grid-item icon="/images/button/else_green.png" url="/pages/home_skip_all/else-skip/else-skip" text="更多" />
+</van-grid>
 
 <!-- 通告栏 -->
-</van-grid>
 <van-notice-bar
     left-icon="volume-o"
     wrapable
