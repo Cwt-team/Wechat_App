@@ -4,10 +4,7 @@ const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia0
 Page({
   data: {
     motto: 'Hello World',
-    userInfo: {
-      avatarUrl: defaultAvatarUrl,
-      nickName: '',
-    },
+    userInfo: null,
     hasUserInfo: false,
     canIUseGetUserProfile: wx.canIUse('getUserProfile'),
     canIUseNicknameComp: wx.canIUse('input.type.nickname'),
@@ -46,4 +43,20 @@ Page({
       }
     })
   },
+  onLoad() {
+    // 检查登录状态
+    const token = wx.getStorageSync('token');
+    const userInfo = wx.getStorageSync('userInfo');
+    
+    if (!token) {
+      wx.redirectTo({
+        url: '/pages/login/login'
+      });
+      return;
+    }
+    
+    this.setData({
+      userInfo: userInfo
+    });
+  }
 })

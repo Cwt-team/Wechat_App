@@ -1,14 +1,26 @@
 <view class="container">
-  <!-- 微信登录按钮 -->
-  <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="login-button" style="position: relative; left: 0rpx; top: 747rpx">
-    微信登录
-  </button>
+  <view class="logo-area">
+    <image class="logo" src="/images/logo.jpg" mode="aspectFit"></image>
+    <text class="title">智慧社区</text>
+  </view>
 
-  <!-- 手机号登录 -->
-  <view class="phone-login" style="height: 1208rpx; display: block; box-sizing: border-box">
-    <input type="number" placeholder="请输入手机号" bindinput="onPhoneInput" class="input-field" />
-    <button bindtap="onSendCode" class="send-code-button">发送验证码</button>
-    <input type="number" placeholder="请输入验证码" bindinput="onCodeInput" class="input-field" />
-    <button bindtap="onPhoneLogin" class="login-button">手机号登录</button>
+  <view class="login-area">
+    <!-- 微信登录按钮 -->
+    <button class="login-btn wx-btn" bindtap="onWxLogin">
+      <image class="wx-icon" src="/static/images/wechat-icon.png" mode="aspectFit"></image>
+      微信一键登录
+    </button>
+  </view>
+
+  <view class="footer">
+    <view class="agreement-row">
+      <checkbox-group bindchange="onCheckboxChange">
+        <checkbox value="agree" checked="{{isAgree}}" />
+      </checkbox-group>
+      <text class="agreement">登录即表示同意</text>
+      <navigator class="link">《用户协议》</navigator>
+      <text class="agreement">和</text>
+      <navigator class="link">《隐私政策》</navigator>
+    </view>
   </view>
 </view>
