@@ -1,6 +1,56 @@
-<van-button type="info" size="large"  data-url="/pages/functionskip/fun-op-skip/fun-op-skip" bindtap="navigateToPage" >一键开门功能介绍</van-button>
-<van-button type="info" size="large" style="margin-right: 10rpx; position: relative; left: 0rpx; top: 6rpx" data-url="/pages/functionskip/fun-fanweisui-skip/fun-fanweisui-skip" bindtap="navigateToPage">一键反尾随功能介绍</van-button>
-<van-button type="info" size="large" style="margin-right: 10rpx; position: relative; left: 0rpx; top: 12rpx" data-url="/pages/functionskip/fun-fire-skip/fun-fire-skip" bindtap="navigateToPage">一键火警功能介绍</van-button>
-<van-button type="info" size="large" style="margin-right: 10rpx; position: relative; left: 0rpx; top: 18rpx" data-url="/pages/functionskip/fun-cm-skip/fun-cm-skip" bindtap="navigateToPage">社区通知功能介绍</van-button>
-<van-button type="info" size="large" style="margin-right: 10rpx; position: relative; left: 0rpx; top: 24rpx" data-url="/pages/functionskip/fun-call-skip/fun-call-skip" bindtap="navigateToPage">呼叫物业功能介绍</van-button>
-<van-button type="info" size="large" style="margin-right: 10rpx; position: relative; left: 0rpx; top: 30rpx" data-url="/pages/functionskip/fun-repair-skip" bindtap="navigateToPage">报事报修功能介绍</van-button>
+<view class="container">
+  <van-button 
+    type="info" 
+    size="large" 
+    class="custom-button" 
+    data-url="/pages/functionskip/fun-op-skip/fun-op-skip" 
+    bindtap="navigateToPage"
+  >
+    一键开门功能介绍
+  </van-button>
+  <van-button 
+    type="info" 
+    size="large" 
+    class="custom-button" 
+    data-url="/pages/functionskip/fun-fanweisui-skip/fun-fanweisui-skip" 
+    bindtap="navigateToPage"
+  >
+    一键反尾随功能介绍
+  </van-button>
+  <van-button 
+    type="info" 
+    size="large" 
+    class="custom-button" 
+    data-url="/pages/functionskip/fun-fire-skip/fun-fire-skip" 
+    bindtap="navigateToPage"
+  >
+    一键火警功能介绍
+  </van-button>
+  <van-button 
+    type="info" 
+    size="large" 
+    class="custom-button" 
+    data-url="/pages/functionskip/fun-cm-skip/fun-cm-skip" 
+    bindtap="navigateToPage"
+  >
+    社区通知功能介绍
+  </van-button>
+  <van-button 
+    type="info" 
+    size="large" 
+    class="custom-button" 
+    data-url="/pages/functionskip/fun-call-skip/fun-call-skip" 
+    bindtap="navigateToPage"
+  >
+    呼叫物业功能介绍
+  </van-button>
+  <van-button 
+    type="info" 
+    size="large" 
+    class="custom-button" 
+    data-url="/pages/functionskip/fun-repair-skip" 
+    bindtap="navigateToPage"
+  >
+    报事报修功能介绍
+  </van-button>
+</view>

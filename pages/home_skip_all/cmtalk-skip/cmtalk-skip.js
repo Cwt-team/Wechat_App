@@ -1,66 +1,24 @@
-// pages/cmtalk-skip/cmtalk-skip.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
-})
+    data: {
+      notices: [
+        {
+          title: "杀虫",
+          content: "请住户关好门窗",
+          time: "2024-08-03 16:38"
+        },
+        {
+          title: "紧急通知",
+          content: "水管爆裂",
+          time: "2024-08-03 16:37"
+        }
+        // 可添加更多通知...
+      ],
+      onNoticeClick(e) {
+        const index = e.currentTarget.dataset.index;
+        const notice = this.data.notices[index];
+        wx.navigateTo({
+          url: `/pages/notice-detail/index?id=${notice.id}` // 假设有唯一ID
+        });
+      }
+    }  
+  });

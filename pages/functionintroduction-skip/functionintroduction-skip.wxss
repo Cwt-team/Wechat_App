@@ -1,5 +1,0 @@
-/* pages/functionintroduction-skip/functionintroduction-skip.wxss */
-.van-button--primary {
-  font-size: 20px;
-  background-color: pink;
-}

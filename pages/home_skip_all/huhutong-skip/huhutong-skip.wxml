@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="display">
+    <text class="dialed-number">{{dialedNumber}}</text>
+  </view>
+  <view class="dial-pad">
+    <block wx:for="{{buttons}}" wx:key="*this">
+      <button class="dial-button" data-value="{{item}}" bindtap="onDial">{{item}}</button>
+    </block>
+  </view>
+  <view class="actions">
+    <button class="action-button" bindtap="onProperty">物业</button>
+    <button class="call-button" bindtap="onCall">📞</button>
+    <button class="action-button" bindtap="onDelete">删除</button>
+  </view>
+</view>
+

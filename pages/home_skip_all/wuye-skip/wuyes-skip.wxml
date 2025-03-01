@@ -1,2 +1,2 @@
-<!--pages/wuye-skip/wuyes-skip.wxml-->
-<text>pages/wuye-skip/wuyes-skip.wxml</text>
+<van-button type="info" size="large">呼叫值班经理</van-button>
+<van-button type="info" size="large">呼叫门卫</van-button>

@@ -1,2 +1,21 @@
-<!--pages/cmtalk-skip/cmtalk-skip.wxml-->
-<text>pages/cmtalk-skip/cmtalk-skip.wxml</text>
+<!-- 社区通知列表 -->
+<view 
+  class="notice-item" 
+  wx:for="{{ notices }}" 
+  wx:key="index"
+  bindtap="onNoticeClick" 
+  data-index="{{ index }}"
+>
+<view class="notice-container">
+  <view class="notice-item" wx:for="{{ notices }}" wx:key="index">
+    <!-- 通知标题 -->
+    <text class="notice-title">{{ item.title }}</text>
+    <!-- 通知内容 -->
+    <text class="notice-content">{{ item.content }}</text>
+    <!-- 发布时间 -->
+    <text class="notice-time">{{ item.time }}</text>
+  </view>
+</view>
+
+  <!-- 原有内容 -->
+</view>
