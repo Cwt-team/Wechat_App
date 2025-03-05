@@ -6,6 +6,7 @@ const smsService = require('../utils/smsService');
 const WxService = require('../utils/wxService');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const bcrypt = require('bcrypt');
 
 // 数据库连接池
 const pool = mysql.createPool(config.mysql);
@@ -65,7 +66,7 @@ router.post('/wechat', async (req, res) => {
   try {
     console.log('收到微信登录请求:', { code, userInfo });
     
-    if (!code || !userInfo) {
+    if (!code) {
       return res.json({
         code: 400,
         message: '参数不完整'
@@ -94,173 +95,246 @@ router.post('/wechat', async (req, res) => {
         [openid]
       );
 
-      let owner;
       if (owners.length > 0) {
         // 已存在用户,直接返回
-        owner = owners[0];
-      } else {
-        // 不存在则创建新用户
-        const [result] = await connection.execute(
-          'INSERT INTO owner_info (wx_openid, nickname, avatar_url, gender, country, province, city, language) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-          [
-            openid, 
-            userInfo.nickName,
-            userInfo.avatarUrl,
-            userInfo.gender,
-            userInfo.country,
-            userInfo.province,
-            userInfo.city,
-            userInfo.language
-          ]
+        const owner = owners[0];
+        
+        // 查询完整信息
+        const [fullOwners] = await connection.execute(
+          `SELECT oi.*, op.*, hi.house_full_name, ci.community_name 
+           FROM owner_info oi
+           LEFT JOIN owner_permission op ON oi.id = op.owner_id
+           LEFT JOIN house_info hi ON oi.house_id = hi.id
+           LEFT JOIN community_info ci ON oi.community_id = ci.id
+           WHERE oi.id = ?`,
+          [owner.id]
         );
-        owner = {
-          id: result.insertId,
-          wx_openid: openid,
-          nickname: userInfo.nickName,
-          avatar_url: userInfo.avatarUrl,
-          gender: userInfo.gender,
-          country: userInfo.country,
-          province: userInfo.province,
-          city: userInfo.city,
-          language: userInfo.language
-        };
+        
+        const fullOwner = fullOwners[0];
+        const token = generateToken(fullOwner);
+        
+        return res.json({
+          code: 200,
+          message: '登录成功',
+          data: formatUserData(fullOwner, token)
+        });
+      } else {
+        // 不存在则返回需要绑定账号的状态码
+        return res.json({
+          code: 201,
+          message: '请绑定账号',
+          data: {
+            openid: openid
+          }
+        });
       }
+    } finally {
+      connection.release();
+    }
+  } catch (error) {
+    console.error('微信登录错误:', error);
+    res.json({ code: 500, message: '服务器错误' });
+  }
+});
 
-      // 生成token
-      const token = generateToken(owner);
+// 辅助函数
+function generateToken(user) {
+  return jwt.sign(
+    { id: user.id, openid: user.wx_openid },
+    config.jwt.secret || 'your-secret-key',
+    { expiresIn: '7d' }
+  );
+}
+
+function formatUserData(user, token) {
+  return {
+    token,
+    userInfo: {
+      id: user.id,
+      nickname: user.nickname || user.name || '业主',
+      avatar_url: user.avatar_url || '',
+      phone_number: user.phone_number || '',
+      house_full_name: user.house_full_name || '',
+      community_name: user.community_name || '',
+      account: user.account || ''
+    }
+  };
+}
+
+async function verifyCode(req, phone, code) {
+  // 简化版验证，实际应用中应该更严格
+  return req.session.verifyCode && 
+         req.session.verifyCode.phone === phone && 
+         req.session.verifyCode.code === code &&
+         req.session.verifyCode.expireTime > Date.now();
+}
+
+// 绑定账号
+router.post('/bind-account', async (req, res) => {
+  const { openid, account, password, isNew } = req.body;
+  
+  if (!openid || !account || !password) {
+    return res.json({ code: 400, message: '参数不完整' });
+  }
+  
+  try {
+    const connection = await pool.getConnection();
+    
+    try {
+      if (isNew) {
+        // 创建新账号
+        // 检查账号是否已存在
+        const [existingAccounts] = await connection.execute(
+          'SELECT * FROM owner_info WHERE account = ?',
+          [account]
+        );
+        
+        if (existingAccounts.length > 0) {
+          return res.json({ code: 400, message: '账号已存在' });
+        }
+        
+        // 加密密码
+        const hashedPassword = await bcrypt.hash(password, 10);
+        
+        // 创建新用户
+        const [result] = await connection.execute(
+          'INSERT INTO owner_info (account, password, wx_openid, nickname) VALUES (?, ?, ?, ?)',
+          [account, hashedPassword, openid, '新用户']
+        );
+        
+        const ownerId = result.insertId;
+        
+        // 查询新创建的用户信息
+        const [owners] = await connection.execute(
+          'SELECT * FROM owner_info WHERE id = ?',
+          [ownerId]
+        );
+        
+        const owner = owners[0];
+        const token = generateToken(owner);
+        
+        return res.json({
+          code: 200,
+          message: '创建成功',
+          data: {
+            token: token,
+            userInfo: {
+              id: owner.id,
+              account: owner.account,
+              nickname: owner.nickname || '新用户',
+              avatar_url: ''
+            }
+          }
+        });
+      } else {
+        // 绑定已有账号
+        // 查询账号是否存在
+        const [owners] = await connection.execute(
+          'SELECT * FROM owner_info WHERE account = ?',
+          [account]
+        );
+        
+        if (owners.length === 0) {
+          return res.json({ code: 404, message: '账号不存在' });
+        }
+        
+        const owner = owners[0];
+        
+        // 验证密码
+        const isPasswordValid = await bcrypt.compare(password, owner.password);
+        
+        if (!isPasswordValid) {
+          return res.json({ code: 401, message: '密码错误' });
+        }
+        
+        // 更新openid
+        await connection.execute(
+          'UPDATE owner_info SET wx_openid = ? WHERE id = ?',
+          [openid, owner.id]
+        );
+        
+        // 查询完整信息
+        const [fullOwners] = await connection.execute(
+          `SELECT oi.*, op.*, hi.house_full_name, ci.community_name 
+           FROM owner_info oi
+           LEFT JOIN owner_permission op ON oi.id = op.owner_id
+           LEFT JOIN house_info hi ON oi.house_id = hi.id
+           LEFT JOIN community_info ci ON oi.community_id = ci.id
+           WHERE oi.id = ?`,
+          [owner.id]
+        );
+        
+        const fullOwner = fullOwners[0];
+        const token = generateToken(fullOwner);
+        
+        return res.json({
+          code: 200,
+          message: '绑定成功',
+          data: formatUserData(fullOwner, token)
+        });
+      }
+    } finally {
+      connection.release();
+    }
+  } catch (error) {
+    console.error('绑定账号错误:', error);
+    res.json({ code: 500, message: '服务器错误' });
+  }
+});
+
+// 检查登录状态
+router.get('/check', async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  
+  if (!token) {
+    return res.json({ code: 401, message: '未登录' });
+  }
+  
+  try {
+    // 验证token
+    const decoded = jwt.verify(token, config.jwt.secret || 'your-secret-key');
+    
+    // 查询用户信息
+    const connection = await pool.getConnection();
+    
+    try {
+      const [owners] = await connection.execute(
+        `SELECT oi.*, op.*, hi.house_full_name, ci.community_name 
+         FROM owner_info oi
+         LEFT JOIN owner_permission op ON oi.id = op.owner_id
+         LEFT JOIN house_info hi ON oi.house_id = hi.id
+         LEFT JOIN community_info ci ON oi.community_id = ci.id
+         WHERE oi.id = ?`,
+        [decoded.id]
+      );
       
-      return res.json({
+      if (owners.length === 0) {
+        return res.json({ code: 404, message: '用户不存在' });
+      }
+      
+      const owner = owners[0];
+      
+      res.json({
         code: 200,
-        message: '登录成功',
+        message: '已登录',
         data: {
-          token,
-          userInfo: owner
+          userInfo: {
+            id: owner.id,
+            nickname: owner.nickname || owner.name || '业主',
+            avatar_url: owner.avatar_url || '',
+            phone_number: owner.phone_number || '',
+            house_full_name: owner.house_full_name || '',
+            community_name: owner.community_name || '',
+            account: owner.account || ''
+          }
         }
       });
     } finally {
       connection.release();
     }
   } catch (error) {
-    console.error('微信登录处理错误:', error);
-    return res.json({
-      code: 500, 
-      message: error.message || '服务器错误'
-    });
-  }
-});
-
-// 辅助函数
-function generateToken(owner) {
-  return jwt.sign({
-    id: owner.id,
-    type: 'owner'
-  }, config.jwt.secret, {
-    expiresIn: config.jwt.expiresIn
-  });
-}
-
-function formatUserData(owner, token) {
-  return {
-    token,
-    userInfo: {
-      id: owner.id,
-      name: owner.name,
-      phoneNumber: owner.phone_number,
-      communityId: owner.community_id,
-      communityName: owner.community_name,
-      houseFullName: owner.house_full_name,
-      permissions: {
-        callingEnabled: owner.calling_enabled,
-        pstnEnabled: owner.pstn_enabled
-      }
-    }
-  };
-}
-
-async function verifyCode(req, phoneNumber, code) {
-  const sessionVerifyCode = req.session.verifyCode;
-  return sessionVerifyCode && 
-         sessionVerifyCode.phoneNumber === phoneNumber && 
-         sessionVerifyCode.code === code &&
-         Date.now() <= sessionVerifyCode.expireTime;
-}
-
-// 绑定手机号
-router.post('/bind-phone', async (req, res) => {
-  const { code, wxCode, userInfo } = req.body;
-  
-  try {
-    console.log('收到绑定手机号请求:', { code, wxCode, userInfo });
-
-    // 1. 获取access_token
-    const tokenRes = await getAccessToken();
-    
-    // 2. 调用微信接口获取手机号
-    const phoneRes = await axios.post(
-      `https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=${tokenRes.access_token}`,
-      { code }
-    );
-
-    if (phoneRes.data.errcode === 0) {
-      const phoneNumber = phoneRes.data.phone_info.phoneNumber;
-      console.log('获取手机号成功:', phoneNumber);
-
-      const connection = await pool.getConnection();
-      
-      try {
-        // 3. 查询手机号是否已存在
-        const [owners] = await connection.execute(
-          'SELECT * FROM owner_info WHERE phone_number = ?',
-          [phoneNumber]
-        );
-
-        let owner;
-        if (owners.length > 0) {
-          // 4a. 已存在则更新openid
-          owner = owners[0];
-          await connection.execute(
-            'UPDATE owner_info SET wx_openid = ? WHERE id = ?',
-            [userInfo.openid, owner.id]
-          );
-          console.log('更新已有业主微信信息:', owner.id);
-        } else {
-          // 4b. 不存在则创建新业主
-          const [result] = await connection.execute(
-            'INSERT INTO owner_info (phone_number, wx_openid, nickname, avatar_url) VALUES (?, ?, ?, ?)',
-            [phoneNumber, userInfo.openid, userInfo.nickName, userInfo.avatarUrl]
-          );
-          owner = {
-            id: result.insertId,
-            phone_number: phoneNumber,
-            nickname: userInfo.nickName
-          };
-          console.log('创建新业主:', owner.id);
-        }
-
-        // 5. 生成token
-        const token = generateToken(owner);
-        
-        res.json({
-          code: 200,
-          message: '绑定成功',
-          data: {
-            token,
-            userInfo: owner
-          }
-        });
-      } finally {
-        connection.release();
-      }
-    } else {
-      console.error('获取手机号失败:', phoneRes.data);
-      throw new Error('获取手机号失败');
-    }
-  } catch (error) {
-    console.error('绑定手机号错误:', error);
-    res.json({
-      code: 500,
-      message: error.message || '服务器错误'
-    });
+    console.error('验证token错误:', error);
+    res.json({ code: 401, message: '登录已过期' });
   }
 });
 
@@ -294,50 +368,57 @@ router.post('/verify-code', async (req, res) => {
   }
 });
 
-// 添加 token 校验接口
-router.get('/check', async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
+module.exports = router; 
+
+// 账号密码登录
+router.post('/account', async (req, res) => {
+  const { account, password } = req.body;
   
-  if (!token) {
-    return res.json({
-      code: 401,
-      message: '未登录'
-    });
+  if (!account || !password) {
+    return res.json({ code: 400, message: '账号和密码不能为空' });
   }
-
+  
   try {
-    // 验证 token
-    const decoded = jwt.verify(token, config.jwt.secret);
-    
-    // 查询用户信息
     const connection = await pool.getConnection();
+    
     try {
+      // 查询业主信息
       const [owners] = await connection.execute(
-        'SELECT * FROM owner_info WHERE id = ?',
-        [decoded.id]
+        `SELECT oi.*, op.*, hi.house_full_name, ci.community_name 
+         FROM owner_info oi
+         LEFT JOIN owner_permission op ON oi.id = op.owner_id
+         LEFT JOIN house_info hi ON oi.house_id = hi.id
+         LEFT JOIN community_info ci ON oi.community_id = ci.id
+         WHERE oi.account = ?`,
+        [account]
       );
-
+      
       if (owners.length === 0) {
-        return res.json({
-          code: 401,
-          message: '用户不存在'
-        });
+        return res.json({ code: 404, message: '账号不存在' });
       }
-
+      
+      const owner = owners[0];
+      
+      // 验证密码
+      const isPasswordValid = await bcrypt.compare(password, owner.password);
+      
+      if (!isPasswordValid) {
+        return res.json({ code: 401, message: '密码错误' });
+      }
+      
+      // 生成token
+      const token = generateToken(owner);
+      
       res.json({
         code: 200,
-        message: 'token有效'
+        message: '登录成功',
+        data: formatUserData(owner, token)
       });
     } finally {
       connection.release();
     }
   } catch (error) {
-    console.error('token验证失败:', error);
-    res.json({
-      code: 401,
-      message: 'token无效'
-    });
+    console.error('账号密码登录错误:', error);
+    res.json({ code: 500, message: '服务器错误' });
   }
 });
-
-module.exports = router; 

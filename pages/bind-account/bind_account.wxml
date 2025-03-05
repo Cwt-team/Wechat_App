@@ -1,0 +1,20 @@
+<view class="container">
+  <view class="bind-header">
+    <text class="title">绑定账号</text>
+    <text class="subtitle">请绑定已有账号或创建新账号</text>
+  </view>
+  
+  <view class="bind-form">
+    <view class="input-group">
+      <input class="input" placeholder="请输入账号" bindinput="inputAccount" value="{{account}}"/>
+    </view>
+    <view class="input-group">
+      <input class="input" placeholder="请输入密码" password="true" bindinput="inputPassword" value="{{password}}"/>
+    </view>
+    
+    <view class="btn-group">
+      <button class="bind-btn" bindtap="bindAccount">绑定已有账号</button>
+      <button class="create-btn" bindtap="createAccount">创建新账号</button>
+    </view>
+  </view>
+</view>

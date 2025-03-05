@@ -1,31 +1,39 @@
 <view class="container">
-  <view class="logo-area">
-    <image class="logo" src="/images/logo.jpg" mode="aspectFit"></image>
-    <text class="title">智慧社区</text>
+  <view class="login-header">
+    <image class="logo" src="/images/logo.png" mode="aspectFit"></image>
+    <text class="title">物业管理系统</text>
   </view>
-
-  <view class="login-area">
-    <!-- 微信登录按钮 -->
-    <button class="login-btn wx-btn" bindtap="onWxLogin">
-      <image class="wx-icon" src="/static/images/wechat-icon.png" mode="aspectFit"></image>
+  
+  <view class="login-tabs">
+    <view class="tab {{loginType === 'account' ? 'active' : ''}}" bindtap="switchTab" data-type="account">账号密码登录</view>
+    <view class="tab {{loginType === 'wechat' ? 'active' : ''}}" bindtap="switchTab" data-type="wechat">微信快捷登录</view>
+  </view>
+  
+  <!-- 账号密码登录 -->
+  <view class="login-form" wx:if="{{loginType === 'account'}}">
+    <view class="input-group">
+      <input class="input" placeholder="请输入账号" bindinput="inputAccount" value="{{account}}"/>
+    </view>
+    <view class="input-group">
+      <input class="input" placeholder="请输入密码" password="true" bindinput="inputPassword" value="{{password}}"/>
+    </view>
+    <button class="login-btn" bindtap="accountLogin">登录</button>
+  </view>
+  
+  <!-- 微信快捷登录 -->
+  <view class="login-form" wx:if="{{loginType === 'wechat'}}">
+    <button class="wechat-btn" bindtap="onWxLogin">
+      <image class="wechat-icon" src="/images/wechat.png"></image>
       微信一键登录
     </button>
-    
-    <!-- 暂不登录按钮 -->
-    <button class="login-btn skip-btn" bindtap="skipLogin">
-      暂不登录
-    </button>
-  </view>
-
-  <view class="footer">
-    <view class="agreement-row">
-      <checkbox-group bindchange="onCheckboxChange">
-        <checkbox value="agree" checked="{{isAgree}}" />
-      </checkbox-group>
-      <text class="agreement">登录即表示同意</text>
-      <navigator class="link">《用户协议》</navigator>
-      <text class="agreement">和</text>
-      <navigator class="link">《隐私政策》</navigator>
+    <view class="agreement">
+      <checkbox checked="{{isAgree}}" bindtap="toggleAgreement"></checkbox>
+      <text class="agreement-text">我已阅读并同意《用户协议》和《隐私政策》</text>
     </view>
+  </view>
+  
+  <!-- 暂不登录按钮 -->
+  <view class="skip-login">
+    <button class="skip-btn" bindtap="skipLogin">暂不登录</button>
   </view>
 </view>
