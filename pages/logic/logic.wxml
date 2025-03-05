@@ -1,6 +1,6 @@
 <view class="container">
   <view class="login-header">
-    <image class="logo" src="/images/logo.png" mode="aspectFit"></image>
+    <image class="logo" src="/images/logo.jpg" mode="aspectFit"></image>
     <text class="title">物业管理系统</text>
   </view>
   

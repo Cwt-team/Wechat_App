@@ -30,7 +30,8 @@
     "pages/recordskip/calling-skip/calling-skip",
     "pages/logs/logs",
     "pages/user_setting/user_setting",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/bind-account/bind_account"
   ],
   "window": {
     "backgroundTextStyle": "light",

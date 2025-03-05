@@ -193,13 +193,10 @@ router.post('/bind-account', async (req, res) => {
           return res.json({ code: 400, message: '账号已存在' });
         }
         
-        // 加密密码
-        const hashedPassword = await bcrypt.hash(password, 10);
-        
-        // 创建新用户
+        // 创建新用户，直接使用明文密码
         const [result] = await connection.execute(
           'INSERT INTO owner_info (account, password, wx_openid, nickname) VALUES (?, ?, ?, ?)',
-          [account, hashedPassword, openid, '新用户']
+          [account, password, openid, '新用户']
         );
         
         const ownerId = result.insertId;
@@ -241,7 +238,7 @@ router.post('/bind-account', async (req, res) => {
         const owner = owners[0];
         
         // 验证密码
-        const isPasswordValid = await bcrypt.compare(password, owner.password);
+        const isPasswordValid = password === owner.password;
         
         if (!isPasswordValid) {
           return res.json({ code: 401, message: '密码错误' });
@@ -400,7 +397,7 @@ router.post('/account', async (req, res) => {
       const owner = owners[0];
       
       // 验证密码
-      const isPasswordValid = await bcrypt.compare(password, owner.password);
+      const isPasswordValid = password === owner.password;
       
       if (!isPasswordValid) {
         return res.json({ code: 401, message: '密码错误' });

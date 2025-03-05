@@ -13,7 +13,7 @@ const config = {
     port: 3326,
     user: 'root',
     password: '123456',
-    database: 'wuye',
+    database: 'wuye1',
     charset: 'utf8mb4',
     waitForConnections: true,
     connectionLimit: 10,

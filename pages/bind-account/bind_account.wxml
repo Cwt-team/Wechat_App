@@ -14,7 +14,6 @@
     
     <view class="btn-group">
       <button class="bind-btn" bindtap="bindAccount">绑定已有账号</button>
-      <button class="create-btn" bindtap="createAccount">创建新账号</button>
     </view>
   </view>
 </view>

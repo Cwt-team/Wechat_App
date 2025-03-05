@@ -116,6 +116,8 @@ Page({
             });
           } else if (res.data.code === 201) {
             // 需要绑定账号
+            console.log('准备跳转到绑定页面，openid:', res.data.data.openid);
+
             wx.showModal({
               title: '提示',
               content: '请绑定账号以完成登录',
@@ -123,9 +125,15 @@ Page({
               cancelText: '取消',
               success: (modalRes) => {
                 if (modalRes.confirm) {
-                  // 保存openid，跳转到绑定页面
+                  // 修改跳转路径
                   wx.navigateTo({
-                    url: '/pages/bind-account/bind-account?openid=' + res.data.data.openid
+                    url: '/pages/bind-account/bind_account?openid=' + res.data.data.openid,
+                    success: function() {
+                      console.log('跳转成功');
+                    },
+                    fail: function(error) {
+                      console.error('跳转失败:', error);
+                    }
                   });
                 }
               }
