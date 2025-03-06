@@ -6,7 +6,7 @@ Page({
     defaultGridItems: [
       { icon: '/images/button/fangke-green.png', url: '/pages/home_skip_all/huhutong-skip/huhutong-skip', text: '户户通' },
       { icon: '/images/button/monitor-green.png', url: '', text: '监视' },
-      { icon: '/images/button/invite-green.png', url: '', text: '访客邀请' },
+      { icon: '/images/button/invite-green.png', url: '/pages/home_skip_all/fk-invite/fk-invite', text: '访客邀请' },
       { icon: '/images/button/phone-green.png', url: '/pages/recordskip/calling-skip/calling-skip', text: '呼叫记录' },
       { icon: '/images/button/elevator-green.png', url: '', text: '呼叫电梯' },
       { icon: '/images/button/scan-green.png', url: '/pages/home_skip_all/calllog-skip/calllog-skip', text: '扫码开门' },
@@ -73,6 +73,20 @@ Page({
       });
       return;
     }
+
+    if (text === '访客邀请') {
+        wx.navigateTo({
+          url: '/pages/home_skip_all/fk-invite/fk-invite',
+          fail: function(err) {
+            console.error('访客邀请跳转失败:', err);
+            wx.showToast({
+              title: '访客邀请页面跳转失败',
+              icon: 'none'
+            });
+          }
+        });
+        return;
+      }
     
     if (text === '报事报修') {
       wx.navigateTo({
@@ -104,7 +118,7 @@ Page({
     }
     
     // 2. 待实现的功能
-    if (['访客邀请', '社区通知', '社区评价', '投诉建议'].includes(text)) {
+    if ([ '社区通知', '社区评价', ].includes(text)) {
       wx.showToast({
         title: `${text}功能正在开发中`,
         icon: 'none',

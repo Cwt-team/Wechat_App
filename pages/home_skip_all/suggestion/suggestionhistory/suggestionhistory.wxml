@@ -1,0 +1,13 @@
+<view class="container">
+  <block wx:for="{{suggestionHistory}}" wx:key="*this">
+    <view class="card">
+      <text>日期: {{item.date}}</text>
+      <text>类型: {{item.type}}</text>
+      <text>地址: {{item.address}}</text>
+      <text>内容: {{item.content}}</text>
+      <block wx:for="{{item.images}}" wx:key="*this">
+        <image src="{{item}}" class="preview-image" mode="aspectFill" />
+      </block>
+    </view>
+  </block>
+</view>

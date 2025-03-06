@@ -1,0 +1,10 @@
+<view class="container">
+  <block wx:for="{{visitorHistory}}" wx:key="*this">
+    <view class="card">
+      <text>日期: {{item.date}}</text>
+      <text>时间: {{item.time}}</text>
+      <text>姓名: {{item.name}}</text>
+      <text>访客码: {{item.code}}</text>
+    </view>
+  </block>
+</view>

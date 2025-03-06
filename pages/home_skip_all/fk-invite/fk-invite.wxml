@@ -1,0 +1,32 @@
+<!-- pages/home_skip_all/fk-invite/fk-invite.wxml -->
+<view class="container">
+  <!-- 来访时间选择 -->
+  <view class="picker-container">
+    <picker mode="date" bindchange="onVisitDateChange">
+      <view class="picker">
+        选择来访日期: {{visitDate}}
+      </view>
+    </picker>
+  </view>
+  <view class="picker-container">
+    <picker mode="time" bindchange="onVisitTimeChange">
+      <view class="picker">
+        选择来访时间: {{visitTime}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- 来访客人信息输入 -->
+  <input type="text" placeholder="请备注来访客人姓氏" bindinput="onVisitorNameInput" class="input-field" />
+
+  <!-- 生成访客码 -->
+  <button bindtap="generateVisitorCode" class="generate-button">生成访客码</button>
+
+  <!-- 显示访客码 -->
+  <view class="visitor-code">
+    访客码: {{visitorCode}}
+  </view>
+  
+<!-- 跳转到访客历史记录页面 -->
+   <button bindtap="navigateToHistory" class="history-button">查看访客历史记录</button>
+</view>

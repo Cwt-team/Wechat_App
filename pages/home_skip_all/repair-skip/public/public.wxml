@@ -1,2 +1,129 @@
-<!--pages/home_skip_all/repair-skip/public/public.wxml-->
-<text>pages/home_skip_all/repair-skip/public/public.wxml</text>
+<view class="container">
+  <!-- 楼栋输入 -->
+  <view class="input-container">
+    <image src="/images/icons/building.png" class="input-icon" />
+    <input 
+      type="text" 
+      placeholder="请输入楼栋" 
+      placeholder-class="placeholder"
+      bindinput="onBuildingInput" 
+      class="input-field" 
+    />
+  </view>
+
+  <!-- 房间号输入 -->
+  <view class="input-container">
+    <image src="/images/icons/room.png" class="input-icon" />
+    <input 
+      type="text" 
+      placeholder="请输入房间号" 
+      placeholder-class="placeholder"
+      bindinput="onRoomInput" 
+      class="input-field" 
+    />
+  </view>
+
+  <!-- 维修类别选择 -->
+  <view class="input-container">
+    <image src="/images/icons/category.png" class="input-icon" />
+    <picker 
+      mode="selector" 
+      range="{{metaData.categories}}" 
+      bindchange="onCategoryChange"
+    >
+      <view class="picker">
+        当前选择: {{formData.selectedCategory}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- 问题描述输入 -->
+  <view class="input-container">
+    <image src="/images/icons/description.png" class="input-icon" />
+    <textarea 
+      placeholder="请描述问题" 
+      placeholder-class="placeholder"
+      bindinput="onDescriptionInput" 
+      class="description-field"
+    ></textarea>
+  </view>
+
+  <!-- 图片上传 -->
+  <button 
+    bindtap="chooseImage" 
+    class="upload-button"
+  >
+    <image src="/images/icons/upload.png" class="button-icon" />
+    上传照片（{{images.length}}/{{metaData.maxImages}}）
+  </button>
+
+  <!-- 图片预览 -->
+  <view class="image-preview">
+    <block wx:for="{{images}}" wx:key="*this">
+      <image 
+        src="{{item}}" 
+        class="preview-image" 
+        mode="aspectFill"
+      />
+    </block>
+  </view>
+
+  <!-- 联系人输入 -->
+  <view class="input-container">
+    <image src="/images/icons/contact.png" class="input-icon" />
+    <input 
+      type="text" 
+      placeholder="请输入联系人" 
+      placeholder-class="placeholder"
+      bindinput="onContactInput" 
+      class="input-field" 
+    />
+  </view>
+
+  <!-- 手机号输入 -->
+  <view class="input-container">
+    <image src="/images/icons/phone.png" class="input-icon" />
+    <input 
+      type="number" 
+      placeholder="请输入手机号码" 
+      placeholder-class="placeholder"
+      bindinput="onPhoneInput" 
+      class="input-field" 
+    />
+  </view>
+
+  <!-- 预约日期选择 -->
+  <view class="input-container">
+    <image src="/images/icons/date.png" class="input-icon" />
+    <picker 
+      mode="date" 
+      bindchange="onDateChange"
+    >
+      <view class="picker">
+        预约日期: {{formData.selectedDate}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- 预约时间选择 -->
+  <view class="input-container">
+    <image src="/images/icons/time.png" class="input-icon" />
+    <picker 
+      mode="time" 
+      bindchange="onTimeChange"
+    >
+      <view class="picker">
+        预约时间: {{formData.selectedTime}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- 提交按钮 -->
+  <button 
+    bindtap="submitRepairRequest" 
+    class="submit-button"
+  >
+    <image src="/images/icons/submit.png" class="button-icon" />
+    提交报修
+  </button>
+</view>
