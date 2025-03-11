@@ -62,5 +62,27 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  // 登录成功后的处理
+  handleLoginSuccess(res) {
+    console.log('登录成功，返回数据:', res.data);
+    
+    // 存储token和用户信息
+    wx.setStorageSync('token', res.data.data.token);
+    wx.setStorageSync('userInfo', res.data.data.userInfo);
+    
+    console.log('存储的token:', res.data.data.token);
+    console.log('存储的用户信息:', res.data.data.userInfo);
+    
+    // 返回上一页或首页
+    wx.navigateBack({
+      delta: 1,
+      fail: function() {
+        wx.switchTab({
+          url: '/pages/home/home'
+        });
+      }
+    });
   }
 })

@@ -3,18 +3,119 @@
     background-color: #f9f9f9;
   }
   
+  .header {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .empty-tip {
+    text-align: center;
+    padding: 30px 0;
+    color: #999;
+    font-size: 16px;
+  }
+  
   .card {
     margin-bottom: 15px;
-    padding: 15px;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
   }
   
-  .card text {
-    display: block;
-    margin-bottom: 5px;
+  .status-0 {
+    border-left: 4px solid #1890ff;
+  }
+  
+  .status-1 {
+    border-left: 4px solid #52c41a;
+  }
+  
+  .status-2 {
+    border-left: 4px solid #d9d9d9;
+    opacity: 0.8;
+  }
+  
+  .card-header {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .visitor-name {
     font-size: 16px;
+    font-weight: bold;
     color: #333;
+  }
+  
+  .status-tag {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    color: #666;
+  }
+  
+  .status-0 .status-tag {
+    background-color: #e6f7ff;
+    color: #1890ff;
+  }
+  
+  .status-1 .status-tag {
+    background-color: #f6ffed;
+    color: #52c41a;
+  }
+  
+  .status-2 .status-tag {
+    background-color: #f5f5f5;
+    color: #999;
+  }
+  
+  .card-content {
+    padding: 15px;
+  }
+  
+  .info-row {
+    display: flex;
+    margin-bottom: 8px;
+  }
+  
+  .label {
+    width: 80px;
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .value {
+    flex: 1;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .code {
+    font-weight: bold;
+    color: #1890ff;
+  }
+  
+  .card-footer {
+    padding: 10px 15px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .cancel-btn {
+    font-size: 14px;
+    padding: 4px 12px;
+    background-color: #fff;
+    color: #ff4d4f;
+    border: 1px solid #ff4d4f;
+    border-radius: 4px;
+    line-height: 1.5;
   }

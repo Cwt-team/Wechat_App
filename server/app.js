@@ -57,6 +57,10 @@ app.use('/api/community', require('./routes/community'));
 app.use('/api/repair', require('./routes/repair'));
 app.use('/api/notice', require('./routes/notice'));
 
+// 添加访客邀请路由
+const visitorInvitationRouter = require('./routes/visitorInvitation');
+app.use('/api/visitor-invitation', visitorInvitationRouter);
+
 // 添加健康检查接口
 app.get('/api/health', (req, res) => {
   const timestamp = new Date().toISOString();

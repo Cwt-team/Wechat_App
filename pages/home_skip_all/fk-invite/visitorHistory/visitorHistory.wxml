@@ -1,10 +1,52 @@
 <view class="container">
-  <block wx:for="{{visitorHistory}}" wx:key="*this">
-    <view class="card">
-      <text>日期: {{item.date}}</text>
-      <text>时间: {{item.time}}</text>
-      <text>姓名: {{item.name}}</text>
-      <text>访客码: {{item.code}}</text>
+  <view class="header">访客邀请历史记录</view>
+  
+  <view class="empty-tip" wx:if="{{visitorHistory.length === 0}}">
+    暂无访客邀请记录
+  </view>
+  
+  <block wx:for="{{visitorHistory}}" wx:key="id">
+    <view class="card status-{{item.status}}">
+      <view class="card-header">
+        <text class="visitor-name">{{item.visitor_name}}</text>
+        <text class="status-tag">{{statusMap[item.status]}}</text>
+      </view>
+      
+      <view class="card-content">
+        <view class="info-row">
+          <text class="label">访客码:</text>
+          <text class="value code">{{item.visitor_code}}</text>
+        </view>
+        
+        <view class="info-row" wx:if="{{item.visitor_phone}}">
+          <text class="label">电话:</text>
+          <text class="value">{{item.visitor_phone}}</text>
+        </view>
+        
+        <view class="info-row">
+          <text class="label">来访时间:</text>
+          <text class="value">{{formatDateTime(item.visit_date, item.visit_time)}}</text>
+        </view>
+        
+        <view class="info-row">
+          <text class="label">小区房屋:</text>
+          <text class="value">{{item.community_name}} - {{item.house_full_name}}</text>
+        </view>
+        
+        <view class="info-row" wx:if="{{item.remark}}">
+          <text class="label">备注:</text>
+          <text class="value">{{item.remark}}</text>
+        </view>
+        
+        <view class="info-row">
+          <text class="label">创建时间:</text>
+          <text class="value">{{item.created_at}}</text>
+        </view>
+      </view>
+      
+      <view class="card-footer" wx:if="{{item.status === 0}}">
+        <button class="cancel-btn" bindtap="cancelInvitation" data-id="{{item.id}}">取消邀请</button>
+      </view>
     </view>
   </block>
 </view>

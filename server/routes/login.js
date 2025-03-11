@@ -98,6 +98,7 @@ router.post('/wechat', async (req, res) => {
       if (owners.length > 0) {
         // 已存在用户,直接返回
         const owner = owners[0];
+        console.log('找到现有用户:', owner);
         
         // 查询完整信息
         const [fullOwners] = await connection.execute(
@@ -111,7 +112,10 @@ router.post('/wechat', async (req, res) => {
         );
         
         const fullOwner = fullOwners[0];
+        console.log('用户完整信息:', fullOwner);
+        
         const token = generateToken(fullOwner);
+        console.log('生成的token:', token);
         
         return res.json({
           code: 200,
@@ -139,8 +143,14 @@ router.post('/wechat', async (req, res) => {
 
 // 辅助函数
 function generateToken(user) {
+  // 打印用户信息，检查id是否存在
+  console.log('生成token的用户信息:', user);
+  
   return jwt.sign(
-    { id: user.id, openid: user.wx_openid },
+    { 
+      id: user.id, // 确保这里正确设置了id
+      openid: user.wx_openid 
+    },
     config.jwt.secret || 'your-secret-key',
     { expiresIn: '7d' }
   );
