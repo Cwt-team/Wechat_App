@@ -23,6 +23,7 @@
     "pages/home_skip_all/fk-invite/visitorHistory/visitorHistory",
     "pages/home_skip_all/suggestion/suggestion",
     "pages/home_skip_all/suggestion/suggestionhistory/suggestionhistory",
+    "pages/home_skip_all/community_rating/community_rating",
     "pages/functionskip/fun-op-skip/fun-op-skip",
     "pages/functionskip/fun-fanweisui-skip/fun-fanweisui-skip",
     "pages/functionskip/fun-fire-skip/fun-fire-skip",

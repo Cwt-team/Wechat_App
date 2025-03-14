@@ -9,23 +9,18 @@
     </picker>
   </view>
 
-  <!-- 详细地址输入 -->
-  <view class="input-container">
-    <input type="text" placeholder="请输入详细地址" bindinput="onAddressInput" class="input-field" />
-  </view>
-
   <!-- 投诉或建议内容 -->
   <view class="input-container">
     <textarea placeholder="请输入投诉或建议内容" bindinput="onContentInput" class="textarea-field"></textarea>
   </view>
 
-  <!-- 上传照片 -->
+  <!-- 上传照片（可选） -->
   <button bindtap="chooseImage" class="upload-button">
-    上传照片（{{images.length}}/{{maxImages}}）
+    上传照片（可选）（{{images.length}}/{{maxImages}}）
   </button>
 
   <!-- 图片预览 -->
-  <view class="image-preview">
+  <view class="image-preview" wx:if="{{images.length > 0}}">
     <block wx:for="{{images}}" wx:key="*this">
       <image src="{{item}}" class="preview-image" mode="aspectFill" />
     </block>
@@ -34,6 +29,6 @@
   <!-- 提交按钮 -->
   <button bindtap="submitSuggestion" class="submit-button">提交投诉建议</button>
 
-  <!-- 跳转到投诉建议历史记录页面 -->
+  <!-- 查看历史记录 -->
   <button bindtap="navigateToHistory" class="history-button">查看投诉建议历史记录</button>
 </view>

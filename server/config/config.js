@@ -10,10 +10,10 @@ const config = {
   // MySQL配置
   mysql: { 
     host: 'localhost',
-    port: 3326,
+    port: 3316,
     user: 'root',
-    password: '123456',            
-    database: 'wuye',
+    password: '9874123cwj',            
+    database: 'wuye1',
     charset: 'utf8mb4',
     waitForConnections: true,
     connectionLimit: 10,

@@ -1,0 +1,49 @@
+<!--pages/home_skip_all/community_rating/community_rating.wxml-->
+<view class="container">
+  <!-- 星级评分 -->
+  <view class="rating-section">
+    <text class="section-title">社区评分</text>
+    <view class="stars-container">
+      <view class="star-item" 
+            wx:for="{{stars}}" 
+            wx:key="*this" 
+            bindtap="selectStar" 
+            data-star="{{item}}">
+        <image class="star-image" 
+               src="{{item < currentRating ? '/images/star-filled.png' : '/images/star-empty.png'}}"
+               mode="aspectFit"/>
+      </view>
+    </view>
+    <text class="rating-text">{{currentRating ? currentRating + '星' : '请选择评分'}}</text>
+  </view>
+
+  <!-- 评价内容 -->
+  <view class="content-section">
+    <text class="section-title">评价内容</text>
+    <textarea class="content-input" 
+              placeholder="请输入您的评价内容（必填）" 
+              value="{{content}}"
+              bindinput="onContentInput">
+    </textarea>
+  </view>
+
+  <!-- 图片上传（可选） -->
+  <view class="image-section">
+    <text class="section-title">上传图片（可选）</text>
+    <view class="image-list">
+      <view class="image-item" wx:for="{{images}}" wx:key="*this">
+        <image src="{{item}}" mode="aspectFill" class="preview-image"/>
+        <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+      </view>
+      <view class="upload-btn" bindtap="chooseImage" wx:if="{{images.length < maxImages}}">
+        <text class="plus">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <button class="submit-btn" bindtap="submitRating">提交评价</button>
+
+  <!-- 查看历史评价 -->
+  <button class="history-btn" bindtap="viewHistory">查看历史评价</button>
+</view>

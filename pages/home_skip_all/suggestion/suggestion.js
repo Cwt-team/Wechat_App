@@ -2,7 +2,6 @@ Page({
   data: {
     types: ['投诉', '建议'],
     selectedType: '请选择类型',
-    address: '',
     content: '',
     images: [],
     maxImages: 3,
@@ -12,12 +11,6 @@ Page({
   onTypeChange: function (e) {
     this.setData({
       selectedType: this.data.types[e.detail.value]
-    });
-  },
-
-  onAddressInput: function (e) {
-    this.setData({
-      address: e.detail.value
     });
   },
 
@@ -43,10 +36,10 @@ Page({
   },
 
   submitSuggestion: function () {
-    const { selectedType, address, content, images } = this.data;
-    if (selectedType === '请选择类型' || !address || !content) {
+    const { selectedType, content, images } = this.data;
+    if (selectedType === '请选择类型' || !content) {
       wx.showToast({
-        title: '请填写完整信息',
+        title: '请填写类型和内容',
         icon: 'none'
       });
       return;
@@ -55,9 +48,8 @@ Page({
     // 获取当前日期
     const currentDate = new Date().toLocaleDateString();
     const suggestionData = {
-      date: currentDate, // 记录生成投诉建议的日期
+      date: currentDate,
       type: selectedType,
-      address,
       content,
       images
     };
