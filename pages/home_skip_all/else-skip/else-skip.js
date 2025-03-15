@@ -100,6 +100,12 @@ Page({
         return;
       }
       
+      // 处理扫码开门
+      if (item.text === '扫码开门') {
+        this.handleScanQRCode();
+        return;
+      }
+      
       // 检查是否为开发中的功能
       if (item.text === '呼叫电梯' || item.text === '一键反尾随') {
         wx.showToast({
@@ -228,5 +234,47 @@ Page({
         icon: 'success',
         duration: 1500
       });
+    },
+
+    // 添加扫码开门处理函数
+    async handleScanQRCode() {
+      try {
+        const res = await wx.scanCode({
+          onlyFromCamera: true,
+          scanType: ['qrCode']
+        });
+        
+        wx.showLoading({
+          title: '验证中...'
+        });
+
+        const verifyResult = await deviceUtil.verifyQrCode({
+          code: res.result
+        });
+
+        if(verifyResult.success) {
+          await deviceUtil.unlockDoor();
+          wx.showToast({
+            title: '开门成功',
+            icon: 'success'
+          });
+        } else {
+          wx.showToast({
+            title: '无效的二维码',
+            icon: 'error' 
+          });
+        }
+
+      } catch (error) {
+        console.error('扫码失败:', error);
+        wx.showToast({
+          title: error.message || '扫码失败',
+          icon: 'none'
+        });
+        // 扫码失败返回上一页
+        wx.navigateBack();
+      } finally {
+        wx.hideLoading();
+      }
     }
   });
