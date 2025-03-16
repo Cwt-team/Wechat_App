@@ -37,7 +37,8 @@
     "pages/logs/logs",
     "pages/user_setting/user_setting",
     "pages/login/login",
-    "pages/bind-account/bind_account"
+    "pages/bind-account/bind_account",
+    "pages/home_skip_all/notice-detail/notice-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

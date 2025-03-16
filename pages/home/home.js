@@ -117,8 +117,8 @@ Page({
       return;
     }
     
-    // 2. 待实现的功能
-    if ([ '社区通知', '社区评价', ].includes(text)) {
+    // 2. 待实现的功能  
+    if ([ '社区评价', ].includes(text)) {
       wx.showToast({
         title: `${text}功能正在开发中`,
         icon: 'none',

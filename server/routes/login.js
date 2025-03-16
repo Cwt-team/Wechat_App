@@ -102,7 +102,7 @@ router.post('/wechat', async (req, res) => {
         
         // 查询完整信息
         const [fullOwners] = await connection.execute(
-          `SELECT oi.*, op.*, hi.house_full_name, ci.community_name 
+          `SELECT oi.id, oi.*, op.*, hi.house_full_name, ci.community_name 
            FROM owner_info oi
            LEFT JOIN owner_permission op ON oi.id = op.owner_id
            LEFT JOIN house_info hi ON oi.house_id = hi.id
@@ -262,7 +262,7 @@ router.post('/bind-account', async (req, res) => {
         
         // 查询完整信息
         const [fullOwners] = await connection.execute(
-          `SELECT oi.*, op.*, hi.house_full_name, ci.community_name 
+          `SELECT oi.id, oi.*, op.*, hi.house_full_name, ci.community_name 
            FROM owner_info oi
            LEFT JOIN owner_permission op ON oi.id = op.owner_id
            LEFT JOIN house_info hi ON oi.house_id = hi.id

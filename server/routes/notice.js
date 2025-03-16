@@ -3,6 +3,7 @@ const router = express.Router();
 const mysql = require('mysql2/promise');
 const config = require('../config/config');
 const jwt = require('jsonwebtoken');
+const dbUtils = require('../utils/dbUtils');
 
 // 数据库连接池
 const pool = mysql.createPool(config.mysql);
@@ -16,8 +17,31 @@ const verifyToken = async (req, res, next) => {
   }
   
   try {
-    const decoded = jwt.verify(token, config.jwt.secret || 'your-secret-key');
+    const decoded = jwt.verify(token, config.jwt.secret);
     req.userId = decoded.id;
+    req.openid = decoded.openid;
+    
+    // 如果没有userId但有openid，尝试通过openid查询userId
+    if (!req.userId && req.openid) {
+      const connection = await pool.getConnection();
+      try {
+        const [owners] = await connection.execute(
+          'SELECT id FROM owner_info WHERE wx_openid = ?',
+          [req.openid]
+        );
+        
+        if (owners.length > 0) {
+          req.userId = owners[0].id;
+        }
+      } finally {
+        connection.release();
+      }
+    }
+    
+    if (!req.userId) {
+      return res.json({ code: 401, message: '无效的用户信息' });
+    }
+    
     next();
   } catch (error) {
     return res.json({ code: 401, message: 'token无效' });
@@ -26,84 +50,90 @@ const verifyToken = async (req, res, next) => {
 
 // 获取通知列表
 router.get('/list', verifyToken, async (req, res) => {
-  console.log('收到获取通知列表请求')
-  console.log('请求参数:', req.query)
-  console.log('用户Token:', req.headers.authorization)
+  console.log('收到获取通知列表请求');
+  console.log('请求参数:', req.query);
+  console.log('用户Token:', req.headers.authorization);
   
   try {
-    const userId = req.userId
-    console.log('当前用户ID:', userId)
+    const userId = req.userId;
+    const openid = req.openid;
+    console.log('当前用户ID:', userId, '微信openid:', openid);
     
-    const page = parseInt(req.query.page) || 1
-    const pageSize = parseInt(req.query.pageSize) || 10
-    const offset = (page - 1) * pageSize
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 10;
+    const offset = (page - 1) * pageSize;
     
-    console.log('分页参数:', { page, pageSize, offset })
+    console.log('分页参数:', { page, pageSize, offset });
+    console.log('参数类型:', { 
+      page: typeof page, 
+      pageSize: typeof pageSize, 
+      offset: typeof offset 
+    });
     
-    const connection = await pool.getConnection()
-    console.log('数据库连接成功')
+    // 先通过openid获取用户信息
+    const [owners] = await dbUtils.execute(
+      'SELECT id, community_id FROM owner_info WHERE wx_openid = ?',
+      [openid]
+    );
     
-    try {
-      // 获取用户所在社区
-      const [owners] = await connection.execute(
-        'SELECT community_id FROM owner_info WHERE id = ?',
-        [userId]
-      )
-      
-      console.log('查询用户社区结果:', owners)
-      
-      if (owners.length === 0) {
-        console.log('未找到用户信息')
-        return res.json({ code: 404, message: '用户不存在' })
-      }
-      
-      const communityId = owners[0].community_id || 0
-      console.log('用户所在社区ID:', communityId)
-      
-      // 查询通知
-      const [notices] = await connection.execute(
-        `SELECT n.*, a.name as admin_name, 
-                DATE_FORMAT(n.create_time, '%Y-%m-%d %H:%i:%s') as formatted_create_time
-         FROM notice n
-         LEFT JOIN admin_info a ON n.admin_id = a.id
-         WHERE n.community_id = ? OR n.community_id = 0
-         ORDER BY n.create_time DESC
-         LIMIT ?, ?`,
-        [communityId, offset, pageSize]
-      )
-      
-      console.log(`查询到${notices.length}条通知`)
-      
-      // 查询总数
-      const [countResult] = await connection.execute(
-        'SELECT COUNT(*) as total FROM notice WHERE community_id = ? OR community_id = 0',
-        [communityId]
-      )
-      
-      const total = countResult[0].total
-      console.log('通知总数:', total)
-      
-      res.json({
-        code: 200,
-        message: '获取成功',
-        data: {
-          list: notices,
-          pagination: {
-            current: page,
-            pageSize: pageSize,
-            total: total
-          }
-        }
-      })
-    } finally {
-      connection.release()
-      console.log('数据库连接已释放')
+    if (owners.length === 0) {
+      console.log('未找到用户信息');
+      return res.json({ code: 404, message: '用户不存在' });
     }
+    
+    const communityId = owners[0].community_id;
+    console.log('用户社区ID:', communityId);
+    
+    // 查询通知总数
+    const [countResult] = await dbUtils.execute(
+      `SELECT COUNT(*) as total
+       FROM community_notification n
+       WHERE (n.community_id = ? OR n.community_id = 0)
+       AND (
+         CURRENT_DATE() BETWEEN COALESCE(n.display_start_time, CURRENT_DATE()) 
+         AND COALESCE(n.display_end_time, CURRENT_DATE())
+       )`,
+      [communityId]
+    );
+    
+    const total = countResult[0].total;
+    console.log('通知总数:', total);
+    
+    // 查询通知列表 - 使用字符串参数
+    console.log('SQL查询参数:', [communityId, offset.toString(), pageSize.toString()]);
+    
+    const [notices] = await dbUtils.execute(
+      `SELECT n.*, DATE_FORMAT(n.created_at, '%Y-%m-%d %H:%i:%s') as formatted_create_time
+       FROM community_notification n
+       WHERE (n.community_id = ? OR n.community_id = 0)
+       AND (
+         CURRENT_DATE() BETWEEN COALESCE(n.display_start_time, CURRENT_DATE()) 
+         AND COALESCE(n.display_end_time, CURRENT_DATE())
+       )
+       ORDER BY n.created_at DESC
+       LIMIT ?, ?`,
+      [communityId, offset.toString(), pageSize.toString()]
+    );
+    
+    console.log(`查询到${notices.length}条通知`);
+    
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: {
+        list: notices,
+        pagination: {
+          current: page,
+          pageSize: pageSize,
+          total: total
+        }
+      }
+    });
   } catch (error) {
-    console.error('获取通知列表错误:', error)
-    res.json({ code: 500, message: '服务器错误' })
+    console.error('获取通知列表错误:', error);
+    res.json({ code: 500, message: '服务器错误' });
   }
-})
+});
 
 // 获取通知详情
 router.get('/detail/:id', verifyToken, async (req, res) => {

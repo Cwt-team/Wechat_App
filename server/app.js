@@ -56,6 +56,7 @@ app.use('/api/owner', require('./routes/owner'));
 app.use('/api/community', require('./routes/community'));
 app.use('/api/repair', require('./routes/repair'));
 app.use('/api/notice', require('./routes/notice'));
+app.use('/api/notices', require('./routes/notice'));
 
 // 添加访客邀请路由
 const visitorInvitationRouter = require('./routes/visitorInvitation');

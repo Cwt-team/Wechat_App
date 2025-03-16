@@ -1,21 +1,40 @@
 <!-- 社区通知列表 -->
-<view 
-  class="notice-item" 
-  wx:for="{{ notices }}" 
-  wx:key="index"
-  bindtap="onNoticeClick" 
-  data-index="{{ index }}"
->
 <view class="notice-container">
-  <view class="notice-item" wx:for="{{ notices }}" wx:key="index">
-    <!-- 通知标题 -->
-    <text class="notice-title">{{ item.title }}</text>
-    <!-- 通知内容 -->
-    <text class="notice-content">{{ item.content }}</text>
-    <!-- 发布时间 -->
-    <text class="notice-time">{{ item.time }}</text>
+  <!-- 登录提示 -->
+  <view class="login-tip" wx:if="{{!isLoggedIn}}">
+    请先登录后查看社区通知
+    <button class="login-btn" bindtap="navigateToLogin">去登录</button>
   </view>
-</view>
-
-  <!-- 原有内容 -->
+  
+  <!-- 加载中提示 -->
+  <view class="loading-container" wx:elif="{{loading}}">
+    <van-loading size="24px" color="#1989fa">加载中...</van-loading>
+  </view>
+  
+  <!-- 空状态提示 -->
+  <view class="empty-container" wx:elif="{{notices.length === 0}}">
+    <text class="empty-text">暂无社区通知</text>
+  </view>
+  
+  <!-- 通知列表 -->
+  <block wx:else>
+    <view class="notice-item" wx:for="{{notices}}" wx:key="id">
+      <!-- 通知标题 -->
+      <text class="notice-title">{{ item.title }}</text>
+      <!-- 通知内容 -->
+      <text class="notice-content">{{ item.content }}</text>
+      <!-- 发布时间 -->
+      <text class="notice-time">{{ item.time }}</text>
+    </view>
+  </block>
+  
+  <!-- 加载更多提示 -->
+  <view class="loading-more" wx:if="{{ loading && notices.length > 0 }}">
+    <text>加载更多...</text>
+  </view>
+  
+  <!-- 没有更多数据提示 -->
+  <view class="no-more" wx:if="{{ !hasMore && notices.length > 0 }}">
+    <text>没有更多数据了</text>
+  </view>
 </view>
