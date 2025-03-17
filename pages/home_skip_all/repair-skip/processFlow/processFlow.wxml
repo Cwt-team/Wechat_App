@@ -1,2 +1,61 @@
 <!--pages/home_skip_all/repair-skip/processFlow/processFlow.wxml-->
-<text>pages/home_skip_all/repair-skip/processFlow/processFlow.wxml</text>
+<view class="repair-order">
+  <!-- 报修单信息 -->
+  <view class="order-card">
+    <view class="order-header">
+      <text class="order-number">报修单号：{{repairOrder.orderNumber}}</text>
+      <text class="order-date">提交日期：{{repairOrder.submitDate}}</text>
+    </view>
+
+    <view class="order-content">
+      <view class="info-item">
+        <text class="label">楼栋：</text>
+        <text class="value">{{repairOrder.building}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">房间号：</text>
+        <text class="value">{{repairOrder.roomNumber}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">报修类别：</text>
+        <text class="value">{{repairOrder.category}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">联系人：</text>
+        <text class="value">{{repairOrder.contactName}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">联系电话：</text>
+        <text class="value">{{repairOrder.phoneNumber}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">预约时间：</text>
+        <text class="value">{{repairOrder.appointmentDate}} {{repairOrder.appointmentTime}}</text>
+      </view>
+      <view class="info-item description">
+        <text class="label">问题描述：</text>
+        <text class="value">{{repairOrder.description}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 处理进度 -->
+  <view class="process-flow">
+    <view class="flow-title">处理进度</view>
+    <view class="steps">
+      <view class="step-item {{step.status}}" wx:for="{{processSteps}}" wx:key="title" wx:for-item="step">
+        <view class="step-circle"></view>
+        <view class="step-content">
+          <text class="step-title">{{step.title}}</text>
+          <text class="step-desc">{{step.description}}</text>
+        </view>
+        <view class="step-line" wx:if="{{index < processSteps.length-1}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-buttons">
+    <button class="history-btn" bindtap="viewHistory">查看历史报修</button> 
+  </view>
+</view>

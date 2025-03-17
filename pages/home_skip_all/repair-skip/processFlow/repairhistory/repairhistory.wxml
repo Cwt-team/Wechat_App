@@ -1,0 +1,42 @@
+<!--pages/home_skip_all/repair-skip/processFlow/repairhistory/repairhistory.wxml-->
+<view class="history-container">
+  <block wx:if="{{repairHistory.length > 0}}">
+    <view class="history-list">
+      <view class="repair-card" wx:for="{{repairHistory}}" wx:key="orderNumber" bindtap="viewDetail" data-index="{{index}}">
+        <text class="delete-icon" catchtap="showDeleteConfirm" data-index="{{index}}">×</text>
+        <view class="card-header">
+          <text class="order-number">报修单号：{{item.orderNumber}}</text>
+          <text class="order-status {{item.status}}">{{item.status === 'pending' ? '待处理' : 
+                                                     item.status === 'processing' ? '处理中' : 
+                                                     item.status === 'completed' ? '已完成' : 
+                                                     item.status === 'cancelled' ? '已取消' : '未知状态'}}</text>
+        </view>
+        
+        <view class="card-content">
+          <view class="info-row">
+            <text class="label">报修时间：</text>
+            <text class="value">{{item.submitDate}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">报修位置：</text>
+            <text class="value">{{item.building}} {{item.roomNumber}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">报修类别：</text>
+            <text class="value">{{item.category}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">预约时间：</text>
+            <text class="value">{{item.appointmentDate}} {{item.appointmentTime}}</text>
+          </view>
+        </view>
+        
+      </view>
+    </view>
+  </block>
+  
+  <view class="empty-state" wx:else>
+    <image class="empty-icon" src="/images/empty.png" mode="aspectFit"></image>
+    <text class="empty-text">暂无报修记录</text>
+  </view>
+</view>
