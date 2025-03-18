@@ -1,7 +1,22 @@
 /* pages/home_skip_all/community_rating/community_rating.wxss */
 .container {
   padding: 20px;
-  background-color: #f8f8f8;
+  background-color: #f8f8f8;8  min-height: 100vh;
+}
+
+.community-info {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.community-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
 }
 
 .rating-section,
@@ -34,8 +49,8 @@
 }
 
 .star-image {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
 }
 
 .rating-text {
@@ -43,6 +58,7 @@
   color: #666;
   font-size: 14px;
   display: block;
+  margin-top: 5px;
 }
 
 /* 评价内容样式 */
@@ -54,6 +70,14 @@
   border: 1px solid #eee;
   border-radius: 4px;
   font-size: 14px;
+}
+
+.word-count {
+  text-align: right;
+  color: #999;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
 }
 
 /* 图片上传样式 */
@@ -106,24 +130,149 @@
   color: #999;
 }
 
-/* 按钮样式 */
+/* 提交评价按钮 */
 .submit-btn {
-  width: 100%;
-  background-color: #07c160;
+  width: 90%;
+  height: 88rpx;
+  margin: 30rpx auto;
+  background: linear-gradient(135deg, #07c160, #06ad56);
   color: white;
+  font-size: 32rpx;
+  border-radius: 44rpx;
   border: none;
-  padding: 12px 0;
-  border-radius: 8px;
-  font-size: 16px;
-  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(7, 193, 96, 0.3);
+  transition: all 0.3s ease;
 }
 
+.submit-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 6rpx rgba(7, 193, 96, 0.2);
+}
+
+.submit-btn[disabled] {
+  background: linear-gradient(135deg, #a8e6c1, #89d7aa);
+  box-shadow: none;
+}
+
+/* 查看历史评价按钮 */
 .history-btn {
-  width: 100%;
-  background-color: #f0f0f0;
-  color: #333;
-  border: none;
-  padding: 12px 0;
+  width: 90%;
+  height: 88rpx;
+  margin: 20rpx auto;
+  background: #ffffff;
+  color: #07c160;
+  font-size: 32rpx;
+  border-radius: 44rpx;
+  border: 2rpx solid #07c160;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.history-btn:active {
+  background: #f0fff5;
+  transform: scale(0.98);
+}
+
+/* 按钮图标样式 */
+.button-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 12rpx;
+}
+
+/* 历史评价部分样式 */
+.history-section {
+  background-color: #fff;
+  padding: 15px;
   border-radius: 8px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.history-list {
+  margin-top: 10px;
+}
+
+.history-item {
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.history-community {
+  font-weight: bold;
+  color: #333;
   font-size: 16px;
+}
+
+.history-time {
+  color: #999;
+  font-size: 12px;
+}
+
+.history-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.star-container {
+  display: flex;
+  margin-left: 5px;
+}
+
+.star-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 2px;
+}
+
+.history-comment {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.history-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.history-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 4px;
+}
+
+.upload-btn {
+  width: 80px;
+  height: 80px;
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 1px dashed #ddd;
+}
+
+.plus {
+  font-size: 30px;
+  color: #999;
 }

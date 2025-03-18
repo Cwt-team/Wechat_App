@@ -1,5 +1,10 @@
 <!--pages/home_skip_all/community_rating/community_rating.wxml-->
 <view class="container">
+  <!-- 社区信息 -->
+  <view class="community-info">
+    <text class="community-name">{{communityName}}</text>
+  </view>
+
   <!-- 星级评分 -->
   <view class="rating-section">
     <text class="section-title">社区评分</text>
@@ -21,15 +26,17 @@
   <view class="content-section">
     <text class="section-title">评价内容</text>
     <textarea class="content-input" 
-              placeholder="请输入您的评价内容（必填）" 
+              placeholder="请输入您对社区环境、物业服务等方面的评价（必填）" 
               value="{{content}}"
-              bindinput="onContentInput">
+              bindinput="onContentInput"
+              maxlength="500">
     </textarea>
+    <text class="word-count">{{content.length}}/500</text>
   </view>
 
   <!-- 图片上传（可选） -->
   <view class="image-section">
-    <text class="section-title">上传图片（可选）</text>
+    <text class="section-title">上传图片（可选，最多{{maxImages}}张）</text>
     <view class="image-list">
       <view class="image-item" wx:for="{{images}}" wx:key="*this">
         <image src="{{item}}" mode="aspectFill" class="preview-image"/>
@@ -42,8 +49,43 @@
   </view>
 
   <!-- 提交按钮 -->
-  <button class="submit-btn" bindtap="submitRating">提交评价</button>
+  <button class="submit-btn" bindtap="submitRating" disabled="{{submitting}}">
+    {{submitting ? '提交中...' : '提交评价'}}
+  </button>
 
   <!-- 查看历史评价 -->
   <button class="history-btn" bindtap="viewHistory">查看历史评价</button>
+
+  <!-- 评价历史部分 -->
+  <view class="history-section" wx:if="{{ratingHistory.length > 0}}">
+    <view class="section-title">我的评价历史</view>
+    <view class="history-list">
+      <view class="history-item" wx:for="{{ratingHistory}}" wx:key="id">
+        <view class="history-header">
+          <view class="history-community">{{item.community_name}}</view>
+          <view class="history-time">{{item.created_at}}</view>
+        </view>
+        <view class="history-rating">
+          <text class="rating-text">评分：</text>
+          <view class="star-container">
+            <image wx:for="{{item.rating}}" wx:key="*this" wx:for-item="star" 
+                   src="/images/star_filled.png" class="star-icon"></image>
+            <image wx:for="{{5 - item.rating}}" wx:key="*this" wx:for-item="star" 
+                   src="/images/star_empty.png" class="star-icon"></image>
+          </view>
+        </view>
+        <view class="history-comment">{{item.comment}}</view>
+        <view class="history-images" wx:if="{{item.images.length > 0}}">
+          <image wx:for="{{item.images}}" wx:key="*this" wx:for-item="img" 
+                 src="{{img}}" class="history-image" mode="aspectFill" 
+                 bindtap="previewImage" data-urls="{{item.images}}" data-current="{{img}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="back-btn" bindtap="goBack">
+    <image src="/images/back.png" mode="aspectFit" class="back-icon"></image>
+    返回
+  </view>
 </view>

@@ -3,7 +3,8 @@ App({
   globalData: {
     userInfo: null,
     token: null,
-    isLogin: false
+    isLogin: false,
+    apiBaseUrl: 'http://localhost:3000'
   },
   
   onLaunch: function() {

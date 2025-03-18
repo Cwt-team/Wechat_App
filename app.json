@@ -25,6 +25,7 @@
     "pages/home_skip_all/suggestion/suggestionhistory/suggestionhistory",
     "pages/home_skip_all/community_rating/community_rating",
     "pages/home_skip_all/repair-skip/processFlow/repairhistory/repairhistory",
+    "pages/home_skip_all/community_rating/rating_history/rating_history",
     "pages/functionskip/fun-op-skip/fun-op-skip",
     "pages/functionskip/fun-fanweisui-skip/fun-fanweisui-skip",
     "pages/functionskip/fun-fire-skip/fun-fire-skip",
