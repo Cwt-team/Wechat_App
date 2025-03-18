@@ -1,7 +1,7 @@
 /* pages/home_skip_all/community_rating/community_rating.wxss */
 .container {
   padding: 20px;
-  background-color: #f8f8f8;8  min-height: 100vh;
+  background-color: #f8f8f8;  min-height: 100vh;
 }
 
 .community-info {
@@ -114,11 +114,12 @@
   font-size: 16px;
 }
 
+/* 上传按钮样式 */
 .upload-btn {
-  width: 80px;
-  height: 80px;
-  border: 1px dashed #ddd;
-  border-radius: 4px;
+  width: 160rpx;  /* 修改为rpx单位 */
+  height: 160rpx; /* 修改为rpx单位 */
+  border: 2rpx dashed #ddd;  /* 修改为rpx单位 */
+  border-radius: 8rpx;  /* 修改为rpx单位 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,7 +127,7 @@
 }
 
 .plus {
-  font-size: 30px;
+  font-size: 60rpx;  /* 修改为rpx单位 */
   color: #999;
 }
 
