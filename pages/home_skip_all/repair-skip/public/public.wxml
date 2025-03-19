@@ -127,10 +127,7 @@
     提交报修
   </button>
 
-<!-- 底部按钮区域 -->
-<view class="bottom-buttons">
-  <button class="history-btn" bindtap="viewHistory">
-    <image src="/images/icons/history.png" class="button-icon" />
-    查看历史报修
-  </button>
+  <view class="bottom-buttons">
+    <button class="history-btn" bindtap="viewHistory">查看历史报修</button>
+  </view>
 </view>

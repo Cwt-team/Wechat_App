@@ -54,8 +54,4 @@
     </view>
   </view>
 
-  <!-- 底部按钮 -->
-  <view class="bottom-buttons">
-    <button class="history-btn" bindtap="viewHistory">查看历史报修</button> 
-  </view>
 </view>

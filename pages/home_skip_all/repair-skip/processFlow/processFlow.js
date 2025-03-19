@@ -72,12 +72,6 @@ Page({
     wx.setStorageSync('repairHistory', repairHistory);
   },
 
-  viewHistory() {
-    wx.navigateTo({
-      url: './repairhistory/repairhistory'
-    });
-  },
-
   confirmProcess: function () {
     // 模拟事件完成，返回报修界面
     wx.showToast({
