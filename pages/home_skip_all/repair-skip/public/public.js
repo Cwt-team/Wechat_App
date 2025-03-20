@@ -19,7 +19,7 @@ Page({
     },
   
     // 通用输入处理函数
-    handleInput: function(field) {
+    handleInput: function (field) {
       return (e) => {
         this.setData({
           [`formData.${field}`]: e.detail.value
@@ -28,7 +28,7 @@ Page({
     },
   
     // 维修类别选择事件
-    onCategoryChange: function(e) {
+    onCategoryChange: function (e) {
       const selectedCategory = this.data.metaData.categories[e.detail.value];
       this.setData({
         'formData.selectedCategory': selectedCategory
@@ -36,21 +36,21 @@ Page({
     },
   
     // 日期选择事件
-    onDateChange: function(e) {
+    onDateChange: function (e) {
       this.setData({
         'formData.selectedDate': e.detail.value
       });
     },
   
     // 时间选择事件
-    onTimeChange: function(e) {
+    onTimeChange: function (e) {
       this.setData({
         'formData.selectedTime': e.detail.value
       });
     },
   
     // 图片选择处理
-    chooseImage: function() {
+    chooseImage: function () {
       const that = this;
       wx.chooseImage({
         count: this.data.metaData.maxImages - this.data.images.length,
@@ -66,7 +66,7 @@ Page({
     },
   
     // 表单验证
-    validateForm: function() {
+    validateForm: function () {
       const { formData } = this.data;
       const requiredFields = [
         { field: 'building', msg: '请填写楼栋信息' },
@@ -96,43 +96,49 @@ Page({
     },
   
     // 提交报修请求
-    submitRepairRequest: function() {
+    submitRepairRequest: function () {
       if (!this.validateForm()) return;
   
+      const { formData } = this.data;
+  
+      // 准备传递给处理流程页面的数据
       const requestData = {
-        ...this.data.formData,
-        images: this.data.images,
-        timestamp: Date.now()
+        building: formData.building,
+        roomNumber: formData.roomNumber,
+        selectedCategory: formData.selectedCategory,
+        description: formData.description,
+        contactName: formData.contactName,
+        phoneNumber: formData.phoneNumber,
+        appointmentDate: formData.selectedDate,
+        appointmentTime: formData.selectedTime
       };
   
-      console.log('提交的报修信息:', requestData);
-      wx.showToast({
-        title: '报修提交成功',
-        icon: 'success',
-        duration: 2000
-      });
-  
-      // 跳转到处理流程页面
+      // 跳转到处理流程页面并传递数据
       wx.navigateTo({
         url: '/pages/home_skip_all/repair-skip/processFlow/processFlow',
         success: (res) => {
-          res.eventChannel.emit('transferData', {
-            appointment: `${this.data.formData.selectedDate} ${this.data.formData.selectedTime}`
-          });
+          res.eventChannel.emit('acceptDataFromOpenerPage', requestData);
         }
       });
     },
   
     // 事件绑定简写
-    onBuildingInput: function(e) { this.handleInput('building')(e); },
-    onRoomInput: function(e) { this.handleInput('roomNumber')(e); },
-    onDescriptionInput: function(e) { this.handleInput('description')(e); },
-    onContactInput: function(e) { this.handleInput('contactName')(e); },
-    onPhoneInput: function(e) { this.handleInput('phoneNumber')(e); },
+    onBuildingInput: function (e) { this.handleInput('building')(e); },
+    onRoomInput: function (e) { this.handleInput('roomNumber')(e); },
+    onDescriptionInput: function (e) { this.handleInput('description')(e); },
+    onContactInput: function (e) { this.handleInput('contactName')(e); },
+    onPhoneInput: function (e) { this.handleInput('phoneNumber')(e); },
   
     // 流程确认
-    confirmProcess: function() {
+    confirmProcess: function () {
       wx.showToast({ title: '事件已完成', icon: 'success' });
       this.setData({ showProcessFlow: false });
+    },
+  
+    // 查看历史报修
+    viewHistory() {
+      wx.navigateTo({
+        url: '../processFlow/repairhistory/repairhistory'
+      });
     }
   });

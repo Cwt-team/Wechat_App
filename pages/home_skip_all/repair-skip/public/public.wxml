@@ -126,4 +126,12 @@
     <image src="/images/icons/submit.png" class="button-icon" />
     提交报修
   </button>
+
+  <view class="bottom-buttons">
+    <button class="history-btn" bindtap="viewHistory">查看历史报修</button>
+  </view>
 </view>
+
+
+
+
