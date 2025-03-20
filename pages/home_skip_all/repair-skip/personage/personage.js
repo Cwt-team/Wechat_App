@@ -67,12 +67,29 @@ Page({
       phoneNumber
     };
 
-    console.log('提交的报修信息:', repairRequest);
-    wx.showToast({
-      title: '报修提交成功',
-      icon: 'success'
+    wx.request({
+      url: 'https://your-api-domain.com/repair/submit',
+      method: 'POST',
+      data: repairRequest,
+      success: (res) => {
+        if (res.data.code === 200) {
+          wx.showToast({
+            title: '报修提交成功',
+            icon: 'success'
+          });
+        } else {
+          wx.showToast({
+            title: '提交失败：' + res.data.message,
+            icon: 'none'
+          });
+        }
+      },
+      fail: (err) => {
+        wx.showToast({
+          title: '网络错误，请重试',
+          icon: 'none'
+        });
+      }
     });
-
-    // 在这里可以调用后端接口提交数据
   }
 });
