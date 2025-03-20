@@ -1,79 +1,78 @@
 {
-    "usingComponents": {},
-    "pages": [
-      "pages/logic/logic",
-      "pages/bind-phone/bind-phone",
-      "pages/home/home",
-      "pages/contact/contact",
-      "pages/message/message",
-      "pages/index/index",
-      "pages/lock/lock",
-      "pages/home_skip_all/calllog-skip/calllog-skip",
-      "pages/home_skip_all/repair-skip/repair-skip",
-      "pages/home_skip_all/repair-skip/personage/personage",
-      "pages/home_skip_all/repair-skip/public/public",
-      "pages/home_skip_all/repair-skip/processFlow/processFlow",
-      "pages/home_skip_all/else-skip/else-skip",
-      "pages/home_skip_all/cmtalk-skip/cmtalk-skip",
-      "pages/home_skip_all/wuye-skip/wuyes-skip",
-      "pages/home_skip_all/fire-skip/fire-skip",
-      "pages/home_skip_all/functionintroduction-skip/functionintroduction-skip",
-      "pages/home_skip_all/huhutong-skip/huhutong-skip",
-      "pages/home_skip_all/fk-invite/fk-invite",
-      "pages/home_skip_all/fk-invite/visitorHistory/visitorHistory",
-      "pages/home_skip_all/suggestion/suggestion",
-      "pages/home_skip_all/suggestion/suggestionhistory/suggestionhistory",
-      "pages/home_skip_all/community_rating/community_rating",
-      "pages/home_skip_all/repair-skip/processFlow/repairhistory/repairhistory",
-      "pages/functionskip/fun-op-skip/fun-op-skip",
-      "pages/functionskip/fun-fanweisui-skip/fun-fanweisui-skip",
-      "pages/functionskip/fun-fire-skip/fun-fire-skip",
-      "pages/functionskip/fun-cm-skip/fun-cm-skip",
-      "pages/functionskip/fun-call-skip/fun-call-skip",
-      "pages/functionskip/fun-repair-skip/fun-repair-skip",
-      "pages/recordskip/Alarm-record-skip/Alarm-record-skip",
-      "pages/recordskip/fws-skip/fws-skip",
-      "pages/recordskip/rp-skip/rp-skip",
-      "pages/recordskip/calling-skip/calling-skip",
-      "pages/logs/logs",
-      "pages/user_setting/user_setting",
-      "pages/login/login",
-      "pages/bind-account/bind_account",
-      "pages/home_skip_all/notice-detail/notice-detail"
-    ],
-    "window": {
-      "backgroundTextStyle": "light",
-      "navigationBarBackgroundColor": "#fff",
-      "navigationBarTitleText": "物业管理",
-      "navigationBarTextStyle": "black",
-      "enablePullDownRefresh": true
-    },
-    "tabBar": {
-      "color": "#999999",
-      "selectedColor": "#1AAD19",
-      "backgroundColor": "#ffffff",
-      "list": [
-        {
-          "pagePath": "pages/home/home",
-          "text": "首页",
-          "iconPath": "images/home.png",
-          "selectedIconPath": "images/home-active.png"
-        },
-        {
-          "pagePath": "pages/lock/lock",
-          "text": "开锁",
-          "iconPath": "/images/tabs/alarm.png",
-          "selectedIconPath": "/images/tabs/alarm.png"
-        },
-        {
-          "pagePath": "pages/contact/contact",
-          "text": "个人",
-          "iconPath": "images/tabs/user.png",
-          "selectedIconPath": "images/tabs/user-active.png"
-        }
-      ]
-    },
-    "componentFramework": "glass-easel",
-    "sitemapLocation": "sitemap.json",
-    "lazyCodeLoading": "requiredComponents"
-  }
+  "usingComponents": {},
+  "pages": [
+    "pages/logic/logic",
+    "pages/bind-phone/bind-phone",
+    "pages/home/home",
+    "pages/contact/contact",
+    "pages/message/message",
+    "pages/index/index",
+    "pages/lock/lock",
+    "pages/home_skip_all/calllog-skip/calllog-skip",
+    "pages/home_skip_all/repair-skip/repair-skip",
+    "pages/home_skip_all/repair-skip/personage/personage",
+    "pages/home_skip_all/repair-skip/public/public",
+    "pages/home_skip_all/repair-skip/processFlow/processFlow",
+    "pages/home_skip_all/else-skip/else-skip",
+    "pages/home_skip_all/cmtalk-skip/cmtalk-skip",
+    "pages/home_skip_all/wuye-skip/wuyes-skip",
+    "pages/home_skip_all/fire-skip/fire-skip",
+    "pages/home_skip_all/functionintroduction-skip/functionintroduction-skip",
+    "pages/home_skip_all/huhutong-skip/huhutong-skip",
+    "pages/home_skip_all/fk-invite/fk-invite",
+    "pages/home_skip_all/fk-invite/visitorHistory/visitorHistory",
+    "pages/home_skip_all/suggestion/suggestion",
+    "pages/home_skip_all/suggestion/suggestionhistory/suggestionhistory",
+    "pages/home_skip_all/community_rating/community_rating",
+    "pages/functionskip/fun-op-skip/fun-op-skip",
+    "pages/functionskip/fun-fanweisui-skip/fun-fanweisui-skip",
+    "pages/functionskip/fun-fire-skip/fun-fire-skip",
+    "pages/functionskip/fun-cm-skip/fun-cm-skip",
+    "pages/functionskip/fun-call-skip/fun-call-skip",
+    "pages/functionskip/fun-repair-skip/fun-repair-skip",
+    "pages/recordskip/Alarm-record-skip/Alarm-record-skip",
+    "pages/recordskip/fws-skip/fws-skip",
+    "pages/recordskip/rp-skip/rp-skip",
+    "pages/recordskip/calling-skip/calling-skip",
+    "pages/logs/logs",
+    "pages/user_setting/user_setting",
+    "pages/login/login",
+    "pages/bind-account/bind_account",
+    "pages/home_skip_all/notice-detail/notice-detail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "物业管理",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1AAD19",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/lock/lock",
+        "text": "开锁",
+        "iconPath": "/images/tabs/alarm.png",
+        "selectedIconPath": "/images/tabs/alarm.png"
+      },
+      {
+        "pagePath": "pages/contact/contact",
+        "text": "个人",
+        "iconPath": "images/tabs/user.png",
+        "selectedIconPath": "images/tabs/user-active.png"
+      }
+    ]
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

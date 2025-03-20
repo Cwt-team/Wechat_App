@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">
+      <image src="/images/back.png" mode="aspectFit" class="back-icon"></image>
+    </view>
+    <view class="title">评价历史</view>
+  </view>
+  
+  <view class="history-list" wx:if="{{ratingHistory.length > 0}}">
+    <view class="history-item" wx:for="{{ratingHistory}}" wx:key="id">
+      <view class="history-header">
+        <view class="history-community">{{item.community_name}}</view>
+        <view class="history-time">{{item.created_at}}</view>
+      </view>
+      <view class="history-rating">
+        <text class="rating-text">评分：</text>
+        <view class="star-container">
+          <image wx:for="{{item.rating}}" wx:key="*this" wx:for-item="star" 
+                 src="/images/star_filled.png" class="star-icon"></image>
+          <image wx:for="{{5 - item.rating}}" wx:key="*this" wx:for-item="star" 
+                 src="/images/star_empty.png" class="star-icon"></image>
+        </view>
+      </view>
+      <view class="history-comment">{{item.comment}}</view>
+      <view class="history-images" wx:if="{{item.images.length > 0}}">
+        <image wx:for="{{item.images}}" wx:key="*this" wx:for-item="img" 
+               src="{{img}}" class="history-image" mode="aspectFill" 
+               bindtap="previewImage" data-urls="{{item.images}}" data-current="{{img}}"></image>
+      </view>
+    </view>
+  </view>
+  
+  <view class="empty-state" wx:else>
+    <image src="/images/empty.png" mode="aspectFit" class="empty-icon"></image>
+    <text class="empty-text">暂无评价记录</text>
+  </view>
+</view> 
