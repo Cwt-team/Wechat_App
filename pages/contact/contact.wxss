@@ -1,20 +1,21 @@
 page {
-  background-color: #f1f1f1;
+  background-color: #f7f7f7;
 }
  
 /* 设置背景颜色 */
 .top-bg {
-  height: 200rpx;
-  background-color: #008c8c;
+  height: 220rpx;
+  background: linear-gradient(180deg, #008c8c 0%, #009999 100%);
 }
  
 /* 圆角盒子 */
 .box {
   background-color: white;
   margin-top: -120rpx;
-  border-top-left-radius: 50rpx;
-  border-top-right-radius: 50rpx;
-  padding: 0 20rpx;
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  padding: 0 30rpx;
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.05);
 }
  
 /* 头像部分 */
@@ -23,8 +24,8 @@ page {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-bottom: 1rpx solid #fbdbdc;
-  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #eee;
+  padding-bottom: 30rpx;
 }
  
 .avatar {
@@ -32,7 +33,8 @@ page {
   font-weight: inherit;
   display: flex;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
+  padding: 0;
 }
  
 .avatar::after {
@@ -40,28 +42,33 @@ page {
 }
  
 .head-img {
-  width: 140rpx;
-  height: 140rpx;
-  overflow: hidden;
+  width: 160rpx;
+  height: 160rpx;
   border-radius: 50%;
-  background-color: #fbdbdc;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  border: 6rpx solid #fff;
 }
  
 .tip {
-  font-size: 26rpx;
-  color: gray;
-  margin: 15rpx 0;
+  font-size: 32rpx;
+  color: #333;
+  margin: 20rpx 0 5rpx;
+  font-weight: 500;
 }
  
 /* 列表部分 */
 .row {
+  min-height: 88rpx;
   display: flex;
   align-items: center;
-  padding: 36rpx 10rpx;
-  font-size: 30rpx;
-  font-weight: inherit;
-  background-color: rgba(0, 0, 0, 0);
-  border-bottom: 1rpx solid #fbdbdc;
+  padding: 24rpx 30rpx;
+  background: #fff;
+  margin-bottom: 2rpx;
+  position: relative;
+}
+
+.row:active {
+  background-color: #f9f9f9;
 }
  
 .row::after {
@@ -69,8 +76,10 @@ page {
 }
  
 .text {
-  margin-left: 15rpx;
-  color: #636262;
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+  margin-left: 16rpx;
 }
  
 .left {
@@ -79,25 +88,92 @@ page {
   display: flex;
   align-items: center;
 }
+
+.left van-icon {
+  color: #008c8c;
+  font-size: 36rpx;
+  margin-right: 4rpx;
+}
  
 .right {
-  width: 10%;
-  text-align: right;
-  color: rgb(148, 147, 147);
+  position: absolute;
+  right: 20rpx;
+  color: #999;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
 }
  
 .end {
   background-color: white;
   margin-top: 20rpx;
-  padding: 0 20rpx;
+  padding: 0 30rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.03);
 }
  
 .footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20rpx 0;
-  font-size: 22rpx;
+  padding: 30rpx 0;
+  font-size: 24rpx;
   margin: 30rpx 0;
-  color: gray;
+  color: #999;
+}
+
+.info-text {
+  flex: 1;
+  text-align: right;
+  padding-right: 40rpx;
+}
+
+.house-info {
+  font-size: 28rpx;
+  color: #666;
+  display: inline-block;
+  max-width: 400rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+/* 按钮样式优化 */
+button.row {
+  margin: 0;
+  padding: 32rpx 20rpx;
+  line-height: 1.5;
+  border-radius: 0;
+}
+
+/* 图标样式 */
+.icon-small {
+  color: #008c8c;
+  font-size: 36rpx;
+}
+
+/* 切换用户和退出登录按钮 */
+.end button:last-child {
+  border-bottom: none !important;
+}
+
+/* 添加动画效果 */
+.row {
+  transition: all 0.3s ease;
+}
+
+.row:active {
+  transform: scale(0.98);
+}
+
+/* 添加阴影效果 */
+.box, .end {
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 基本信息行样式 */
+.info-row {
+  position: relative;
+  padding: 32rpx 20rpx !important;
 }

@@ -14,7 +14,7 @@ const pool = mysql.createPool(config.mysql);
 // 手机号登录
 router.post('/phone', async (req, res) => {
   const { phoneNumber, verificationCode } = req.body;
-  
+
   try {
     // 验证验证码
     if (!await verifyCode(req, phoneNumber, verificationCode)) {
@@ -22,11 +22,11 @@ router.post('/phone', async (req, res) => {
     }
 
     const connection = await pool.getConnection();
-    
+
     try {
       // 查询业主信息
       const [owners] = await connection.execute(
-        `SELECT oi.*, op.*, hi.house_full_name, ci.community_name 
+        `SELECT oi.*, op.*, hi.house_full_name, ci.community_name, hi.unit_number, hi.room_number 
          FROM owner_info oi
          LEFT JOIN owner_permission op ON oi.id = op.owner_id
          LEFT JOIN house_info hi ON oi.house_id = hi.id
@@ -62,10 +62,10 @@ router.post('/phone', async (req, res) => {
 // 微信登录
 router.post('/wechat', async (req, res) => {
   const { code, userInfo } = req.body;
-  
+
   try {
     console.log('收到微信登录请求:', { code, userInfo });
-    
+
     if (!code) {
       return res.json({
         code: 400,
@@ -76,7 +76,7 @@ router.post('/wechat', async (req, res) => {
     // 获取微信openid
     const wxLoginRes = await WxService.code2Session(code);
     console.log('微信登录接口返回:', wxLoginRes);
-    
+
     const { openid } = wxLoginRes;
 
     if (!openid) {
@@ -87,7 +87,7 @@ router.post('/wechat', async (req, res) => {
     }
 
     const connection = await pool.getConnection();
-    
+
     try {
       // 查询是否已有用户
       const [owners] = await connection.execute(
@@ -99,7 +99,7 @@ router.post('/wechat', async (req, res) => {
         // 已存在用户,直接返回
         const owner = owners[0];
         console.log('找到现有用户:', owner);
-        
+
         // 查询完整信息
         const [fullOwners] = await connection.execute(
           `SELECT oi.id, oi.*, op.*, hi.house_full_name, ci.community_name 
@@ -110,13 +110,13 @@ router.post('/wechat', async (req, res) => {
            WHERE oi.id = ?`,
           [owner.id]
         );
-        
+
         const fullOwner = fullOwners[0];
         console.log('用户完整信息:', fullOwner);
-        
+
         const token = generateToken(fullOwner);
         console.log('生成的token:', token);
-        
+
         return res.json({
           code: 200,
           message: '登录成功',
@@ -145,11 +145,11 @@ router.post('/wechat', async (req, res) => {
 function generateToken(user) {
   // 打印用户信息，检查id是否存在
   console.log('生成token的用户信息:', user);
-  
+
   return jwt.sign(
-    { 
+    {
       id: user.id, // 确保这里正确设置了id
-      openid: user.wx_openid 
+      openid: user.wx_openid
     },
     config.jwt.secret || 'your-secret-key',
     { expiresIn: '7d' }
@@ -166,30 +166,32 @@ function formatUserData(user, token) {
       phone_number: user.phone_number || '',
       house_full_name: user.house_full_name || '',
       community_name: user.community_name || '',
-      account: user.account || ''
+      account: user.account || '',
+      unit_number: user.unit_number || '',
+      room_number: user.room_number || ''
     }
   };
 }
 
 async function verifyCode(req, phone, code) {
   // 简化版验证，实际应用中应该更严格
-  return req.session.verifyCode && 
-         req.session.verifyCode.phone === phone && 
-         req.session.verifyCode.code === code &&
-         req.session.verifyCode.expireTime > Date.now();
+  return req.session.verifyCode &&
+    req.session.verifyCode.phone === phone &&
+    req.session.verifyCode.code === code &&
+    req.session.verifyCode.expireTime > Date.now();
 }
 
 // 绑定账号
 router.post('/bind-account', async (req, res) => {
   const { openid, account, password, isNew } = req.body;
-  
+
   if (!openid || !account || !password) {
     return res.json({ code: 400, message: '参数不完整' });
   }
-  
+
   try {
     const connection = await pool.getConnection();
-    
+
     try {
       if (isNew) {
         // 创建新账号
@@ -198,28 +200,28 @@ router.post('/bind-account', async (req, res) => {
           'SELECT * FROM owner_info WHERE account = ?',
           [account]
         );
-        
+
         if (existingAccounts.length > 0) {
           return res.json({ code: 400, message: '账号已存在' });
         }
-        
+
         // 创建新用户，直接使用明文密码
         const [result] = await connection.execute(
           'INSERT INTO owner_info (account, password, wx_openid, nickname) VALUES (?, ?, ?, ?)',
           [account, password, openid, '新用户']
         );
-        
+
         const ownerId = result.insertId;
-        
+
         // 查询新创建的用户信息
         const [owners] = await connection.execute(
           'SELECT * FROM owner_info WHERE id = ?',
           [ownerId]
         );
-        
+
         const owner = owners[0];
         const token = generateToken(owner);
-        
+
         return res.json({
           code: 200,
           message: '创建成功',
@@ -240,26 +242,26 @@ router.post('/bind-account', async (req, res) => {
           'SELECT * FROM owner_info WHERE account = ?',
           [account]
         );
-        
+
         if (owners.length === 0) {
           return res.json({ code: 404, message: '账号不存在' });
         }
-        
+
         const owner = owners[0];
-        
+
         // 验证密码
         const isPasswordValid = password === owner.password;
-        
+
         if (!isPasswordValid) {
           return res.json({ code: 401, message: '密码错误' });
         }
-        
+
         // 更新openid
         await connection.execute(
           'UPDATE owner_info SET wx_openid = ? WHERE id = ?',
           [openid, owner.id]
         );
-        
+
         // 查询完整信息
         const [fullOwners] = await connection.execute(
           `SELECT oi.id, oi.*, op.*, hi.house_full_name, ci.community_name 
@@ -270,10 +272,10 @@ router.post('/bind-account', async (req, res) => {
            WHERE oi.id = ?`,
           [owner.id]
         );
-        
+
         const fullOwner = fullOwners[0];
         const token = generateToken(fullOwner);
-        
+
         return res.json({
           code: 200,
           message: '绑定成功',
@@ -292,18 +294,18 @@ router.post('/bind-account', async (req, res) => {
 // 检查登录状态
 router.get('/check', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
-  
+
   if (!token) {
     return res.json({ code: 401, message: '未登录' });
   }
-  
+
   try {
     // 验证token
     const decoded = jwt.verify(token, config.jwt.secret || 'your-secret-key');
-    
+
     // 查询用户信息
     const connection = await pool.getConnection();
-    
+
     try {
       const [owners] = await connection.execute(
         `SELECT oi.*, op.*, hi.house_full_name, ci.community_name 
@@ -314,13 +316,13 @@ router.get('/check', async (req, res) => {
          WHERE oi.id = ?`,
         [decoded.id]
       );
-      
+
       if (owners.length === 0) {
         return res.json({ code: 404, message: '用户不存在' });
       }
-      
+
       const owner = owners[0];
-      
+
       res.json({
         code: 200,
         message: '已登录',
@@ -332,7 +334,9 @@ router.get('/check', async (req, res) => {
             phone_number: owner.phone_number || '',
             house_full_name: owner.house_full_name || '',
             community_name: owner.community_name || '',
-            account: owner.account || ''
+            account: owner.account || '',
+            unit_number: owner.unit_number || '',
+            room_number: owner.room_number || ''
           }
         }
       });
@@ -348,21 +352,21 @@ router.get('/check', async (req, res) => {
 // 发送验证码
 router.post('/verify-code', async (req, res) => {
   const { phoneNumber } = req.body;
-  
+
   try {
     // 生成6位验证码
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-    
+
     // 发送验证码
     await smsService.sendVerifyCode(phoneNumber, code);
-    
+
     // 将验证码存入Redis或Session(这里使用Session示例)
     req.session.verifyCode = {
       code,
       phoneNumber,
       expireTime: Date.now() + 5 * 60 * 1000 // 5分钟有效期
     };
-    
+
     res.json({
       code: 200,
       message: '验证码发送成功'
@@ -375,19 +379,19 @@ router.post('/verify-code', async (req, res) => {
   }
 });
 
-module.exports = router; 
+module.exports = router;
 
 // 账号密码登录
 router.post('/account', async (req, res) => {
   const { account, password } = req.body;
-  
+
   if (!account || !password) {
     return res.json({ code: 400, message: '账号和密码不能为空' });
   }
-  
+
   try {
     const connection = await pool.getConnection();
-    
+
     try {
       // 查询业主信息
       const [owners] = await connection.execute(
@@ -399,23 +403,23 @@ router.post('/account', async (req, res) => {
          WHERE oi.account = ?`,
         [account]
       );
-      
+
       if (owners.length === 0) {
         return res.json({ code: 404, message: '账号不存在' });
       }
-      
+
       const owner = owners[0];
-      
+
       // 验证密码
       const isPasswordValid = password === owner.password;
-      
+
       if (!isPasswordValid) {
         return res.json({ code: 401, message: '密码错误' });
       }
-      
+
       // 生成token
       const token = generateToken(owner);
-      
+
       res.json({
         code: 200,
         message: '登录成功',

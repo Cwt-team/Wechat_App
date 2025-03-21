@@ -1,4 +1,5 @@
 <view class="container">
+  <input type="text" placeholder="请输入楼栋号" bindinput="onBuildingInput" class="input-field" />
   <input type="text" placeholder="请输入房间号" bindinput="onRoomInput" class="input-field" />
   
 

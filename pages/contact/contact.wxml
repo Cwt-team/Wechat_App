@@ -11,12 +11,14 @@
   
   <!--第一部分列表-->
   <view>
-    <button class="row" style="width:100%;" bindtap="basicclick">
+    <button class="row info-row" style="width:100%;" bindtap="basicclick">
       <view class="left">
         <van-icon name="success" /> 
         <text class="text">基本信息</text>
       </view>
-      <text>{{houseInfo || '未绑定房屋'}}</text>
+      <view class="info-text">
+        <text class="house-info">{{houseInfo}}{{unitInfo}}{{roomInfo}}</text>
+      </view>
       <view class="right">></view>
     </button>
 

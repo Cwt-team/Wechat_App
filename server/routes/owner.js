@@ -25,11 +25,11 @@ router.get('/info', async (req, res) => {
     }
 
     const connection = await pool.getConnection();
-    
+
     try {
       // 查询业主信息
       const [owners] = await connection.execute(
-        `SELECT oi.*, op.*, hi.house_full_name, ci.community_name 
+        `SELECT oi.*, op.*, hi.house_full_name, ci.community_name, hi.unit_number, hi.room_number 
          FROM owner_info oi
          LEFT JOIN owner_permission op ON oi.id = op.owner_id
          LEFT JOIN house_info hi ON oi.house_id = hi.id
@@ -43,7 +43,7 @@ router.get('/info', async (req, res) => {
       }
 
       const owner = owners[0];
-      
+
       // 返回业主信息
       res.json({
         code: 200,
@@ -55,7 +55,9 @@ router.get('/info', async (req, res) => {
           phone_number: owner.phone_number || '',
           house_full_name: owner.house_full_name || '',
           community_name: owner.community_name || '',
-          account: owner.account || ''
+          account: owner.account || '',
+          unit_number: owner.unit_number || '',
+          room_number: owner.room_number || ''
         }
       });
     } finally {
@@ -85,9 +87,9 @@ router.post('/update', async (req, res) => {
     }
 
     const { nickname, avatar_url } = req.body;
-    
+
     const connection = await pool.getConnection();
-    
+
     try {
       // 更新业主信息
       await connection.execute(
@@ -96,19 +98,18 @@ router.post('/update', async (req, res) => {
       );
 
       // 查询更新后的业主信息
+      // 修改查询SQL
       const [owners] = await connection.execute(
-        `SELECT oi.*, op.*, hi.house_full_name, ci.community_name 
-         FROM owner_info oi
-         LEFT JOIN owner_permission op ON oi.id = op.owner_id
-         LEFT JOIN house_info hi ON oi.house_id = hi.id
-         LEFT JOIN community_info ci ON oi.community_id = ci.id
-         WHERE oi.id = ?`,
+        `SELECT oi.*, op.*, hi.house_full_name, ci.community_name, hi.unit_number, hi.room_number 
+   FROM owner_info oi
+   LEFT JOIN owner_permission op ON oi.id = op.owner_id
+   LEFT JOIN house_info hi ON oi.house_id = hi.id
+   LEFT JOIN community_info ci ON oi.community_id = ci.id
+   WHERE oi.id = ?`,
         [decoded.id]
       );
 
-      const owner = owners[0];
-      
-      // 返回更新后的业主信息
+      // 修改返回数据
       res.json({
         code: 200,
         message: '更新成功',
@@ -119,7 +120,9 @@ router.post('/update', async (req, res) => {
           phone_number: owner.phone_number || '',
           house_full_name: owner.house_full_name || '',
           community_name: owner.community_name || '',
-          account: owner.account || ''
+          account: owner.account || '',
+          unit_number: owner.unit_number || '',
+          room_number: owner.room_number || ''
         }
       });
     } finally {

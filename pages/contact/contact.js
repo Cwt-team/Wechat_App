@@ -8,23 +8,25 @@ Page({
     },
     userInfo: null,
     houseInfo: '',
-    communityInfo: ''
+    communityInfo: '',
+    unitInfo: '',
+    roomInfo: ''
   },
-  
-  onLoad: function() {
+
+  onLoad: function () {
     this.checkLoginStatus();
   },
-  
-  onShow: function() {
+
+  onShow: function () {
     // 每次页面显示时检查登录状态，确保数据最新
     this.checkLoginStatus();
   },
-  
-  checkLoginStatus: function() {
+
+  checkLoginStatus: function () {
     // 获取存储的用户信息和token
     const userInfo = wx.getStorageSync('userInfo');
     const token = wx.getStorageSync('token');
-    
+
     if (userInfo && token) {
       // 已登录状态
       this.setData({
@@ -36,7 +38,9 @@ Page({
         },
         userInfo: userInfo,
         houseInfo: userInfo.house_full_name || '',
-        communityInfo: userInfo.community_name || ''
+        communityInfo: userInfo.community_name || '',
+        unitInfo: userInfo.unit_number ? `${userInfo.unit_number}单元` : '',
+        roomInfo: userInfo.room_number || ''
       });
     } else {
       // 未登录状态
@@ -49,12 +53,14 @@ Page({
         },
         userInfo: null,
         houseInfo: '',
-        communityInfo: ''
+        communityInfo: '',
+        unitInfo: '',
+        roomInfo: ''
       });
     }
   },
-  
-  chooseAvatar: function(e) {
+
+  chooseAvatar: function (e) {
     // 如果用户未登录，跳转到登录页面
     if (!this.data.login.show) {
       wx.navigateTo({
@@ -62,7 +68,7 @@ Page({
       });
       return;
     }
-    
+
     // 已登录用户可以更换头像
     let that = this;
     wx.chooseImage({
@@ -74,25 +80,25 @@ Page({
         that.setData({
           'login.avatar': tempFilePaths[0]
         });
-        
+
         // 更新存储的用户信息
         const userInfo = wx.getStorageSync('userInfo');
         userInfo.avatar_url = tempFilePaths[0];
         wx.setStorageSync('userInfo', userInfo);
-        
+
         // 这里可以添加上传头像到服务器的代码
       }
     });
   },
-  
-  switchUser: function() {
+
+  switchUser: function () {
     // 跳转到登录页面重新登录
     wx.navigateTo({
       url: '/pages/logic/logic'
     });
   },
-  
-  exitClick: function() {
+
+  exitClick: function () {
     let that = this;
     wx.showModal({
       title: '提示',
@@ -102,7 +108,7 @@ Page({
           // 清除用户信息和token
           wx.removeStorageSync('userInfo');
           wx.removeStorageSync('token');
-          
+
           // 更新页面数据
           that.setData({
             login: {
@@ -113,14 +119,16 @@ Page({
             },
             userInfo: null,
             houseInfo: '',
-            communityInfo: ''
+            communityInfo: '',
+            unitInfo: '',
+            roomInfo: ''
           });
         }
       }
     });
   },
-  
-  basicclick: function() {
+
+  basicclick: function () {
     // 如果未登录，提示用户登录
     if (!this.data.login.show) {
       wx.showToast({
@@ -129,21 +137,21 @@ Page({
       });
       return;
     }
-    
+
     // 跳转到基本信息页面
     wx.navigateTo({
       url: '/pages/user_info/user_info'
     });
   },
-  
-  settingClick: function() {
+
+  settingClick: function () {
     // 跳转到设置页面
     wx.navigateTo({
       url: '/pages/user_setting/user_setting'
     });
   },
-  
-  feedbackClick: function() {
+
+  feedbackClick: function () {
     // 如果未登录，提示用户登录
     if (!this.data.login.show) {
       wx.showToast({
@@ -152,7 +160,7 @@ Page({
       });
       return;
     }
-    
+
     // 跳转到投诉页面
     wx.navigateTo({
       url: '/pages/feedback/feedback'
