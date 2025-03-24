@@ -83,9 +83,4 @@
       </view>
     </view>
   </view>
-
-  <view class="back-btn" bindtap="goBack">
-    <image src="/images/back.png" mode="aspectFit" class="back-icon"></image>
-    返回
-  </view>
 </view>

@@ -39,7 +39,8 @@
       "pages/user_setting/user_setting",
       "pages/login/login",
       "pages/bind-account/bind_account",
-      "pages/home_skip_all/notice-detail/notice-detail"
+      "pages/home_skip_all/notice-detail/notice-detail",
+      "pages/home_skip_all/community_rating/rating_history/rating_history"
     ],
     "window": {
       "backgroundTextStyle": "light",

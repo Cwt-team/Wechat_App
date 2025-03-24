@@ -338,10 +338,14 @@ Page({
   viewHistory: function() {
     console.log('查看历史评价按钮点击');
     
-    // 导航到历史页面
+    // 修改为正确的路由路径
     wx.navigateTo({
-      url: './rating_history/rating_history',
-      success: function(res) {
+      url: '/pages/home_skip_all/community_rating/rating_history/rating_history',
+      success: (res) => {
+        // 通过 eventChannel 传递数据
+        res.eventChannel.emit('transferRatingHistory', {
+          ratingHistory: this.data.ratingHistory
+        });
         console.log('导航到历史页面成功');
       },
       fail: function(err) {

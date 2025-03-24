@@ -5,33 +5,19 @@ Page({
     ratingHistory: []
   },
 
-  onLoad: function (options) {
-    console.log('评价历史页面加载');
-    const that = this;
-    
-    // 获取页面跳转时传递的数据
-    const eventChannel = this.getOpenerEventChannel();
-    eventChannel.on('transferRatingHistory', function(data) {
-      console.log('接收到评价历史数据:', data);
-      that.setData({
-        ratingHistory: data.ratingHistory || []
-      });
-    });
-    
-    // 如果没有接收到数据，直接从服务器获取
-    if (!this.data.ratingHistory || this.data.ratingHistory.length === 0) {
-      console.log('未接收到数据，直接从服务器获取');
-      this.loadRatingHistory();
-    }
+  onLoad: function() {
+    this.loadRatingHistory();
   },
 
   // 从服务器加载评价历史
   loadRatingHistory: function() {
-    console.log('从服务器加载评价历史');
     const that = this;
+    wx.showLoading({
+      title: '加载中...'
+    });
     
     wx.request({
-      url: app.globalData.apiBaseUrl + '/api/community/review/history',
+      url: getApp().globalData.apiBaseUrl + '/api/community/review/history',
       method: 'GET',
       header: {
         'Authorization': 'Bearer ' + wx.getStorageSync('token')
@@ -55,6 +41,9 @@ Page({
           title: '网络错误，请重试',
           icon: 'none'
         });
+      },
+      complete() {
+        wx.hideLoading();
       }
     });
   },
