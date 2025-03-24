@@ -87,6 +87,10 @@ app.get('/api/health', (req, res) => {
   console.log(`[${timestamp}] 健康检查响应成功`);
 });
 
+// 添加投诉建议路由
+const suggestionRouter = require('./routes/suggestion');
+app.use('/api/suggestion', suggestionRouter);
+
 // 错误处理中间件
 app.use((err, req, res, next) => {
   console.error('服务器错误:', err);

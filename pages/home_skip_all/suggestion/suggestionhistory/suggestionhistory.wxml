@@ -1,13 +1,28 @@
 <view class="container">
-  <block wx:for="{{suggestionHistory}}" wx:key="*this">
-    <view class="card">
-      <text>日期: {{item.date}}</text>
-      <text>类型: {{item.type}}</text>
-      <text>地址: {{item.address}}</text>
-      <text>内容: {{item.content}}</text>
-      <block wx:for="{{item.images}}" wx:key="*this">
-        <image src="{{item}}" class="preview-image" mode="aspectFill" />
-      </block>
+  <view class="history-list" wx:if="{{!loading && suggestions.length > 0}}">
+    <view class="suggestion-item" wx:for="{{suggestions}}" wx:key="id">
+      <view class="suggestion-header">
+        <text class="type">{{item.type === 'complaint' ? '投诉' : '建议'}}</text>
+        <text class="status">{{item.status === 'pending' ? '待处理' : 
+                             item.status === 'processing' ? '处理中' : 
+                             item.status === 'completed' ? '已完成' : '已驳回'}}</text>
+      </view>
+      <view class="content">{{item.content}}</view>
+      <view class="image-list" wx:if="{{item.images.length > 0}}">
+        <image wx:for="{{item.images}}" wx:key="*this" wx:for-item="img" 
+               src="{{img}}" mode="aspectFill" bindtap="previewImage" 
+               data-urls="{{item.images}}" data-current="{{img}}"/>
+      </view>
+      <view class="time">提交时间：{{item.created_at}}</view>
+      <view class="reply" wx:if="{{item.reply}}">
+        <text class="reply-label">回复：</text>
+        <text class="reply-content">{{item.reply}}</text>
+        <text class="reply-time">{{item.reply_time}}</text>
+      </view>
     </view>
-  </block>
+  </view>
+  
+  <view class="empty-state" wx:if="{{!loading && suggestions.length === 0}}">
+    <text>暂无投诉建议记录</text>
+  </view>
 </view>
