@@ -14,7 +14,7 @@ Page({
         { icon: '/images/button/repair-green.png', text: '报事报修', url: '/pages/home_skip_all/repair-skip/repair-skip', isShown: false, id: 'life2' },
         { icon: '/images/button/message-green.png', text: '社区评价', url: '/pages/home_skip_all/community_rating/community_rating', isShown: false, id: 'life3' },
         { icon: '/images/button/complaint-green.png', text: '投诉建议', url: '/pages/home_skip_all/suggestion/suggestion', isShown: false, id: 'life4' },
-        { icon: '/images/button/alarm-green.png', text: '报警记录', url: '', isShown: false, id: 'life5' },
+        { icon: '/images/button/alarm-green.png', text: '报警记录', url: '/pages/home_skip_all/alarmRecords/alarmRecords', isShown: true, id: 'life5' },
         { icon: '/images/button/alarm-green.png', text: '一键火警', url: '/pages/home_skip_all/fire-skip/fire-skip', isShown: false, id: 'life6' },
         { icon: '/images/button/alarm-green.png', text: '一键反尾随', url: '', isShown: false, id: 'life7' },
       ],

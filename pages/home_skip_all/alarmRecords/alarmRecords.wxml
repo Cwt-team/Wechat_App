@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="header">
+    <text class="title">报警记录</text>
+  </view>
+
+  <view class="alarm-list">
+    <block wx:if="{{loading}}">
+      <view class="loading">加载中...</view>
+    </block>
+    
+    <block wx:elif="{{alarmRecords.length === 0}}">
+      <view class="empty">暂无报警记录</view>
+    </block>
+    
+    <block wx:else>
+      <view class="alarm-item" wx:for="{{alarmRecords}}" wx:key="id">
+        <view class="alarm-header">
+          <text class="alarm-type">{{item.alarm_type}}</text>
+          <text class="alarm-status {{item.alarm_status}}">{{item.alarm_status}}</text>
+        </view>
+        <view class="alarm-content">
+          <view class="house-info">{{item.house_full_name}}</view>
+          <view class="alarm-time">首次报警: {{item.first_alarm_time}}</view>
+          <view class="alarm-desc">{{item.alarm_description}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view> 

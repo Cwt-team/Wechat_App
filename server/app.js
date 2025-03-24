@@ -91,6 +91,10 @@ app.get('/api/health', (req, res) => {
 const suggestionRouter = require('./routes/suggestion');
 app.use('/api/suggestion', suggestionRouter);
 
+// 添加报警记录路由
+const alarmRecordsRouter = require('./routes/alarmRecords');
+app.use('/api/alarm-records', alarmRecordsRouter);
+
 // 错误处理中间件
 app.use((err, req, res, next) => {
   console.error('服务器错误:', err);

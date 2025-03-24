@@ -117,6 +117,21 @@ Page({
       return;
     }
     
+    // 添加报警记录跳转
+    if (text === '报警记录') {
+      wx.navigateTo({
+        url: '/pages/home_skip_all/alarmRecords/alarmRecords',
+        fail: function(err) {
+          console.error('报警记录跳转失败:', err);
+          wx.showToast({
+            title: '报警记录页面跳转失败',
+            icon: 'none'
+          });
+        }
+      });
+      return;
+    }
+    
     // 2. 待实现的功能  
     if ([ '社区评价', ].includes(text)) {
       wx.showToast({
