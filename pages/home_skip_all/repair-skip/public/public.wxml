@@ -4,10 +4,11 @@
     <image src="/images/icons/building.png" class="input-icon" />
     <input 
       type="text" 
-      placeholder="请输入楼栋" 
+      placeholder="楼栋信息（已自动获取）" 
       placeholder-class="placeholder"
       bindinput="onBuildingInput" 
       class="input-field" 
+      value="{{formData.building}}"
     />
   </view>
 
@@ -16,10 +17,11 @@
     <image src="/images/icons/room.png" class="input-icon" />
     <input 
       type="text" 
-      placeholder="请输入房间号" 
+      placeholder="房间号（已自动获取）" 
       placeholder-class="placeholder"
       bindinput="onRoomInput" 
       class="input-field" 
+      value="{{formData.roomNumber}}"
     />
   </view>
 
@@ -45,6 +47,7 @@
       placeholder-class="placeholder"
       bindinput="onDescriptionInput" 
       class="description-field"
+      value="{{formData.description}}"
     ></textarea>
   </view>
 
@@ -73,10 +76,11 @@
     <image src="/images/icons/contact.png" class="input-icon" />
     <input 
       type="text" 
-      placeholder="请输入联系人" 
+      placeholder="联系人（已自动获取）" 
       placeholder-class="placeholder"
       bindinput="onContactInput" 
       class="input-field" 
+      value="{{formData.contactName}}"
     />
   </view>
 
@@ -85,10 +89,11 @@
     <image src="/images/icons/phone.png" class="input-icon" />
     <input 
       type="number" 
-      placeholder="请输入手机号码" 
+      placeholder="联系电话（已自动获取）" 
       placeholder-class="placeholder"
       bindinput="onPhoneInput" 
       class="input-field" 
+      value="{{formData.phoneNumber}}"
     />
   </view>
 

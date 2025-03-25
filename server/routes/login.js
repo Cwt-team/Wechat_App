@@ -142,19 +142,20 @@ router.post('/wechat', async (req, res) => {
 });
 
 // 辅助函数
-function generateToken(user) {
-  // 打印用户信息，检查id是否存在
-  console.log('生成token的用户信息:', user);
-
-  return jwt.sign(
-    {
-      id: user.id, // 确保这里正确设置了id
-      openid: user.wx_openid
-    },
+const generateToken = (user) => {
+  return jwt.sign({
+    id: user.id,                  // 添加用户ID
+    openid: user.openid,          // 保留openid
+    name: user.name || user.nickName, // 用户名称
+    phone: user.phone || user.phoneNumber, // 用户电话
+    type: user.type || 'resident', // 添加用户类型，默认为resident
+    house_id: user.house_id,       // 房屋ID
+    community_id: user.community_id, // 社区ID
+    house_full_name: user.house_full_name // 完整房屋名称
+  },
     config.jwt.secret || 'your-secret-key',
-    { expiresIn: '7d' }
-  );
-}
+    { expiresIn: '7d' });
+};
 
 function formatUserData(user, token) {
   return {

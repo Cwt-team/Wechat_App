@@ -3,6 +3,7 @@ const cors = require('cors');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const config = require('./config/config');
+const path = require('path');
 
 const app = express();
 
@@ -11,13 +12,13 @@ process.env.NODE_ENV = 'development';
 
 // CORS 配置
 const corsOptions = {
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     // 允许本地开发环境和微信小程序请求
     const allowedOrigins = [
       'http://localhost:8080',
       'http://127.0.0.1:8080'
     ];
-    
+
     // 微信小程序发起的请求 origin 为 undefined
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
@@ -32,8 +33,8 @@ const corsOptions = {
 };
 
 // 添加 body-parser 中间件
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 // CORS 配置
 app.use(cors(corsOptions));
@@ -48,6 +49,7 @@ app.use(session({
 
 // 静态文件服务
 app.use('/images', express.static('public/images'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // 路由
 app.use('/api/login', require('./routes/login'));
@@ -55,7 +57,8 @@ app.use('/api/call-records', require('./routes/callRecords'));
 app.use('/api/owner', require('./routes/owner'));
 const communityRoutes = require('./routes/community');
 app.use('/api/community', communityRoutes);
-app.use('/api/repair', require('./routes/repair'));
+const maintenanceRoutes = require('./routes/maintenance');
+app.use('/api/maintenance', maintenanceRoutes);
 app.use('/api/notice', require('./routes/notice'));
 app.use('/api/notices', require('./routes/notice'));
 
@@ -83,7 +86,7 @@ app.get('/api/health', (req, res) => {
       memory: process.memoryUsage()
     }
   });
-  
+
   console.log(`[${timestamp}] 健康检查响应成功`);
 });
 
@@ -94,6 +97,9 @@ app.use('/api/suggestion', suggestionRouter);
 // 添加报警记录路由
 const alarmRecordsRouter = require('./routes/alarmRecords');
 app.use('/api/alarm-records', alarmRecordsRouter);
+
+// 兼容旧API路径 - 重要：为了保持向后兼容
+app.use('/api/repair', maintenanceRoutes);
 
 // 错误处理中间件
 app.use((err, req, res, next) => {
