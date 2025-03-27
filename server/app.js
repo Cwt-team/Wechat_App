@@ -52,10 +52,10 @@ app.use('/images', express.static('public/images'));
 // 路由
 app.use('/api/login', require('./routes/login'));
 app.use('/api/call-records', require('./routes/callRecords'));
-app.use('/api/owner', require('./routes/owner'));
+const ownerRouter = require('./routes/owner');
+app.use('/api/owner', ownerRouter);
 const communityRoutes = require('./routes/community');
 app.use('/api/community', communityRoutes);
-app.use('/api/repair', require('./routes/repair'));
 app.use('/api/notice', require('./routes/notice'));
 app.use('/api/notices', require('./routes/notice'));
 
@@ -94,6 +94,10 @@ app.use('/api/suggestion', suggestionRouter);
 // 添加报警记录路由
 const alarmRecordsRouter = require('./routes/alarmRecords');
 app.use('/api/alarm-records', alarmRecordsRouter);
+
+// 添加报修路由
+const maintenanceRouter = require('./routes/maintenance');
+app.use('/api/maintenance', maintenanceRouter);
 
 // 错误处理中间件
 app.use((err, req, res, next) => {

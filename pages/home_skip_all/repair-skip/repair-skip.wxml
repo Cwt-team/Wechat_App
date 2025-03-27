@@ -1,2 +1,0 @@
-<van-button type="info" size="large" bind:click="onPersonageClick">个人区域报修</van-button>
-<van-button type="info" size="large" style="position: relative; left: 0rpx; top: 12rpx" bind:click="onPublicClick">公共区域保修</van-button>

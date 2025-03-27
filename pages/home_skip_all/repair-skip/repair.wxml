@@ -1,0 +1,33 @@
+<view class="container">
+  <view class="header">
+    <image class="banner" src="/images/repair_banner.jpg" mode="aspectFill"></image>
+    <view class="title-container">
+      <text class="title">社区报修服务</text>
+      <text class="subtitle">为您提供便捷的报修解决方案</text>
+    </view>
+  </view>
+  
+  <view class="service-grid">
+    <block wx:for="{{repairTypes}}" wx:key="id">
+      <view class="service-item" bindtap="handleServiceTap" data-type="{{item.id}}">
+        <image class="service-icon" src="{{item.icon}}" mode="aspectFit"></image>
+        <text class="service-name">{{item.name}}</text>
+      </view>
+    </block>
+  </view>
+  
+  <view class="notice-container">
+    <view class="notice-title">报修须知</view>
+    <view class="notice-content">
+      <view class="notice-item">1. 请详细描述问题，以便维修人员更好地了解情况</view>
+      <view class="notice-item">2. 可上传图片帮助说明问题</view>
+      <view class="notice-item">3. 请保持联系方式畅通，以便维修人员联系</view>
+      <view class="notice-item">4. 紧急情况请直接拨打物业电话</view>
+    </view>
+  </view>
+  
+  <view class="contact-info">
+    <view class="contact-title">物业服务热线</view>
+    <view class="contact-number" bindtap="callProperty">400-888-8888</view>
+  </view>
+</view> 

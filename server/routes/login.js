@@ -102,7 +102,12 @@ router.post('/wechat', async (req, res) => {
 
         // 查询完整信息
         const [fullOwners] = await connection.execute(
-          `SELECT oi.id, oi.*, op.*, hi.house_full_name, ci.community_name 
+          `SELECT oi.id, oi.community_id, oi.house_id, oi.name, oi.gender, oi.phone_number, 
+                  oi.id_card, oi.email, oi.city, oi.address, oi.owner_type, oi.face_image, 
+                  oi.face_status, oi.account, oi.password, oi.wx_openid, oi.updated_at,
+                  op.owner_id, op.permission_status, op.valid_period, op.calling_enabled, op.pstn_enabled,
+                  hi.house_full_name, hi.unit_number, hi.room_number, 
+                  ci.community_name
            FROM owner_info oi
            LEFT JOIN owner_permission op ON oi.id = op.owner_id
            LEFT JOIN house_info hi ON oi.house_id = hi.id
@@ -264,7 +269,12 @@ router.post('/bind-account', async (req, res) => {
 
         // 查询完整信息
         const [fullOwners] = await connection.execute(
-          `SELECT oi.id, oi.*, op.*, hi.house_full_name, ci.community_name 
+          `SELECT oi.id, oi.community_id, oi.house_id, oi.name, oi.gender, oi.phone_number, 
+                  oi.id_card, oi.email, oi.city, oi.address, oi.owner_type, oi.face_image, 
+                  oi.face_status, oi.account, oi.password, oi.wx_openid, oi.updated_at,
+                  op.owner_id, op.permission_status, op.valid_period, op.calling_enabled, op.pstn_enabled,
+                  hi.house_full_name, hi.unit_number, hi.room_number, 
+                  ci.community_name
            FROM owner_info oi
            LEFT JOIN owner_permission op ON oi.id = op.owner_id
            LEFT JOIN house_info hi ON oi.house_id = hi.id

@@ -1,0 +1,51 @@
+<view class="container">
+  <view class="header">
+    <text class="title">报事报修记录</text>
+  </view>
+
+  <!-- 加载中提示 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading"></view>
+    <text>加载中...</text>
+  </view>
+
+  <!-- 空数据提示 -->
+  <view class="empty-container" wx:if="{{!loading && empty}}">
+    <image src="/static/images/empty.png" mode="aspectFit"></image>
+    <text>暂无报修记录</text>
+  </view>
+
+  <!-- 报修列表 -->
+  <view class="repair-list" wx:if="{{!loading && !empty}}">
+    <block wx:for="{{maintenanceList}}" wx:key="id">
+      <view class="repair-card" bindtap="viewDetail" data-id="{{item.id}}">
+        <view class="card-header">
+          <text class="request-number">单号: {{item.request_number}}</text>
+          <text class="status" style="color: {{item.status_color}}">{{item.status_text}}</text>
+        </view>
+        
+        <view class="card-body">
+          <view class="repair-title">{{item.title}}</view>
+          <view class="repair-info">
+            <text class="info-item">类型: {{item.type_text}}</text>
+            <text class="info-divider">|</text>
+            <text class="info-item">{{item.formatted_time}}</text>
+          </view>
+          <view class="repair-description">{{item.description}}</view>
+        </view>
+        
+        <view class="card-footer">
+          <view class="location">
+            <text class="icon">📍</text>
+            <text>{{item.house_full_name || item.community_name}}</text>
+          </view>
+          
+          <!-- 待处理状态可以取消 -->
+          <view wx:if="{{item.status === 'pending'}}" class="action-button" catchtap="cancelRepair" data-id="{{item.id}}">
+            取消报修
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view> 

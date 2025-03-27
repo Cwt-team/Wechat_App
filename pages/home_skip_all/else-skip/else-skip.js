@@ -11,7 +11,7 @@ Page({
       ],
       lifeList: [
         { icon: '/images/button/message-green.png', text: '社区通知', url: '/pages/home_skip_all/cmtalk-skip/cmtalk-skip', isShown: true, id: 'life1' },
-        { icon: '/images/button/repair-green.png', text: '报事报修', url: '/pages/home_skip_all/repair-skip/repair-skip', isShown: false, id: 'life2' },
+        { icon: '/images/button/repair-green.png', text: '报事报修', url: '/pages/home_skip_all/repair-skip/repair', isShown: false, id: 'life2' },
         { icon: '/images/button/message-green.png', text: '社区评价', url: '/pages/home_skip_all/community_rating/community_rating', isShown: false, id: 'life3' },
         { icon: '/images/button/complaint-green.png', text: '投诉建议', url: '/pages/home_skip_all/suggestion/suggestion', isShown: false, id: 'life4' },
         { icon: '/images/button/alarm-green.png', text: '报警记录', url: '/pages/home_skip_all/alarmRecords/alarmRecords', isShown: true, id: 'life5' },
@@ -276,5 +276,19 @@ Page({
       } finally {
         wx.hideLoading();
       }
+    },
+
+    // 报修服务点击处理
+    handleRepairService() {
+      wx.navigateTo({
+        url: '/pages/home_skip_all/repair-skip/repair',
+        fail: function(err) {
+          console.error('报修服务跳转失败:', err);
+          wx.showToast({
+            title: '报修服务页面跳转失败',
+            icon: 'none'
+          });
+        }
+      });
     }
   });

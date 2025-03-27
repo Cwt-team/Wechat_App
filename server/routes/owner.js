@@ -10,30 +10,31 @@ const pool = mysql.createPool(config.mysql);
 // 获取业主信息
 router.get('/info', async (req, res) => {
   try {
-    // 从请求头获取token
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
       return res.json({ code: 401, message: '未授权' });
     }
 
-    // 验证token
-    let decoded;
-    try {
-      decoded = jwt.verify(token, config.jwt.secret || 'your-secret-key');
-    } catch (err) {
-      return res.json({ code: 401, message: 'token无效' });
-    }
+    const decoded = jwt.verify(token, config.jwt.secret || 'your-secret-key');
+    console.log('解析的token信息:', decoded);
 
     const connection = await pool.getConnection();
 
     try {
-      // 查询业主信息
+      // 修改SQL查询，包含所有需要的信息
       const [owners] = await connection.execute(
-        `SELECT oi.*, op.*, hi.house_full_name, ci.community_name, hi.unit_number, hi.room_number 
+        `SELECT 
+          oi.*,
+          hi.id as house_id,
+          hi.building_name,
+          hi.unit_number,
+          hi.room_number,
+          hi.house_full_name,
+          ci.id as community_id,
+          ci.community_name
          FROM owner_info oi
-         LEFT JOIN owner_permission op ON oi.id = op.owner_id
          LEFT JOIN house_info hi ON oi.house_id = hi.id
-         LEFT JOIN community_info ci ON oi.community_id = ci.id
+         LEFT JOIN community_info ci ON hi.community_id = ci.id
          WHERE oi.id = ?`,
         [decoded.id]
       );
@@ -43,8 +44,8 @@ router.get('/info', async (req, res) => {
       }
 
       const owner = owners[0];
+      console.log('查询到的业主信息:', owner);
 
-      // 返回业主信息
       res.json({
         code: 200,
         message: '获取成功',
@@ -53,9 +54,11 @@ router.get('/info', async (req, res) => {
           nickname: owner.nickname || owner.name || '业主',
           avatar_url: owner.avatar_url || '',
           phone_number: owner.phone_number || '',
+          house_id: owner.house_id,
+          community_id: owner.community_id,
           house_full_name: owner.house_full_name || '',
           community_name: owner.community_name || '',
-          account: owner.account || '',
+          building_name: owner.building_name || '',
           unit_number: owner.unit_number || '',
           room_number: owner.room_number || ''
         }

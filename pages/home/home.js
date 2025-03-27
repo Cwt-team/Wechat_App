@@ -90,7 +90,7 @@ Page({
     
     if (text === '报事报修') {
       wx.navigateTo({
-        url: '/pages/home_skip_all/repair-skip/repair-skip',
+        url: '/pages/home_skip_all/repair-skip/repair',
         fail: function(err) {
           console.error('报事报修跳转失败:', err);
           wx.showToast({

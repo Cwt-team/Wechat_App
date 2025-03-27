@@ -1,0 +1,130 @@
+<view class="container">
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading"></view>
+    <text>加载中...</text>
+  </view>
+  
+  <!-- 错误状态显示 -->
+  <view wx:elif="{{error}}" class="error-container">
+    <icon type="warn" size="64"></icon>
+    <text>{{errorMsg}}</text>
+    <button bindtap="fetchMaintenanceDetail" class="retry-btn">重新加载</button>
+  </view>
+  
+  <!-- 数据加载成功后显示报修详情 -->
+  <view wx:elif="{{dataLoaded}}" class="repair-detail-container">
+    <view class="repair-card">
+      <!-- 报修单基本信息 -->
+      <view class="info-section">
+        <view class="info-row">
+          <text class="info-label">业务单号：</text>
+          <text class="info-value">{{repairDetail.order_number || 'MR' + repairDetail.id}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">提交日期：</text>
+          <text class="info-value">{{repairDetail.report_time}}</text>
+        </view>
+
+        <view class="query-code-section">
+          <text class="query-label">报修查询码：</text>
+          <text class="query-code">{{repairDetail.query_code || 'PRSKXFQOL9S4'}}</text>
+          <text class="query-tip">(请妥善保管，可用于无需登录查询报修进度)</text>
+        </view>
+
+        <view class="info-row">
+          <text class="info-label">楼栋：</text>
+          <text class="info-value">{{repairDetail.building || '12栋'}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">房间号：</text>
+          <text class="info-value">{{repairDetail.room || '0120'}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">报修类别：</text>
+          <text class="info-value">{{repairDetail.type_text}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">联系人：</text>
+          <text class="info-value">{{repairDetail.contact_name}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">联系电话：</text>
+          <text class="info-value">{{repairDetail.contact_phone}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">预约时间：</text>
+          <text class="info-value">{{repairDetail.expected_time || '2025-03-24 00:00'}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">问题描述：</text>
+          <text class="info-value desc-text">{{repairDetail.description}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 处理进度 -->
+    <view class="progress-section">
+      <view class="section-title">处理进度</view>
+      <view class="progress-timeline">
+        <!-- 提交报修 -->
+        <view class="timeline-item {{repairDetail.status >= 1 ? 'completed' : ''}}">
+          <view class="timeline-dot"></view>
+          <view class="timeline-content">
+            <view class="timeline-step">提交报修</view>
+            <view class="timeline-desc">等待物业确认</view>
+          </view>
+        </view>
+        
+        <!-- 物业受理 -->
+        <view class="timeline-item {{repairDetail.status >= 2 ? 'completed' : 'pending'}}">
+          <view class="timeline-dot"></view>
+          <view class="timeline-content">
+            <view class="timeline-step">物业受理</view>
+            <view class="timeline-desc">物业人员处理中</view>
+          </view>
+        </view>
+        
+        <!-- 维修处理 -->
+        <view class="timeline-item {{repairDetail.status >= 3 ? 'completed' : 'pending'}}">
+          <view class="timeline-dot"></view>
+          <view class="timeline-content">
+            <view class="timeline-step">维修处理</view>
+            <view class="timeline-desc">维修人员上门处理</view>
+          </view>
+        </view>
+        
+        <!-- 完成维修 -->
+        <view class="timeline-item {{repairDetail.status >= 4 ? 'completed' : 'pending'}}">
+          <view class="timeline-dot"></view>
+          <view class="timeline-content">
+            <view class="timeline-step">完成维修</view>
+            <view class="timeline-desc">维修工作已完成</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 照片区域 -->
+    <view class="photo-section" wx:if="{{repairDetail.imageList && repairDetail.imageList.length > 0}}">
+      <view class="section-title">报修照片</view>
+      <view class="photo-list">
+        <block wx:for="{{repairDetail.imageList}}" wx:key="*this">
+          <image class="photo-item" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-src="{{item}}"></image>
+        </block>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="action-btn" bindtap="callProperty">联系物业</button>
+      <button class="action-btn primary" bindtap="repairAgain">再次报修</button>
+    </view>
+  </view>
+  
+  <!-- 无数据显示 -->
+  <view class="no-data" wx:if="{{!loading && !repairDetail}}">
+    <image class="no-data-icon" src="/images/icons/no-data.png"></image>
+    <text>未找到报修信息</text>
+  </view>
+</view> 

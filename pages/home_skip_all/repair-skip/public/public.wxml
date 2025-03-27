@@ -1,137 +1,90 @@
 <view class="container">
-  <!-- 楼栋输入 -->
-  <view class="input-container">
-    <image src="/images/icons/building.png" class="input-icon" />
-    <input 
-      type="text" 
-      placeholder="请输入楼栋" 
-      placeholder-class="placeholder"
-      bindinput="onBuildingInput" 
-      class="input-field" 
-    />
-  </view>
+  <view class="section-title">公共区域报修</view>
 
-  <!-- 房间号输入 -->
-  <view class="input-container">
-    <image src="/images/icons/room.png" class="input-icon" />
-    <input 
-      type="text" 
-      placeholder="请输入房间号" 
-      placeholder-class="placeholder"
-      bindinput="onRoomInput" 
-      class="input-field" 
-    />
-  </view>
-
-  <!-- 维修类别选择 -->
-  <view class="input-container">
-    <image src="/images/icons/category.png" class="input-icon" />
-    <picker 
-      mode="selector" 
-      range="{{metaData.categories}}" 
-      bindchange="onCategoryChange"
-    >
-      <view class="picker">
-        当前选择: {{formData.selectedCategory}}
+  <!-- 社区选择 -->
+  <view class="form-item">
+    <view class="form-label">所在社区<text class="required">*</text></view>
+    <picker mode="selector" range="{{communities}}" range-key="name" bindchange="handleCommunityChange">
+      <view class="input-field" style="line-height: 80rpx;">
+        {{selectedCommunityIndex >= 0 ? communities[selectedCommunityIndex].name : '请选择社区'}}
       </view>
     </picker>
   </view>
-
-  <!-- 问题描述输入 -->
-  <view class="input-container">
-    <image src="/images/icons/description.png" class="input-icon" />
-    <textarea 
-      placeholder="请描述问题" 
-      placeholder-class="placeholder"
-      bindinput="onDescriptionInput" 
-      class="description-field"
-    ></textarea>
-  </view>
-
-  <!-- 图片上传 -->
-  <button 
-    bindtap="chooseImage" 
-    class="upload-button"
-  >
-    <image src="/images/icons/upload.png" class="button-icon" />
-    上传照片（{{images.length}}/{{metaData.maxImages}}）
-  </button>
-
-  <!-- 图片预览 -->
-  <view class="image-preview">
-    <block wx:for="{{images}}" wx:key="*this">
-      <image 
-        src="{{item}}" 
-        class="preview-image" 
-        mode="aspectFill"
-      />
-    </block>
-  </view>
-
-  <!-- 联系人输入 -->
-  <view class="input-container">
-    <image src="/images/icons/contact.png" class="input-icon" />
-    <input 
-      type="text" 
-      placeholder="请输入联系人" 
-      placeholder-class="placeholder"
-      bindinput="onContactInput" 
-      class="input-field" 
-    />
-  </view>
-
-  <!-- 手机号输入 -->
-  <view class="input-container">
-    <image src="/images/icons/phone.png" class="input-icon" />
-    <input 
-      type="number" 
-      placeholder="请输入手机号码" 
-      placeholder-class="placeholder"
-      bindinput="onPhoneInput" 
-      class="input-field" 
-    />
-  </view>
-
-  <!-- 预约日期选择 -->
-  <view class="input-container">
-    <image src="/images/icons/date.png" class="input-icon" />
-    <picker 
-      mode="date" 
-      bindchange="onDateChange"
-    >
-      <view class="picker">
-        预约日期: {{formData.selectedDate}}
+  
+  <!-- 报修类型 -->
+  <view class="form-item">
+    <view class="form-label">报修类型<text class="required">*</text></view>
+    <picker mode="selector" range="{{repairTypes}}" range-key="name" bindchange="handleTypeChange">
+      <view class="input-field" style="line-height: 80rpx;">
+        {{selectedTypeIndex >= 0 ? repairTypes[selectedTypeIndex].name : '请选择报修类型'}}
       </view>
     </picker>
   </view>
-
-  <!-- 预约时间选择 -->
-  <view class="input-container">
-    <image src="/images/icons/time.png" class="input-icon" />
-    <picker 
-      mode="time" 
-      bindchange="onTimeChange"
-    >
-      <view class="picker">
-        预约时间: {{formData.selectedTime}}
-      </view>
-    </picker>
+  
+  <!-- 报修标题 -->
+  <view class="form-item">
+    <view class="form-label">报修标题<text class="required">*</text></view>
+    <input class="input-field" type="text" placeholder="请输入报修标题" value="{{title}}" bindinput="handleTitleInput" />
   </view>
-
+  
+  <!-- 问题描述 -->
+  <view class="form-item">
+    <view class="form-label">问题描述<text class="required">*</text></view>
+    <textarea style="height: 200rpx;" class="input-field" placeholder="请详细描述问题，以便我们更好地为您服务" value="{{description}}" bindinput="handleDescriptionInput"></textarea>
+  </view>
+  
+  <!-- 上传图片 -->
+  <view class="form-item">
+    <view class="form-label">问题照片</view>
+    <view class="upload-area">
+      <view class="upload-title">上传照片可以帮助我们更好地了解问题（最多3张）</view>
+      <view class="image-list">
+        <block wx:for="{{images}}" wx:key="index">
+          <view class="image-item">
+            <image class="preview-image" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}"></image>
+            <view class="delete-icon" catchtap="deleteImage" data-index="{{index}}">
+              <text style="color: white; font-size: 24rpx;">×</text>
+            </view>
+          </view>
+        </block>
+        <view class="image-item" wx:if="{{images.length < 3}}" bindtap="chooseImage">
+          <view class="upload-image">
+            <image class="upload-icon" src="/images/icons/plus.png" mode="aspectFit"></image>
+            <text class="upload-text">上传照片</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 联系人信息 -->
+  <view class="form-item">
+    <view class="form-label">联系人<text class="required">*</text></view>
+    <input class="input-field" type="text" placeholder="请输入联系人姓名" value="{{contactName}}" bindinput="handleContactNameInput" />
+  </view>
+  
+  <view class="form-item">
+    <view class="form-label">联系电话<text class="required">*</text></view>
+    <input class="input-field" type="number" placeholder="请输入联系电话" value="{{contactPhone}}" bindinput="handleContactPhoneInput" />
+  </view>
+  
+  <!-- 期望上门日期和时间 -->
+  <view class="form-item">
+    <view class="form-label">期望上门日期和时间</view>
+    <view style="display: flex; justify-content: space-between;">
+      <picker mode="date" value="{{expectedDate}}" start="{{today}}" bindchange="handleDateChange" style="width: 48%;">
+        <view class="input-field" style="line-height: 80rpx;">
+          {{expectedDate ? expectedDate : '选择日期'}}
+        </view>
+      </picker>
+      <picker mode="time" value="{{expectedTime}}" bindchange="handleTimeChange" style="width: 48%;">
+        <view class="input-field" style="line-height: 80rpx;">
+          {{expectedTime ? expectedTime : '选择时间'}}
+        </view>
+      </picker>
+    </view>
+  </view>
+  
   <!-- 提交按钮 -->
-  <button 
-    bindtap="submitRepairRequest" 
-    class="submit-button"
-  >
-    <image src="/images/icons/submit.png" class="button-icon" />
-    提交报修
-  </button>
-
-  <view class="bottom-buttons">
-    <button class="history-btn" bindtap="viewHistory">查看历史报修</button>
-  </view>
-</view>
-
-
-
-
+  <button class="submit-btn {{isSubmitting ? 'disabled-btn' : ''}}" bindtap="submitRepair" disabled="{{isSubmitting}}">提交报修</button>
+</view> 

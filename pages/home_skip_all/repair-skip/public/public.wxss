@@ -1,163 +1,151 @@
-/* 容器样式 */
+/* 页面容器 */
 .container {
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  /* 输入容器 */
-  .input-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-  }
-  
-  /* 输入框图标 */
-  .input-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-  }
-  
-  /* 输入框、选择器、文本域通用样式 */
-  .input-field, .description-field, .picker {
-    flex: 1;
-    font-size: 14px;
-    color: #333;
-    border: none;
-    outline: none;
-  }
-  
-  /* Placeholder 样式 */
-  .placeholder {
-    color: #999;
-    font-size: 14px;
-    transition: all 0.3s ease;
-  }
-  
-  /* 输入框聚焦时 Placeholder 动画 */
-  .input-field:focus::placeholder, 
-  .description-field:focus::placeholder {
-    transform: translateY(-10px);
-    font-size: 12px;
-    color: #0858eb;
-  }
-  
-  /* 选择器样式 */
-  .picker {
-    color: #333;
-  }
-  
-  /* 上传按钮样式 */
-  .upload-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 10px;
-    background-color: #0858eb;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 14px;
-  }
-  
-  /* 按钮图标 */
-  .button-icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-  }
-  
-  /* 提交按钮样式 */
-  .submit-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  /* 图片预览区域 */
-  .image-preview {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-  
-  /* 图片预览样式 */
-  .preview-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 1px solid #ddd;
-  }
-  
-  /* 响应式调整 */
-  @media (max-width: 480px) {
-    .preview-image {
-      width: 80px;
-      height: 80px;
-    }
-  }
-
-.bottom-buttons {
   padding: 30rpx;
+  background-color: #f8f8f8;
+}
+
+/* 表单项样式 */
+.form-item {
+  margin-bottom: 30rpx;
+  background-color: #fff;
+  border-radius: 8rpx;
+  padding: 20rpx;
+}
+
+/* 表单项标签 */
+.form-label {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+  font-weight: 500;
+}
+
+/* 必填标记 */
+.required {
+  color: #e64340;
+  margin-left: 5rpx;
+}
+
+/* 输入框样式 */
+.input-field {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #eee;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+/* 图片上传区域 */
+.upload-area {
   margin-top: 20rpx;
 }
 
-.submit-btn, .history-btn {
-  flex: 1;
-  height: 80rpx;
-  line-height: 80rpx;
-  text-align: center;
-  border-radius: 8rpx;
-  font-size: 30rpx;
+.upload-title {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
 }
 
-.submit-btn {
-  background: #07c160;
-  color: #fff;
-}
-
-.history-btn {
-  width: 100%;
-  height: 88rpx;
-  line-height: 88rpx;
-  text-align: center;
-  border-radius: 44rpx;
-  font-size: 32rpx;
-  background: linear-gradient(135deg, #1890ff, #0858eb);
-  color: #fff;
-  box-shadow: 0 4rpx 12rpx rgba(24, 144, 255, 0.3);
+.image-list {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+}
+
+.image-item {
+  width: 160rpx;
+  height: 160rpx;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+}
+
+.upload-image {
+  width: 160rpx;
+  height: 160rpx;
+  border: 1rpx dashed #ddd;
+  border-radius: 8rpx;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  transition: all 0.3s ease;
+  align-items: center;
+  background-color: #f7f7f7;
 }
 
-.history-btn:active {
-  transform: scale(0.98);
-  box-shadow: 0 2rpx 6rpx rgba(24, 144, 255, 0.2);
+.upload-icon {
+  width: 60rpx;
+  height: 60rpx;
 }
 
-.button-icon {
-  width: 36rpx;
-  height: 36rpx;
-  margin-right: 12rpx;
+.upload-text {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 8rpx;
+}
+
+.delete-icon {
+  position: absolute;
+  top: -15rpx;
+  right: -15rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 提交按钮 */
+.submit-btn {
+  margin-top: 60rpx;
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  background-color: #07c160;
+  color: #fff;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+}
+
+.disabled-btn {
+  background-color: #ccc;
+}
+
+/* 分类选择区域 */
+.type-selection {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10rpx;
+}
+
+.type-item {
+  padding: 10rpx 20rpx;
+  background-color: #f2f2f2;
+  border-radius: 30rpx;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.type-item.active {
+  background-color: #e6f7ff;
+  color: #1890ff;
+  border: 1rpx solid #91d5ff;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  color: #333;
 }

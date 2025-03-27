@@ -9,10 +9,6 @@
     "pages/index/index",
     "pages/lock/lock",
     "pages/home_skip_all/calllog-skip/calllog-skip",
-    "pages/home_skip_all/repair-skip/repair-skip",
-    "pages/home_skip_all/repair-skip/personage/personage",
-    "pages/home_skip_all/repair-skip/public/public",
-    "pages/home_skip_all/repair-skip/processFlow/processFlow",
     "pages/home_skip_all/else-skip/else-skip",
     "pages/home_skip_all/cmtalk-skip/cmtalk-skip",
     "pages/home_skip_all/wuye-skip/wuyes-skip",
@@ -24,7 +20,6 @@
     "pages/home_skip_all/suggestion/suggestion",
     "pages/home_skip_all/suggestion/suggestionhistory/suggestionhistory",
     "pages/home_skip_all/community_rating/community_rating",
-    "pages/home_skip_all/repair-skip/processFlow/repairhistory/repairhistory",
     "pages/functionskip/fun-op-skip/fun-op-skip",
     "pages/functionskip/fun-fanweisui-skip/fun-fanweisui-skip",
     "pages/functionskip/fun-fire-skip/fun-fire-skip",
@@ -41,7 +36,12 @@
     "pages/bind-account/bind_account",
     "pages/home_skip_all/notice-detail/notice-detail",
     "pages/home_skip_all/community_rating/rating_history/rating_history",
-    "pages/home_skip_all/alarmRecords/alarmRecords"
+    "pages/home_skip_all/alarmRecords/alarmRecords",
+    "pages/home_skip_all/repair-skip/repair",
+    "pages/home_skip_all/repair-skip/personage/personage",
+    "pages/home_skip_all/repair-skip/public/public",
+    "pages/home_skip_all/repair-skip/repairhistory/repairhistory",
+    "pages/home_skip_all/repair-skip/detail/detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
