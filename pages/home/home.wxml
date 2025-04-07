@@ -2,7 +2,7 @@
 <view class="home">
 <swiper autouplay interval="3000" >
 <swiper-item>
-<image src="/images/ssr (2).png"></image>
+<image src="/images/ssr (2).jpg"></image>
 </swiper-item>
 </swiper>
 
@@ -46,12 +46,20 @@
     </view>
     
     <view class="service-card" bindtap="onServiceTap" data-type="car">
-      <image src="/images/fortestuse-3.jpg" mode="aspectFill" class="service-image"></image>
+      <image src="/images/fortestuse-3 .jpg" mode="aspectFill" class="service-image"></image>
       <view class="service-info">
         <text class="service-title">车辆服务</text>
         <text class="service-desc">专业保养，安心出行</text>
       </view>
     </view>
+  </view>
+</view>
+
+<view class="grid-container">
+  <!-- 其他按钮 -->
+  
+  <view class="grid-item" bindtap="onGridItemTap" data-text="门口机" data-url="/pages/door/door">
+    <text>门口机</text>
   </view>
 </view>
 

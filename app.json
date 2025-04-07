@@ -41,7 +41,12 @@
     "pages/home_skip_all/repair-skip/personage/personage",
     "pages/home_skip_all/repair-skip/public/public",
     "pages/home_skip_all/repair-skip/repairhistory/repairhistory",
-    "pages/home_skip_all/repair-skip/detail/detail"
+    "pages/home_skip_all/repair-skip/detail/detail",
+    "pages/door/door",
+    "pages/call/call",
+    "pages/components/fake-call/fake-call",
+    "utils/mock.js",
+    "pages/monitor/monitor"
   ],
   "window": {
     "backgroundTextStyle": "light",
